@@ -1,0 +1,5 @@
+package com.ktds.jmj.web;
+
+public class JobsServlet {
+
+}

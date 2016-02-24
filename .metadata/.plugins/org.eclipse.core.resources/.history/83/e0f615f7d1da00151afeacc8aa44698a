@@ -1,0 +1,5 @@
+package com.ktds.jmj.dao;
+
+public class LocationsDAO {
+
+}
