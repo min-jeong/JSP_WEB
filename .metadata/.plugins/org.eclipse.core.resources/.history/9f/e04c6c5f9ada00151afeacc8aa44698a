@@ -1,0 +1,15 @@
+package com.ktds.jmj.dao;
+
+import java.util.ArrayList;
+import java.util.List;
+
+public class EmployeesDAO { //data access object
+	
+	
+	public List<EmployeesVO> getAllEmployees() {
+		List<EmployeesVO> employees = new ArrayList<EmployeesVO>();
+		
+		return employees;
+	}
+
+}
