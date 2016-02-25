@@ -5,7 +5,32 @@
   <link rel="self" href="https://spring.io/blog.atom" />
   <id>http://spring.io/blog.atom</id>
   <icon>https://spring.io/favicon.ico</icon>
-  <updated>2016-02-23T20:34:00Z</updated>
+  <updated>2016-02-24T23:30:13Z</updated>
+  <entry>
+    <title>Spring XD 1.3.1 GA and Flo for Spring XD 1.0.1 GA released</title>
+    <link rel="alternate" href="https://spring.io/blog/2016/02/24/spring-xd-1-3-1-ga-and-flo-for-spring-xd-1-0-1-ga-released" />
+    <category term="releases" label="Releases" />
+    <author>
+      <name>Mark Pollack</name>
+    </author>
+    <id>tag:spring.io,2016-02-23:2395</id>
+    <updated>2016-02-24T23:30:13Z</updated>
+    <content type="html">&lt;p&gt;Today we are pleased to announce the general availability of Spring XD 1.3.1 and Flo for Spring XD 1.0.1&lt;/p&gt;
+&lt;ul&gt;
+  &lt;li&gt;Spring XD 1.3.1 GA: &lt;a href="http://repo.spring.io/libs-release/org/springframework/xd/spring-xd/1.3.1.RELEASE/spring-xd-1.3.1.RELEASE-dist.zip"&gt;zip&lt;/a&gt;, &lt;a href="http://docs.spring.io/spring-xd/docs/1.3.1.RELEASE/reference/html/#osx-homebrew-installation"&gt;brew&lt;/a&gt; and &lt;a href="http://docs.spring.io/spring-xd/docs/1.3.1.RELEASE/reference/html/#redhatcentos-installation"&gt;rpm&lt;/a&gt;.&lt;/li&gt;
+  &lt;li&gt;Flo for Spring XD 1.0.1 GA: &lt;a href="https://network.pivotal.io/products/p-spring-flo/"&gt;zip&lt;/a&gt;.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Here are some highlights of bug fixes and general improvements. Consult the &lt;a href="https://jira.spring.io/jira/secure/ReleaseNote.jspa?projectId=11401&amp;version=15424"&gt;JIRA release notes&lt;/a&gt; for the full list of issues fixed.&lt;/p&gt;
+&lt;ul&gt;
+  &lt;li&gt;&lt;a href="http://docs.spring.io/spring-xd/docs/1.3.1.RELEASE/reference/html/#encrypted-properties"&gt;Support for encryption in XD configuration files&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href="http://docs.spring.io/spring-xd/docs/1.3.1.RELEASE/reference/html/#kafka-configuration"&gt;Support for Kafka sync or async producers&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;Fix for Embedded Headers Message Converter Buffer Overflow&lt;/li&gt;
+  &lt;li&gt;&lt;a href="http://docs.spring.io/spring-xd/docs/1.3.1.RELEASE/reference/html/#_redis"&gt;Update default redis pool settings to have no limit on number of active connections&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;Upgrade to Spring Integration 4.2.5, Spring Framework 4.2.5, Spring AMQP 3.6&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;The next release line introduces a major redesign to the underlying architecture and breaking up Spring XD into several independent projects. Building upon Spring Boot and Spring Cloud capabilities, Spring XD is actively being redesigned as &lt;a href="http://cloud.spring.io/spring-cloud-dataflow/"&gt;Spring Cloud Data Flow&lt;/a&gt; - a cloud native programming and operating model for composable message-driven microservices. More details can be found in the blog posts: &lt;a href="http://blog.pivotal.io/pivotal-cloud-foundry/products/introducing-spring-cloud-data-flow"&gt;Introducing Spring Cloud Data Flow&lt;/a&gt; and &lt;a href="http://blog.pivotal.io/pivotal-perspectives/features/a-quick-look-at-spring-cloud-data-flow"&gt;A Quick Look At Spring Cloud Data Flow&lt;/a&gt;. InfoQ also summarizes the changes in the article &lt;a href="http://www.infoq.com/news/2015/09/spring-cloud-data-flow"&gt;SpringXD being Re-architected and Re-branded to Spring Cloud Data Flow&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;Feedback is very important, so please get in touch with questions and comments via&lt;br/&gt;* &lt;a href="http://stackoverflow.com/questions/tagged/spring-xd"&gt;StackOverflow&lt;/a&gt; &lt;code&gt;spring-xd&lt;/code&gt; tag&lt;br/&gt;* &lt;a href="https://jira.spring.io/browse/XD/?selectedTab=com.atlassian.jira.jira-projects-plugin:summary-panel"&gt;Spring JIRA&lt;/a&gt; or &lt;a href="https://github.com/spring-projects/spring-xd/issues"&gt;GitHub Issues&lt;/a&gt;&lt;/p&gt;</content>
+  </entry>
   <entry>
     <title>This Week in Spring - February 23, 2016</title>
     <link rel="alternate" href="https://spring.io/blog/2016/02/23/this-week-in-spring-february-23-2016" />
@@ -469,85 +494,5 @@ public class ZipkinQueryServiceApplication {&#xD;
 &lt;img src ="https://raw.githubusercontent.com/joshlong/sleuth-blog/master/images/zipkin-ui-and-resttemplate-detail.png" /&gt;&lt;h2&gt;&lt;a href="#the-opentracing-initiative" class="anchor" name="the-opentracing-initiative"&gt;&lt;/a&gt;The OpenTracing Initiative&lt;/h2&gt;
 &lt;p&gt;For Spring-based workloads, distributed tracing couldn&amp;rsquo;t be easier! However, tracing, by its very nature, is a cross-cutting concern for all services no matter which technology stack they&amp;rsquo;re implemented in. &lt;a href="https://github.com/opentracing"&gt;The OpenTracing initiative&lt;/a&gt; is an effort to standardize the vocabulary and concepts of modern tracing for multiple languages and platforms. The OpenTracing API has support from multiple &lt;em&gt;very&lt;/em&gt; large organizations as its lead one of the original authors on the original Google Dapper paper. The effort defines language bindings; there are already implementations for JavaScript, Python, Go, etc. We will keep Spring Cloud Sleuth conceptually compatible with this effort and will track it. It is expected, but not implied, that the bindings will as often as not have Zipkin as their backend.&lt;/p&gt;&lt;h2&gt;&lt;a href="#next-steps" class="anchor" name="next-steps"&gt;&lt;/a&gt;Next Steps&lt;/h2&gt;
 &lt;p&gt;This blog was meant to skim the surface of the concepts and supporting technologies in distributed tracing. We&amp;rsquo;ve looked at Spring Cloud Sleuth and how Spring Cloud Sleuth works with Zipkin. Zipkin itself has an interesting supporting ecosystem. If you really want to understand what distributed tracing tools like Spring Cloud Sleuth, Zipkin, Apache&amp;rsquo;s HTrace and others are modeled after, check &lt;a href="http://research.google.com/pubs/pub36356.html"&gt;out the original Google Dapper paper&lt;/a&gt;. You should check out &lt;a href="https://www.youtube.com/watch?v=f9J1Av8rwCE"&gt;Adrian Cole&amp;rsquo;s introduction to the larger Zipkin ecosystem&lt;/a&gt;. Naturally, the &lt;a href="https://github.com/joshlong/sleuth-blog"&gt;code for this blog is also online&lt;/a&gt;. Finally, look no further than &lt;a href="http://start.spring.io"&gt;the Spring Initializr&lt;/a&gt; and add the Spring Cloud Sleuth Stream and Zipkin Stream Server to your Maven builds to get started.&lt;/p&gt;</content>
-  </entry>
-  <entry>
-    <title>Developing Spring Boot applications with Kotlin</title>
-    <link rel="alternate" href="https://spring.io/blog/2016/02/15/developing-spring-boot-applications-with-kotlin" />
-    <category term="engineering" label="Engineering" />
-    <author>
-      <name>S?bastien Deleuze</name>
-    </author>
-    <id>tag:spring.io,2016-02-01:2361</id>
-    <updated>2016-02-15T12:58:00Z</updated>
-    <content type="html">&lt;p&gt;Just in time for &lt;a href="http://blog.jetbrains.com/kotlin/2016/02/kotlin-1-0-released-pragmatic-language-for-jvm-and-android/"&gt;Kotlin 1.0 release&lt;/a&gt;, we are adding support for Kotlin language to &lt;a href="https://start.spring.io/#!language=kotlin"&gt;https://start.spring.io&lt;/a&gt; in order to make it easier to start new Spring Boot projects with this language.&lt;/p&gt;
-&lt;p&gt;This blog post is also an opportunity for me to explain why I find this language interesting, to show you a sample project in detail and to give you some hints.&lt;/p&gt;&lt;h1&gt;&lt;a href="#what-is-kotlin" class="anchor" name="what-is-kotlin"&gt;&lt;/a&gt;What is Kotlin?&lt;/h1&gt;
-&lt;p&gt;&lt;a href="https://kotlinlang.org"&gt;Kotlin&lt;/a&gt; is a language created by &lt;a href="https://www.jetbrains.com/"&gt;JetBrains&lt;/a&gt;. It runs on top of the JVM (but not only), it is an object oriented language that includes many ideas from functional programming. I won&amp;rsquo;t go too much in details about all Kotlin features (&lt;a href="https://kotlinlang.org/docs/kotlin-docs.pdf"&gt;PDF&lt;/a&gt;, &lt;a href="https://kotlinlang.org/docs/reference/"&gt;HTML&lt;/a&gt;), but I would like to highlight the ones I find the most interesting:&lt;/p&gt;
-&lt;ul&gt;
-  &lt;li&gt;Kotlin is a statically typed language, but thanks to its &lt;a href="https://kotlinlang.org/docs/reference/basic-types.html"&gt;clever type inference&lt;/a&gt;, it allows you to write code as short and expressive as dynamic language with performances close to pure Java projects&lt;/li&gt;
-  &lt;li&gt;&lt;a href="https://kotlinlang.org/docs/reference/properties.html#declaring-properties"&gt;Properties support&lt;/a&gt;&lt;/li&gt;
-  &lt;li&gt;Relatively lightweight standard library compared to other languages&lt;/li&gt;
-  &lt;li&gt;Easy to learn: a Java developer can quickly understand most of the language (this &lt;a href="https://kotlinlang.org/docs/reference/comparison-to-java.html"&gt;quick comparison to Java&lt;/a&gt; is worth to read)&lt;/li&gt;
-  &lt;li&gt;&lt;a href="https://kotlinlang.org/docs/reference/java-interop.html"&gt;Java interop&lt;/a&gt; is a first class concern and great&lt;/li&gt;
-  &lt;li&gt;Perfect for Android development&lt;/li&gt;
-  &lt;li&gt;Built-in immutability and &lt;a href="https://kotlinlang.org/docs/reference/null-safety.html"&gt;null safety&lt;/a&gt; support&lt;/li&gt;
-  &lt;li&gt;Code is easy to read, efficient to write&lt;/li&gt;
-  &lt;li&gt;Allows to &lt;a href="https://kotlinlang.org/docs/reference/extensions.html"&gt;extend existing libraries&lt;/a&gt; without having to inherit from the class or use any type of design pattern such as Decorator&lt;/li&gt;
-  &lt;li&gt;No semicolon required ;-)&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;You will find a lot of useful links to improve your Kotlin knowledge in this &lt;a href="http://blog.jetbrains.com/kotlin/2016/01/kotlin-digest-2015/"&gt;Kotlin digest 2015&lt;/a&gt; blog post. Also have a look to these simple &lt;a href="http://try.kotlinlang.org/koans"&gt;Kotlin exercices&lt;/a&gt; to have a quick overview of the language.&lt;/p&gt;&lt;h1&gt;&lt;a href="#a-sample-spring-boot-kotlin-project" class="anchor" name="a-sample-spring-boot-kotlin-project"&gt;&lt;/a&gt;A sample Spring Boot + Kotlin project&lt;/h1&gt;
-&lt;p&gt;Kotlin has been designed to play well with the Java ecosystem, and it seems to me that it shares the same pragmatic, innovative and opinionated mindset as Spring Boot, so they play well together. You can have a look at this simple &lt;a href="https://github.com/sdeleuze/spring-boot-kotlin-demo"&gt;Spring Boot + Spring Data JPA Kotlin project&lt;/a&gt; to see more concretely what it looks like.&lt;/p&gt;
-&lt;p&gt;Kotlin allows to write (and read) your domain model easily thanks to &lt;a href="https://kotlinlang.org/docs/reference/data-classes.html"&gt;data classes&lt;/a&gt;. The compiler automatically derives the following members from all properties declared in the primary constructor:&lt;br/&gt; - &lt;code&gt;equals()&lt;/code&gt; / &lt;code&gt;hashCode()&lt;/code&gt; pair&lt;br/&gt; - &lt;code&gt;toString()&lt;/code&gt; of the form &amp;ldquo;Customer(firstName=Foo, lastName=Bar, id=42)&amp;rdquo;&lt;br/&gt; - &lt;code&gt;componentN()&lt;/code&gt; functions corresponding to the properties in their order or declaration&lt;br/&gt; - &lt;code&gt;copy()&lt;/code&gt; function&lt;/p&gt;
-&lt;p&gt;You can see that Kotlin allows you to specify parameter default values, and types are declared after the name of the variable/parameter:&lt;/p&gt;
-&lt;pre&gt;&lt;code class="prettyprint kotlin"&gt;@Entity&#xD;
-data class Customer(&#xD;
-	var firstName: String = &amp;quot;&amp;quot;,&#xD;
-	var lastName: String = &amp;quot;&amp;quot;,&#xD;
-	@Id @GeneratedValue(strategy = GenerationType.AUTO)&#xD;
-	var id: Long = 0&#xD;
-)
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;The Spring MVC REST controller you can see below is using constructor level injection, and default visibility in Kotlin is &lt;code&gt;public&lt;/code&gt; so no need to specify it. When a function returns a single expression, the curly braces can be omitted and the body is specified after a &lt;code&gt;=&lt;/code&gt; symbol. It is even better since the return type can be inferred by the compiler.&lt;/p&gt;
-&lt;pre&gt;&lt;code class="prettyprint kotlin"&gt;@RestController&#xD;
-class CustomerController @Autowired constructor(val repository:CustomerRepository) {&#xD;
-&#xD;
-	@RequestMapping(&amp;quot;/&amp;quot;)&#xD;
-	fun findAll() = repository.findAll()&#xD;
-&#xD;
-&#xD;
-	@RequestMapping(&amp;quot;/{name}&amp;quot;)&#xD;
-	fun findByLastName(@PathVariable name:String)&#xD;
-		= repository.findByLastName(name)&#xD;
-}
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;The Spring Data repository is self explanatory:&lt;/p&gt;
-&lt;pre&gt;&lt;code class="prettyprint kotlin"&gt;interface CustomerRepository : CrudRepository&amp;lt;Customer, Long&amp;gt; {&#xD;
-	fun findByLastName(name: String): List&amp;lt;Customer&amp;gt;&#xD;
-}
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;Since Kotlin supports top-level functions, you can declare your application as simple as:&lt;/p&gt;
-&lt;pre&gt;&lt;code class="prettyprint kotlin"&gt;@SpringBootApplication&#xD;
-open class Application {&#xD;
-&#xD;
-	@Bean&#xD;
-	open fun init(repository: CustomerRepository) = CommandLineRunner {&#xD;
-		repository.save(Customer(&amp;quot;Jack&amp;quot;, &amp;quot;Bauer&amp;quot;))&#xD;
-		repository.save(Customer(&amp;quot;Chloe&amp;quot;, &amp;quot;O&amp;#39;Brian&amp;quot;))&#xD;
-		repository.save(Customer(&amp;quot;Kim&amp;quot;, &amp;quot;Bauer&amp;quot;))&#xD;
-		repository.save(Customer(&amp;quot;David&amp;quot;, &amp;quot;Palmer&amp;quot;))&#xD;
-		repository.save(Customer(&amp;quot;Michelle&amp;quot;, &amp;quot;Dessler&amp;quot;))&#xD;
-	}&#xD;
-}&#xD;
-&#xD;
-fun main(args: Array&amp;lt;String&amp;gt;) {&#xD;
-	SpringApplication.run(Application::class.java, *args)&#xD;
-}
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;You need to mark &lt;code&gt;@Configuration&lt;/code&gt; classes, some others like most &lt;code&gt;@Component&lt;/code&gt; ones and &lt;code&gt;@Bean&lt;/code&gt; methods as &lt;code&gt;open&lt;/code&gt; because they cannot be &lt;code&gt;final&lt;/code&gt; in Spring due to proxy usage (classes and methods in Kotlin are &lt;code&gt;final&lt;/code&gt; by default without the &lt;code&gt;open&lt;/code&gt; modifier).&lt;/p&gt;&lt;h1&gt;&lt;a href="#additional-hints" class="anchor" name="additional-hints"&gt;&lt;/a&gt;Additional hints&lt;/h1&gt;
-&lt;p&gt;Even if Spring Boot and Kotlin work pretty well together, these additional hints may help you.&lt;/p&gt;&lt;h2&gt;&lt;a href="#experiment-with-the-java-to-kotlin-converter" class="anchor" name="experiment-with-the-java-to-kotlin-converter"&gt;&lt;/a&gt;Experiment with the Java to Kotlin converter&lt;/h2&gt;
-&lt;p&gt;The Java to Kotlin converter available in IntelliJ IDEA (Menu Code -&amp;gt; Convert Java file to Kotlin file) is quite useful when you can&amp;rsquo;t figure out how to write something in Kotlin. So do not hesitate to write something in Java and use it to find the Kotlin counterpart. This &lt;a href="https://kotlinlang.org/docs/reference/comparison-to-java.html"&gt;comparison to Java documentation&lt;/a&gt; can also provide some help.&lt;/p&gt;&lt;h2&gt;&lt;a href="#property-placeholders" class="anchor" name="property-placeholders"&gt;&lt;/a&gt;Property placeholders&lt;/h2&gt;
-&lt;p&gt;&lt;code&gt;$&lt;/code&gt; is used for &lt;a href="https://kotlinlang.org/docs/reference/basic-types.html#string-templates"&gt;String interpolation&lt;/a&gt; in Kotlin, so you should escape it when using property placeholders: &lt;code&gt;@Value(&amp;quot;\${some.property}&amp;quot;)&lt;/code&gt;. As an alternative you can also use &lt;a href="https://docs.spring.io/spring-boot/docs/current/reference/htmlsingle/#boot-features-external-config-typesafe-configuration-properties"&gt;&lt;code&gt;@ConfigurationProperties&lt;/code&gt;&lt;/a&gt; instead, see &lt;a href="http://stackoverflow.com/a/33883230/1092077"&gt;this Stack Overflow&lt;/a&gt; answer for more details.&lt;/p&gt;&lt;h2&gt;&lt;a href="#array-annotation-attribute" class="anchor" name="array-annotation-attribute"&gt;&lt;/a&gt;Array annotation attribute&lt;/h2&gt;
-&lt;p&gt;Unlike Java, Kotlin does not allow to specify array annotation attribute as a single value, so be aware that you will have to write &lt;code&gt;@RequestMapping(&amp;quot;/&amp;quot;, method = arrayOf(RequestMethod.GET))&lt;/code&gt;.&lt;/p&gt;&lt;h2&gt;&lt;a href="#jackson-kotlin-module" class="anchor" name="jackson-kotlin-module"&gt;&lt;/a&gt;Jackson Kotlin Module&lt;/h2&gt;
-&lt;p&gt;Last hint, if you are using Jackson you are likely to want to add &lt;a href="https://github.com/FasterXML/jackson-module-kotlin"&gt;&lt;code&gt;com.fasterxml.jackson.module:jackson-module-kotlin&lt;/code&gt;&lt;/a&gt; dependency in order to allow it to deal with data classes with no default constructor or with Kotlin collections.&lt;/p&gt;&lt;h1&gt;&lt;a href="#feedbacks" class="anchor" name="feedbacks"&gt;&lt;/a&gt;Feedbacks&lt;/h1&gt;
-&lt;p&gt;We are interested by your feedbacks about developing Spring applications with Kotlin. This blog post is just an introduction, there is much more to say especially about using Spring Boot with more Kotlin idiomatic code like with &lt;a href="https://github.com/JetBrains/Exposed"&gt;Exposed&lt;/a&gt; SQL library, so stay tuned &amp;hellip;&lt;/p&gt;</content>
   </entry>
 </feed>

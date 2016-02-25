@@ -1,0 +1,77 @@
+package com.ktds.jmj.dao;
+
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
+
+import com.ktds.jmj.vo.prAO;
+
+public class prDAO {
+	
+	public List<prAO> getAllpr() {
+		
+		try {
+			Class.forName("oracle.jdbc.driver.OracleDriver");
+		} catch (ClassNotFoundException e) {
+			throw new RuntimeException(e.getMessage(), e);
+		}
+		
+		Connection conn = null;
+		PreparedStatement stmt = null;
+		ResultSet rs = null;
+		
+		List<prAO> prs = new ArrayList<prAO>();
+		
+		try {
+			conn = DriverManager.getConnection(Const.DB_URL, Const.DB_USER, Const.DB_PASSWORD);
+			
+			String query = " SELECT * FROM COUNTRIES ";
+			stmt = conn.prepareStatement(query);
+			rs = stmt.executeQuery();
+			
+			prAO pr = null;
+			while (rs.next()){
+				pr = new prAO();
+				
+				pr.setCountryId(rs.getString("COUNTRY_ID"));
+				pr.setCountryName(rs.getString("COUNTRY_NAME"));
+				pr.setRegionId(rs.getInt("REGION_ID"));
+				
+				prs.add(pr);
+				
+			}
+			
+			
+		} catch (SQLException e) {
+			throw new RuntimeException(e.getMessage(), e);
+		}
+		
+		finally {
+			if ( rs != null ){
+				try {
+					rs.close();
+				} catch (SQLException e) {}
+			}
+			
+			if ( stmt != null ){
+				try {
+					stmt.close();
+				} catch (SQLException e) {}
+			}
+			
+			if ( conn != null ){
+				try {
+					conn.close();
+				} catch (SQLException e) {}
+			}
+		}
+						
+		return prs;
+				
+	}
+
+}

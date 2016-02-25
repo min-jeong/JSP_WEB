@@ -79,4 +79,14 @@
     <servlet-name>JobHistoryServlet</servlet-name>
     <url-pattern>/JobHistoryServlet</url-pattern>
   </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>MovieServlet</display-name>
+    <servlet-name>MovieServlet</servlet-name>
+    <servlet-class>com.ktds.jmj.web.MovieServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>MovieServlet</servlet-name>
+    <url-pattern>/MovieServlet</url-pattern>
+  </servlet-mapping>
 </web-app>

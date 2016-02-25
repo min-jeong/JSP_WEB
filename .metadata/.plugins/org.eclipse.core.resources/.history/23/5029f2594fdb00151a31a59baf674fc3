@@ -1,0 +1,19 @@
+package com.ktds.jmj.dao;
+
+import java.util.List;
+
+import com.ktds.jmj.vo.prAO;
+
+public class prDAO {
+	
+	public List<prAO> getAllpr() {
+		
+		Class.forName("oracle.jdbc.driver.OracleDriver");
+		
+		return prs;
+		
+		
+		
+	}
+
+}

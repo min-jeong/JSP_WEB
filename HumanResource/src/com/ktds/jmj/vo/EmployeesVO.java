@@ -1,6 +1,6 @@
 package com.ktds.jmj.vo;
 
-public class EmployeesVO {
+public class EmployeesVO { // 테이블 기준으로 만든다.
 	
 	private int employeeId;
 	private String firstName;

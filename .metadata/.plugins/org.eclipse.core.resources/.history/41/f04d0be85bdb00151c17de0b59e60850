@@ -1,0 +1,28 @@
+package com.ktds.jmj.dao;
+
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.util.List;
+
+import com.ktds.jmj.vo.MovieVO;
+
+public class MovieDAO {
+	
+	
+	public List<MovieVO> getAllMovie() {
+		
+		Class.forName("oralce.jdbc.driver.OracleDirver");
+		
+		Connection conn = null;
+		PreparedStatement stmt = null;
+		ResultSet rs = null;
+		
+		List<MovieVO> movies = new ArrayList<MovieVO>();
+		
+		
+		return movies;
+		
+	}
+
+}
