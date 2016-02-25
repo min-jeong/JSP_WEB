@@ -89,4 +89,14 @@
     <servlet-name>MovieServlet</servlet-name>
     <url-pattern>/MovieServlet</url-pattern>
   </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>DetailServlet</display-name>
+    <servlet-name>DetailServlet</servlet-name>
+    <servlet-class>com.ktds.jmj.web.DetailServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>DetailServlet</servlet-name>
+    <url-pattern>/detail</url-pattern>
+  </servlet-mapping>
 </web-app>

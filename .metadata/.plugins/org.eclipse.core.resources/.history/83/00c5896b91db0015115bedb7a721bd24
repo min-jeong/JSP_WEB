@@ -1,0 +1,11 @@
+package com.ktds.jmj.vo;
+
+public class ActorVO {
+	
+	ACTOR_ID	NUMBER
+	ACTOR_NAME	VARCHAR2(300 BYTE)
+	
+	private int actorId;
+	private String actorName;
+
+}

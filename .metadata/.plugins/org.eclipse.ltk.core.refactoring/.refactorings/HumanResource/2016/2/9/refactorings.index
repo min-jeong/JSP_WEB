@@ -9,3 +9,8 @@
 1456358771129	Delete element
 1456358775233	Delete element
 1456367101308	Delete element
+1456382062426	Extract method 'closeDB'
+1456384212059	Extract method 'loadOracleDriver'
+1456384698291	Extract method 'closeDB'
+1456386783953	Delete element
+1456387511586	Rename resource 'result.jsp'

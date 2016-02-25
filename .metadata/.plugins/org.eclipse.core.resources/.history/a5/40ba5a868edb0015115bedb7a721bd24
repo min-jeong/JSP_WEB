@@ -1,0 +1,12 @@
+package com.ktds.jmj.dao;
+
+import java.util.List;
+
+public class DirectorDAO {
+	
+	public List<DirectorVO> getAllDirector() {
+		
+		Class.forName("oracle.jdbc.driver.OracleDriver");
+	}
+
+}
