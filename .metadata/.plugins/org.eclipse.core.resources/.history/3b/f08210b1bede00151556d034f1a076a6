@@ -24,8 +24,7 @@
 			var form = $("#addNewMovieForm");
 			
 			form.attr("method", "POST");
-			form.attr("action", "/HumanResource/addNewMovieAction");
-			form.submit();
+			form.attr("action", "/HumanResource/addNewActorAction");
 		})
 		//http://api.jquery.com/selected-selector/
 		//http://api.jquery.com/checked-selector/

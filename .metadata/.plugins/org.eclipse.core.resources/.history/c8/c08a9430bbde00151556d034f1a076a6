@@ -19,23 +19,11 @@
 			});
 			$("#directorsName").text(selectedDirectors);
 		});
-		
-		$("#addNewMovie").click( function() {
-			var form = $("#addNewMovieForm");
-			
-			form.attr("method", "POST");
-			form.attr("action", "/HumanResource/addNewMovieAction");
-			form.submit();
-		})
-		//http://api.jquery.com/selected-selector/
-		//http://api.jquery.com/checked-selector/
-		
 /* 		$("#addNewMovieForm").hide();
  		$("#addNewMovieForm").slideDown(5000);
 		$("#addNewMovieForm").slideUp(5000); 
 		$("#addNewMovieForm").fadeIn();
 		$("#addNewMovieForm").fadeOut(); */
-		
 	});
 </script>
 </head>

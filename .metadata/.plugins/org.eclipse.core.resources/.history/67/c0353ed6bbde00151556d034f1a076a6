@@ -19,23 +19,22 @@
 			});
 			$("#directorsName").text(selectedDirectors);
 		});
-		
-		$("#addNewMovie").click( function() {
-			var form = $("#addNewMovieForm");
-			
-			form.attr("method", "POST");
-			form.attr("action", "/HumanResource/addNewMovieAction");
-			form.submit();
-		})
 		//http://api.jquery.com/selected-selector/
-		//http://api.jquery.com/checked-selector/
-		
 /* 		$("#addNewMovieForm").hide();
  		$("#addNewMovieForm").slideDown(5000);
 		$("#addNewMovieForm").slideUp(5000); 
 		$("#addNewMovieForm").fadeIn();
 		$("#addNewMovieForm").fadeOut(); */
 		
+		
+		$("#genres").click( function() {
+			var selectedGenres = "";
+			$("#genres checkbox:selected").each(function(index, data) {// data에는 값이 넘어오고 index는 몇번째인지
+				selectedGenres += data.text;
+				selectedGenres += "," 
+			});
+			$("#genreTitle").text(selectedGenres);
+		});
 	});
 </script>
 </head>
