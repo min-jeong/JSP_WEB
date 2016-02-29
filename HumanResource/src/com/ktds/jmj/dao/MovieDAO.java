@@ -28,7 +28,6 @@ public class MovieDAO {
 			conn = DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:XE", "MOVIE", "MOVIE");
 			//String query = " SELECT M.*, G.GRADE_TITLE, AC.ACTOR_COUNT FROM   MOVIE M, GRADE G , ( SELECT MOVIE_ID, COUNT(ACTOR_LIST_ID) ACTOR_COUNT FROM ACTOR_LIST GROUP BY MOVIE_ID) AC WHERE  M.GRADE_ID = G.GRADE_ID AND AC.MOVIE_ID(+) = M.MOVIE_ID ";
 			String query = XML.getNodeString("//query/movie/getAllMovie/text()");
-			System.out.println(query);
 			// "//"는 루트를 의미
 			stmt = conn.prepareStatement(query);
 			rs = stmt.executeQuery();

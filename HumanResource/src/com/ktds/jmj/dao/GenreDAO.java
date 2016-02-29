@@ -51,6 +51,43 @@ public class GenreDAO {
 		return genres;
 	}
 	
+	public List<GenreVO> getAllGenre(){
+		
+		loadOracleDriver();
+		
+		Connection conn = null;
+		PreparedStatement stmt = null;
+		ResultSet rs = null;
+		
+		
+		List<GenreVO> genres = new ArrayList<GenreVO>();
+		
+		try {
+			conn = DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:XE", "MOVIE", "MOVIE");
+			
+			String query = XML.getNodeString("//query/movie/getAllGenre/text()");
+			stmt = conn.prepareStatement(query);
+			rs = stmt.executeQuery();
+			
+			GenreVO genre = null;
+			while( rs.next() ) {
+				genre = new GenreVO();
+				genre.setGenreTitle(rs.getString("GENRE_TITLE"));
+				genre.setGenreId(rs.getInt("GENRE_ID"));
+				
+				genres.add(genre);
+			}
+			
+		} catch (SQLException e) {
+			throw new RuntimeException(e.getMessage(),e);
+		}
+		finally {
+			closeDB(conn, stmt, rs);
+		}
+		return genres;
+	}
+	
+	
 	private void closeDB(Connection conn, PreparedStatement stmt, ResultSet rs) {
 		if( rs!=null ){
 			try {

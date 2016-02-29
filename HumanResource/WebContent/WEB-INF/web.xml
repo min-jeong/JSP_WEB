@@ -119,4 +119,14 @@
     <servlet-name>AddNewActorActionServlet</servlet-name>
     <url-pattern>/addNewActorAction</url-pattern>
   </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>AddNewMovieServlet</display-name>
+    <servlet-name>AddNewMovieServlet</servlet-name>
+    <servlet-class>com.ktds.jmj.web.AddNewMovieServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>AddNewMovieServlet</servlet-name>
+    <url-pattern>/addNewMovie</url-pattern>
+  </servlet-mapping>
 </web-app>

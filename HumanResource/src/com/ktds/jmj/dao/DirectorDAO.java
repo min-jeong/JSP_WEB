@@ -10,7 +10,6 @@ import java.util.List;
 
 import com.ktds.jmj.util.xml.XML;
 import com.ktds.jmj.vo.DirectorVO;
-import com.ktds.jmj.vo.MovieVO;
 
 public class DirectorDAO {
 	
@@ -53,6 +52,45 @@ public class DirectorDAO {
 		return directors;
 		
 	}
+	
+	public List<DirectorVO> getAllDirector() {
+		// 1. DriverLoading
+		loadOracleDriver();
+		
+		Connection conn = null;
+		PreparedStatement stmt = null;
+		ResultSet rs = null;
+		
+		List<DirectorVO> directors = new ArrayList<DirectorVO>();
+		DirectorVO director = null;
+		
+		try {
+			conn = DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:XE", "MOVIE", "MOVIE");
+			
+			String query = XML.getNodeString("//query/movie/getAllDirector/text()");
+			stmt = conn.prepareStatement(query);			
+			rs = stmt.executeQuery();
+			
+			
+			while( rs.next() ) {
+				director = new DirectorVO();
+				director.setDirectorName(rs.getString("DIRECTOR_NAME"));
+				director.setDirectorId(rs.getInt("DIRECTOR_ID"));
+				
+				directors.add(director);
+			}
+			
+		} catch (SQLException e) {
+			throw new RuntimeException(e.getMessage(), e);
+		}
+		finally {
+			closeDB(conn, stmt, rs);
+		}
+		
+		return directors;
+		
+	}
+
 
 	private void closeDB(Connection conn, PreparedStatement stmt, ResultSet rs) {
 		if( rs!=null ){

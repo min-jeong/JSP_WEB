@@ -13,6 +13,7 @@
 							  	  )
 			</insertNewActor>
 		</actor>
+		
 		<getAllMovie> 
 			SELECT   M.*
          			 , G.GRADE_TITLE
@@ -63,6 +64,26 @@
 			WHERE    GL.GENRE_ID = G.GENRE_ID
 			AND      GL.MOVIE_ID = ?	
 		</getGenresByMovieId>
+		
+		<getAllGenre>
+			SELECT G.*
+			FROM   GENRE G
+		</getAllGenre>
+		
+		<getAllGrade>
+			SELECT G.*
+			FROM   GRADE G
+		</getAllGrade>
+		
+		<getAllActor>
+			SELECT A.*
+			FROM   ACTOR A
+		</getAllActor>
+		
+		<getAllDirector>
+			SELECT D.*
+			FROM   DIRECTOR D
+		</getAllDirector>
 		
 	</movie>
 </query>

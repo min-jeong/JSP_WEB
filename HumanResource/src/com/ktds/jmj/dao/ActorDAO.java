@@ -51,6 +51,42 @@ public class ActorDAO {
 		
 	}
 	
+	public List<ActorVO> getAllActor() {
+		// 1. DriverLoading
+		loadOracleDriver();
+		
+		Connection conn = null;
+		PreparedStatement stmt = null;
+		ResultSet rs = null;
+		
+		List<ActorVO> actors = new ArrayList<ActorVO>();
+		try {
+			conn = DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:XE", "MOVIE", "MOVIE");
+			
+			String query = XML.getNodeString("//query/movie/getAllActor/text()");
+			stmt = conn.prepareStatement(query);
+			rs = stmt.executeQuery();
+			
+			ActorVO actor = null;
+			while( rs.next() ) {
+				
+				actor = new ActorVO();
+				actor.setActorName(rs.getString("ACTOR_NAME"));
+				actor.setActorId(rs.getInt("ACTOR_ID"));
+				actors.add(actor);
+			}
+			
+		} catch (SQLException e) {
+			throw new RuntimeException(e.getMessage(), e);
+		}
+		finally {
+			closeDB(conn, stmt, rs);
+		}
+		
+		return actors;
+		
+	}
+	
 	public boolean addNewActor(String actorName) { // 배우이름 추가하기!★.★
 		loadOracleDriver();
 		
