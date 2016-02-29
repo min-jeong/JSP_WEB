@@ -99,4 +99,24 @@
     <servlet-name>DetailServlet</servlet-name>
     <url-pattern>/detail</url-pattern>
   </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>AddNewActorServlet</display-name>
+    <servlet-name>AddNewActorServlet</servlet-name>
+    <servlet-class>com.ktds.jmj.web.AddNewActorServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>AddNewActorServlet</servlet-name>
+    <url-pattern>/addNewActor</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>AddNewActorActionServlet</display-name>
+    <servlet-name>AddNewActorActionServlet</servlet-name>
+    <servlet-class>com.ktds.jmj.web.AddNewActorActionServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>AddNewActorActionServlet</servlet-name>
+    <url-pattern>/addNewActorAction</url-pattern>
+  </servlet-mapping>
 </web-app>

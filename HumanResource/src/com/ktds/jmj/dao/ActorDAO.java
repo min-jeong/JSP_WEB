@@ -50,6 +50,32 @@ public class ActorDAO {
 		return actors;
 		
 	}
+	
+	public boolean addNewActor(String actorName) { // 배우이름 추가하기!★.★
+		loadOracleDriver();
+		
+		Connection conn = null;
+		PreparedStatement stmt = null;
+		//ResultSet rs = null; 는 필요없다. select가 아니라서 ㅎㅎㅎㅎㅎㅎㅎㅎㅎㅎㅎㅎㅎㅎㅎㅎㅎㅎㅎㅎㅎ
+		
+		try {
+			conn = DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:XE", "MOVIE", "MOVIE");
+			
+			String query = XML.getNodeString("//query/movie/actor/insertNewActor/text()");
+			stmt = conn.prepareStatement(query);
+			stmt.setString(1, actorName);
+			
+			int insertCount = stmt.executeUpdate();
+			
+			return insertCount > 0;
+		} catch (SQLException e) {
+			throw new RuntimeException(e.getMessage(), e);
+		}
+		finally {
+			closeDB(conn, stmt, null);
+		}
+		
+	}
 
 	private void closeDB(Connection conn, PreparedStatement stmt, ResultSet rs) {
 		if( rs!=null ){

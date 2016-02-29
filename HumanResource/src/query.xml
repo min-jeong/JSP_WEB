@@ -1,6 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <query> 
 	<movie>
+		<actor>
+			<insertNewActor>
+				INSERT INTO ACTOR (
+									ACTOR_ID
+									, ACTOR_NAME
+								  )
+				VALUES			  (
+									ACTOR_ID_SEQ.NEXTVAL
+									, ?
+							  	  )
+			</insertNewActor>
+		</actor>
 		<getAllMovie> 
 			SELECT   M.*
          			 , G.GRADE_TITLE
