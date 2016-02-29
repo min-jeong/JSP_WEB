@@ -87,7 +87,7 @@ public class ActorDAO {
 		
 	}
 	
-	public boolean addNewActor(String actorName) { // 배우이름 추가하기!
+	public boolean addNewActor(String actorName) { // 배우이름 추가하기!★.★
 		loadOracleDriver();
 		
 		Connection conn = null;
