@@ -12,25 +12,41 @@ public class MemberBiz {
 	
 	public MemberBiz() {
 		memberDAO = new MemberDAO();
-	}
+	} // 생성자
 	
-	public boolean login(MemberVO member, HttpServletRequest request){
-		// 1. 회원 정보를 가져온다.
+	
+	/**
+	 * Login Task
+	 */
+	public boolean login (MemberVO member, HttpServletRequest request) {
+		
+		// 1 회원 정보 가져오기
 		MemberVO loginMember = memberDAO.getMemberByIdAndPassword(member);
 		
-		// 2. 회원 정보가 존재한다면, 세션에 집어 넣는다.
-		if( loginMember != null ){
-			HttpSession session = request.getSession();
-			session.setAttribute("_MEMBER_", loginMember);  // session 변수명 앞뒤에 언더바가 붙는다. 언더바가 있으면 세션이라는 것.
+		// 2 일치하는 회원 정보 세션에 넣기
+		if ( loginMember != null ) {
+			 HttpSession session = request.getSession();
+			 session.setAttribute("_MEMBER_", loginMember);
 		}
-		// 3. 결과를 보고한다.
-		return loginMember != null;
-
-	}
-	
-	public void registerMember(MemberVO member) {
-		memberDAO.registerMember(member);
 		
-	}
-
+		// 3 결과 보고
+		return loginMember != null;
+	} // login end
+	
+	
+	/**
+	 * Join Task
+	 */
+	public boolean join (MemberVO member) {
+		
+		int addResult = memberDAO.addNewMember(member);
+		
+		if ( addResult > 0 ) {
+			return true;
+		}
+		else {
+			return false;
+		}
+	} //join end
+	
 }

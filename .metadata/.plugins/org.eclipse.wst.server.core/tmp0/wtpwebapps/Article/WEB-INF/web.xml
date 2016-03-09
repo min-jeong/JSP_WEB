@@ -39,53 +39,73 @@
   </filter-mapping>
   <servlet>
     <description></description>
-    <display-name>ArticleServlet</display-name>
-    <servlet-name>ArticleServlet</servlet-name>
-    <servlet-class>com.ktds.jmj.member.web.ArticleServlet</servlet-class>
+    <display-name>ArticleListServlet</display-name>
+    <servlet-name>ArticleListServlet</servlet-name>
+    <servlet-class>com.ktds.jmj.article.web.ArticleListServlet</servlet-class>
   </servlet>
   <servlet-mapping>
-    <servlet-name>ArticleServlet</servlet-name>
+    <servlet-name>ArticleListServlet</servlet-name>
     <url-pattern>/list</url-pattern>
   </servlet-mapping>
   <servlet>
     <description></description>
-    <display-name>DetailServlet</display-name>
-    <servlet-name>DetailServlet</servlet-name>
-    <servlet-class>com.ktds.jmj.member.web.DetailServlet</servlet-class>
+    <display-name>DetailArticleServlet</display-name>
+    <servlet-name>DetailArticleServlet</servlet-name>
+    <servlet-class>com.ktds.jmj.article.web.DetailArticleServlet</servlet-class>
   </servlet>
   <servlet-mapping>
-    <servlet-name>DetailServlet</servlet-name>
+    <servlet-name>DetailArticleServlet</servlet-name>
     <url-pattern>/detail</url-pattern>
   </servlet-mapping>
   <servlet>
     <description></description>
-    <display-name>CountServlet</display-name>
-    <servlet-name>CountServlet</servlet-name>
-    <servlet-class>com.ktds.jmj.member.web.CountServlet</servlet-class>
+    <display-name>RecommendsServlet</display-name>
+    <servlet-name>RecommendsServlet</servlet-name>
+    <servlet-class>com.ktds.jmj.article.web.RecommendsServlet</servlet-class>
   </servlet>
   <servlet-mapping>
-    <servlet-name>CountServlet</servlet-name>
-    <url-pattern>/count</url-pattern>
-  </servlet-mapping>
-  <servlet>
-    <description></description>
-    <display-name>UpdateServlet</display-name>
-    <servlet-name>UpdateServlet</servlet-name>
-    <servlet-class>com.ktds.jmj.member.web.UpdateServlet</servlet-class>
-  </servlet>
-  <servlet-mapping>
-    <servlet-name>UpdateServlet</servlet-name>
-    <url-pattern>/update</url-pattern>
+    <servlet-name>RecommendsServlet</servlet-name>
+    <url-pattern>/recommends</url-pattern>
   </servlet-mapping>
   <servlet>
     <description></description>
     <display-name>DeleteServlet</display-name>
     <servlet-name>DeleteServlet</servlet-name>
-    <servlet-class>com.ktds.jmj.member.web.DeleteServlet</servlet-class>
+    <servlet-class>com.ktds.jmj.article.web.DeleteServlet</servlet-class>
   </servlet>
   <servlet-mapping>
     <servlet-name>DeleteServlet</servlet-name>
     <url-pattern>/delete</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>WriteServlet</display-name>
+    <servlet-name>WriteServlet</servlet-name>
+    <servlet-class>com.ktds.jmj.article.web.WriteServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>WriteServlet</servlet-name>
+    <url-pattern>/write</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>WriteActionServlet</display-name>
+    <servlet-name>WriteActionServlet</servlet-name>
+    <servlet-class>com.ktds.jmj.article.web.WriteActionServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>WriteActionServlet</servlet-name>
+    <url-pattern>/writeAction</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>RegisterMemberServlet</display-name>
+    <servlet-name>RegisterMemberServlet</servlet-name>
+    <servlet-class>com.ktds.jmj.member.web.RegisterMemberServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>RegisterMemberServlet</servlet-name>
+    <url-pattern>/registerMember</url-pattern>
   </servlet-mapping>
   <servlet>
     <description></description>
@@ -96,36 +116,6 @@
   <servlet-mapping>
     <servlet-name>AddNewMemberServlet</servlet-name>
     <url-pattern>/addNewMember</url-pattern>
-  </servlet-mapping>
-  <servlet>
-    <description></description>
-    <display-name>WriteServlet</display-name>
-    <servlet-name>WriteServlet</servlet-name>
-    <servlet-class>com.ktds.jmj.member.web.WriteServlet</servlet-class>
-  </servlet>
-  <servlet-mapping>
-    <servlet-name>WriteServlet</servlet-name>
-    <url-pattern>/write</url-pattern>
-  </servlet-mapping>
-  <servlet>
-    <description></description>
-    <display-name>WriteActionServlet</display-name>
-    <servlet-name>WriteActionServlet</servlet-name>
-    <servlet-class>com.ktds.jmj.member.web.WriteActionServlet</servlet-class>
-  </servlet>
-  <servlet-mapping>
-    <servlet-name>WriteActionServlet</servlet-name>
-    <url-pattern>/writeAction</url-pattern>
-  </servlet-mapping>
-  <servlet>
-    <description></description>
-    <display-name>AddMemberServlet</display-name>
-    <servlet-name>AddMemberServlet</servlet-name>
-    <servlet-class>com.ktds.jmj.member.web.AddMemberServlet</servlet-class>
-  </servlet>
-  <servlet-mapping>
-    <servlet-name>AddMemberServlet</servlet-name>
-    <url-pattern>/addMember</url-pattern>
   </servlet-mapping>
   <servlet>
     <description></description>
@@ -141,7 +131,7 @@
     <description></description>
     <display-name>ModifyServlet</display-name>
     <servlet-name>ModifyServlet</servlet-name>
-    <servlet-class>com.ktds.jmj.member.web.ModifyServlet</servlet-class>
+    <servlet-class>com.ktds.jmj.article.web.ModifyServlet</servlet-class>
   </servlet>
   <servlet-mapping>
     <servlet-name>ModifyServlet</servlet-name>
@@ -151,7 +141,7 @@
     <description></description>
     <display-name>ModifyActionServlet</display-name>
     <servlet-name>ModifyActionServlet</servlet-name>
-    <servlet-class>com.ktds.jmj.member.web.ModifyActionServlet</servlet-class>
+    <servlet-class>com.ktds.jmj.article.web.ModifyActionServlet</servlet-class>
   </servlet>
   <servlet-mapping>
     <servlet-name>ModifyActionServlet</servlet-name>

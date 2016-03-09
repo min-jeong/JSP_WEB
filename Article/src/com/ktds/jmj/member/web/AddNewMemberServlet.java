@@ -15,6 +15,7 @@ import com.ktds.jmj.member.vo.MemberVO;
  */
 public class AddNewMemberServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
+	
 	private MemberBiz memberBiz;
        
     /**
@@ -22,8 +23,9 @@ public class AddNewMemberServlet extends HttpServlet {
      */
     public AddNewMemberServlet() {
         super();
+        
         memberBiz = new MemberBiz();
-        // TODO Auto-generated constructor stub
+
     }
 
 	/**
@@ -38,26 +40,20 @@ public class AddNewMemberServlet extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
-		request.setCharacterEncoding("UTF-8");
-		
-		String id = request.getParameter("id");
-		String password = request.getParameter("password");
-		String nickName = request.getParameter("nickName");
-		String email = request.getParameter("email");
-		
-		System.out.println(id);
-		System.out.println(password);
 		MemberVO member = new MemberVO();
+		member.setMemberId(request.getParameter("id"));
+		member.setPassword(request.getParameter("password"));
+		member.setNickName(request.getParameter("nickname"));
+		member.setEmail(request.getParameter("email"));
 		
-		member.setMemberId(id);
-		member.setNickName(nickName);
-		member.setPassword(password);
-		member.setEmail(email);
+		boolean addResult = memberBiz.join(member);
 		
-		memberBiz.registerMember(member);
-		
-		response.sendRedirect("/");
-		
+		if ( addResult ) {
+			response.sendRedirect("/list");
+		}
+		else {
+			response.sendRedirect("/list?errorCode=fail");
+		}
 	}
 
 }

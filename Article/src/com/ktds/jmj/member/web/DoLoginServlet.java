@@ -15,7 +15,9 @@ import com.ktds.jmj.member.vo.MemberVO;
  */
 public class DoLoginServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-    private MemberBiz memberBiz;
+	
+	MemberBiz memberBiz;
+       
     /**
      * @see HttpServlet#HttpServlet()
      */
@@ -46,17 +48,14 @@ public class DoLoginServlet extends HttpServlet {
 		
 		boolean isLoginSuccess = memberBiz.login(loginMember, request);
 		
-		if( isLoginSuccess ){
+		if ( isLoginSuccess ) {
 			response.sendRedirect("/list");
 			return;
 		}
 		else {
-//			response.sendRedirect("/login?errorCode=1");
-			response.sendRedirect("/?errorCode=1");
+			response.sendRedirect("/?errorCode=fail");
 			return;
 		}
-		
-			
 	}
 
 }

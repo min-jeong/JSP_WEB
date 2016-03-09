@@ -1,102 +1,102 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<query> 
+<query>
+	
 	<member>
 		<getMemberByIdAndPassword>
-			SELECT MEMBER_ID
-				   , NICK_NAME
-				   , PASSWORD
-				   , EMAIL
-			FROM   MEMBERS
-			WHERE  MEMBER_ID = ?
-			AND    PASSWORD = ?
+			SELECT 	MEMBER_ID
+					, NICK_NAME
+					, PASSWORD
+					, EMAIL
+			FROM 	MEMBERS
+			WHERE	MEMBER_ID = ?
+			AND		PASSWORD = ?
 		</getMemberByIdAndPassword>
-		
-		<registerMember>
-			INSERT INTO MEMBERS(
-								MEMBER_ID
-								, PASSWORD
-								, NICK_NAME
-								, EMAIL								
+		<addNewMember>
+			INSERT INTO MEMBERS (
+									MEMBER_ID
+									, NICK_NAME
+									, PASSWORD
+									, EMAIL
 								)
-			VALUES    		 (
-							  ?
-							  , ?
-							  , ?
-							  , ?
-			)
-				
-		</registerMember>
+			VALUES				(
+									?
+									, ?
+									, ?
+									, ?
+								)			
+		</addNewMember>
 	</member>
 	
 	<article>
-		<getArticleInfo>
-			SELECT *
-			FROM   ARTICLE A, MEMBERS M
-			WHERE  M.MEMBER_ID = A.MEMBER_ID
-			ORDER  BY ARTICLE_ID DESC
-		</getArticleInfo>
-		
-		<getOneArticleInfoByArticleId>
-			SELECT *
-			FROM   ARTICLE A, MEMBERS M
-			WHERE  M.MEMBER_ID = A.MEMBER_ID
-			AND    A.ARTICLE_ID = ?
-		</getOneArticleInfoByArticleId>
-		
-		<getUpdateHits>
-			UPDATE ARTICLE SET HITS = HITS + 1 WHERE ARTICLE_ID = ?
-		</getUpdateHits>
-		
-		<getUpdateRecommends>
-		    UPDATE ARTICLE SET RECOMMENDS = RECOMMENDS + 1 WHERE ARTICLE_ID = ?
-		</getUpdateRecommends>
-		
-		<getCountHits>
-			SELECT *
-			FROM   ARTICLE A, MEMBERS M
-			WHERE  M.MEMBER_ID = A.MEMBER_ID
-		</getCountHits>
-		
-		<deleteArticleByArticleId>
-			DELETE FROM ARTICLE 
-			WHERE ARTICLE_ID = ?
-		</deleteArticleByArticleId>
-		
+		<getAllArticleList>
+			SELECT  A.*
+					, NICK_NAME
+			FROM    ARTICLE A
+					, MEMBERS M
+			WHERE	A.MEMBER_ID = M.MEMBER_ID
+			ORDER	BY ARTICLE_ID DESC
+		</getAllArticleList>
+		<getDetailArticle>
+			SELECT  A.*
+					, M.NICK_NAME
+			FROM    ARTICLE A
+					, MEMBERS M
+			WHERE	A.ARTICLE_ID = ?
+			AND  	A.MEMBER_ID = M.MEMBER_ID
+		</getDetailArticle>
+		<addHits>
+			UPDATE  ARTICLE
+			SET     HITS = (HITS+1)
+			WHERE   ARTICLE_ID = ?
+		</addHits>
+		<addRecommends>
+			UPDATE	ARTICLE
+			SET		RECOMMENDS = (RECOMMENDS+1)
+			WHERE	ARTICLE_ID = ?
+		</addRecommends>
+		<deleteArticle>
+			DELETE	
+			FROM	ARTICLE
+			WHERE	ARTICLE_ID = ?
+		</deleteArticle>
 		<writeArticle>
 			INSERT INTO ARTICLE (
-								ARTICLE_ID
-								, DESCRIPT
-								, MEMBER_ID
-								, TITLE
-			)
-			VALUES (
-					ARTICLE_ID_SEQ.NEXTVAL
-					, ?
-					, ?
-					, ?
-			)
+									ARTICLE_ID
+									, MEMBER_ID
+									, TITLE
+									, DESCRIPT
+								)
+			VALUES				(
+									ARTICLE_ID_SEQ.NEXTVAL
+									, ?
+									, ?
+									, ?
+								)
 		</writeArticle>
 		
-		
-		
 		<updateArticleOnlyTitle>
-			UPDATE ARTICLE
-			SET	   TITLE = ?
-			WHERE  ARTICLE_ID = ?
+			UPDATE	ARTICLE
+			SET		TITLE = ?
+			WHERE	ARTICLE_ID = ?
 		</updateArticleOnlyTitle>
 		
 		<updateArticleOnlyDescription>
-			UPDATE  ARTICLE
+			UPDATE	ARTICLE
 			SET		DESCRIPT = ?
-			WHERE   ARTICLE_ID = ?
+			WHERE	ARTICLE_ID = ?
 		</updateArticleOnlyDescription>
 		
 		<updateArticle>
-			UPDATE  ARTICLE
+			UPDATE	ARTICLE
 			SET		TITLE = ?
 					, DESCRIPT = ?
 			WHERE	ARTICLE_ID = ?
 		</updateArticle>
 		
 	</article>
+	
 </query>
+
+
+
+

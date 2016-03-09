@@ -6,6 +6,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <link rel="stylesheet" type="text/css" href="/resource/css/header.css" />
 <link rel="stylesheet" type="text/css" href="/resource/css/login.css" />
+<link rel="stylesheet" type="text/css" href="/resource/css/logout.css" />
 <script type="text/javascript" src="resource/js/jquery-1.12.1.js"></script>
 
 <title> 회원제 게시판 </title>
@@ -16,7 +17,7 @@
 		
 		<div id="header">
 			
-			<img src="/resource/img/mario.png" /> <div id="headerFont">Hello SUPA MARIO World !</div> 
+			<a href="/"><img src="/resource/img/mario.png" /></a> <div id="headerFont">Hello SUPA MARIO World !</div> 
 		
 		</div>
 		
