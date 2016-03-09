@@ -1,18 +1,16 @@
 package com.ktds.jmj.article.web;
 
 import java.io.IOException;
-import java.util.List;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
 import com.ktds.jmj.article.biz.ArticleBiz;
-import com.ktds.jmj.article.vo.ArticleVO;
-import com.ktds.jmj.member.vo.MemberVO;
+import com.ktds.jmj.article.vo.ArticleListVO;
+import com.ktds.jmj.article.vo.ArticleSearchVO;
 
 /**
  * Servlet implementation class ArticleListServlet
@@ -42,7 +40,16 @@ public class ArticleListServlet extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
-		List<ArticleVO> articles = articleBiz.getAllArticleList();
+		int pageNo = 0;
+		
+		try{
+			pageNo = Integer.parseInt(request.getParameter("pageNo"));
+		}
+		catch(NumberFormatException nfe){ }
+		ArticleSearchVO searchVO = new ArticleSearchVO();
+		searchVO.setPageNo(pageNo);
+		
+		ArticleListVO articles = articleBiz.getAllArticleList(searchVO);
 		
 		if ( articles != null ) {
 			request.setAttribute("articles", articles);

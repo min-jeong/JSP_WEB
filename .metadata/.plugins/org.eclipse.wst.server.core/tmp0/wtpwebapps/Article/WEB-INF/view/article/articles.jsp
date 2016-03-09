@@ -20,6 +20,7 @@
 	}) ;
 </script>
 
+	총 ${ articles.paging.totalArticleCount } 건의 게시물이 있습니다.
 <table border="1" width="500px" align="center">
 	<tr>
 		<th>번호</th>
@@ -29,7 +30,7 @@
 		<th>추천수</th>
 	</tr>
 	
-	<c:forEach items="${ articles }" var="articles">
+	<c:forEach items="${ articles.articleList }" var="articles">
 	<tr>
 		<td class="c">${ articles.articleId }</td>
 		<td>
@@ -40,7 +41,13 @@
 		<td class="c">${ articles.recommends }</td>
 	</tr>
 	</c:forEach>
-
+	<tr>
+		<td colspan="5">
+			<form id="searchForm">
+			${ articles.paging.getPagingList("pageNo", "[@]", "[이전]", "[다음]", "searchForm") }
+			</form>
+		</td>
+	</tr>
 </table>
 
 <%-- 세션 접근

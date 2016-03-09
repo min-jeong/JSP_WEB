@@ -5,8 +5,11 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 
 import com.ktds.jmj.article.dao.ArticleDAO;
+import com.ktds.jmj.article.vo.ArticleListVO;
+import com.ktds.jmj.article.vo.ArticleSearchVO;
 import com.ktds.jmj.article.vo.ArticleVO;
 import com.ktds.jmj.member.vo.MemberVO;
+import com.ktds.jmj.util.web.Paging;
 
 public class ArticleBiz {
 	
@@ -21,11 +24,24 @@ public class ArticleBiz {
 	/**
 	 * Get Article List Task
 	 */
-	public List<ArticleVO> getAllArticleList() {
+	public ArticleListVO getAllArticleList( ArticleSearchVO searchVO ) {
+		//1. 전체게시물의 수를 셋팅, 보고싶은 번호를 셋팅
+		int allArticleCount = articleDAO.getAllArticleCount();
+		Paging paging = new Paging();
+		paging.setTotalArticleCount(allArticleCount);
+		paging.setPageNumber(searchVO.getPageNo() + ""); //1페이지는 0번으로 시작한다.
 		
-		List<ArticleVO> articles = articleDAO.getArticleList();
+		searchVO.setStartIndex(paging.getStartArticleNumber()); // 시작페이지
+		searchVO.setEndIndex(paging.getEndArticleNumber()); // 끝 페이지 를 가져와서 searchVO에 셋팅 시킨다.
 		
-		return articles;
+		//2. 셀렉트하는 DAO에 전달한다. 받아온 결과를 articleListVO에 넣어준다.
+		List<ArticleVO> articles = articleDAO.getArticleList(searchVO);
+		
+		ArticleListVO articleList = new ArticleListVO();
+		articleList.setArticleList(articles);
+		articleList.setPaging(paging);
+		
+		return articleList;
 		
 	} //getAllArticleList end
 	

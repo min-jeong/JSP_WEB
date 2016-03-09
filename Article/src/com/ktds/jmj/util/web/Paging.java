@@ -23,8 +23,8 @@ public class Paging {
 	private int pageNo;
 
 	public Paging() {
-		this.printArticle = 10;
-		this.printPage = 10;
+		this.printArticle = 10; // 하나의 페이지에는 10개의 게시물
+		this.printPage = 10; // 하나의 게시물에는 
 	}
 	
 	public Paging(int printArticle, int printPage) {

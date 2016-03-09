@@ -28,14 +28,35 @@
 	</member>
 	
 	<article>
-		<getAllArticleList>
-			SELECT  A.*
-					, NICK_NAME
+		<getAllArticleCount>
+			SELECT  COUNT(A.ARTICLE_ID)
 			FROM    ARTICLE A
 					, MEMBERS M
 			WHERE	A.MEMBER_ID = M.MEMBER_ID
-			ORDER	BY ARTICLE_ID DESC
+		</getAllArticleCount>
+		
+		<getAllArticleList>
+			SELECT *
+			FROM   (
+					SELECT  ROWNUM AS RNUM
+							, A.*
+					FROM    (
+							SELECT  ARTICLE_ID
+									, TITLE
+									, NICK_NAME
+									, DESCRIPT
+									, HITS
+									, RECOMMENDS
+							FROM    ARTICLE A
+									, MEMBERS M
+							WHERE	A.MEMBER_ID = M.MEMBER_ID
+							ORDER	BY ARTICLE_ID DESC
+							) A
+					WHERE   ROWNUM &lt;= ?	
+				    )
+		WHERE		RNUM >= ?		
 		</getAllArticleList>
+		
 		<getDetailArticle>
 			SELECT  A.*
 					, M.NICK_NAME
@@ -44,6 +65,7 @@
 			WHERE	A.ARTICLE_ID = ?
 			AND  	A.MEMBER_ID = M.MEMBER_ID
 		</getDetailArticle>
+		
 		<addHits>
 			UPDATE  ARTICLE
 			SET     HITS = (HITS+1)
@@ -54,11 +76,13 @@
 			SET		RECOMMENDS = (RECOMMENDS+1)
 			WHERE	ARTICLE_ID = ?
 		</addRecommends>
+		
 		<deleteArticle>
 			DELETE	
 			FROM	ARTICLE
 			WHERE	ARTICLE_ID = ?
 		</deleteArticle>
+		
 		<writeArticle>
 			INSERT INTO ARTICLE (
 									ARTICLE_ID

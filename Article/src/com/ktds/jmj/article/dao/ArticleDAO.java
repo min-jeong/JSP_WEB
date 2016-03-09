@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.ktds.jmj.Const;
+import com.ktds.jmj.article.vo.ArticleSearchVO;
 import com.ktds.jmj.article.vo.ArticleVO;
 import com.ktds.jmj.util.xml.XML;
 
@@ -17,8 +18,9 @@ public class ArticleDAO {
 	
 	/**
 	 * Article List DAO
+	 * @param searchVO 
 	 */
-	public List<ArticleVO> getArticleList () {
+	public List<ArticleVO> getArticleList (ArticleSearchVO searchVO) {
 		
 		loadOracleDriver();
 		
@@ -32,7 +34,8 @@ public class ArticleDAO {
 			conn = DriverManager.getConnection(Const.DB_URL, Const.DB_USER, Const.DB_PASSWORD);
 			String query = XML.getNodeString("//query/article/getAllArticleList/text()");
 			stmt = conn.prepareStatement(query);
-			
+			stmt.setInt(1, searchVO.getEndIndex()); // 끝나는 번호
+			stmt.setInt(2, searchVO.getStartIndex()); // 시작하는 번호
 			rs = stmt.executeQuery();
 			
 			ArticleVO article = null;
@@ -42,7 +45,7 @@ public class ArticleDAO {
 				article = new ArticleVO();
 				
 				article.setArticleId(rs.getInt("ARTICLE_ID"));
-				article.setMemberId(rs.getString("MEMBER_ID"));
+				//article.setMemberId(rs.getString("MEMBER_ID"));
 				article.setTitle(rs.getString("TITLE"));
 				article.setDescript(rs.getString("DESCRIPT"));
 				article.setHits(rs.getInt("HITS"));
@@ -292,6 +295,37 @@ public class ArticleDAO {
 		}
 	}
 	
+	/**
+	 * 게시물의 갯수를 가져온다.
+	 * @return
+	 */
+	public int getAllArticleCount() {
+		loadOracleDriver();
+		
+		Connection conn = null;
+		PreparedStatement stmt = null;
+		ResultSet rs = null;
+		
+		try {
+			conn = DriverManager.getConnection(Const.DB_URL, Const.DB_USER, Const.DB_PASSWORD);
+
+			String query = XML.getNodeString("//query/article/getAllArticleCount/text()");
+			stmt = conn.prepareStatement(query);
+			rs = stmt.executeQuery();
+			
+			int articleCount = 0;
+			rs.next();
+			articleCount = rs.getInt(1);
+			
+			return articleCount;
+			
+		} catch (SQLException e) {
+			throw new RuntimeException(e.getMessage(), e);
+		}
+		finally {
+			closeDB(conn, stmt, rs);
+		}
+	}
 	
 	/**
 	 * Oracle Driver
@@ -327,6 +361,9 @@ public class ArticleDAO {
 			}
 		}
 	}
+
+
+	
 	
 	
 }

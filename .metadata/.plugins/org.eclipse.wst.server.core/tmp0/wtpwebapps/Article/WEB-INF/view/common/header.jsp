@@ -17,7 +17,7 @@
 		
 		<div id="header">
 			
-			<a href="/"><img src="/resource/img/mario.png" /></a> <div id="headerFont">Hello SUPA MARIO World !</div> 
+			<a href="/list"><img src="/resource/img/mario.png" /></a> <div id="headerFont">Hello SUPA MARIO World !</div> 
 		
 		</div>
 		

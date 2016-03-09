@@ -1,0 +1,9 @@
+package com.ktds.jmj.article.vo;
+
+public class ArticleSearchVO { // 검색만을 위한 VO
+	
+	private int pageNo;
+	private int startIndex;
+	private int endIndex;
+
+}
