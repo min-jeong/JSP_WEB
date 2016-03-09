@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<query> 
+	<member>
+		<getMemberByIdAndPassword>
+			SELECT MEMBER_ID
+				   , NICK_NAME
+				   , PASSWORD
+				   , EMAIL
+			FROM   MEMBERS
+			WHERE  MEMBER_ID = ?
+			AND    PASSWORD = ?
+		</getMemberByIdAndPassword>
+
+	</member>
+	
+	<article>
+		<getArticleInfo>
+			SELECT *
+			FROM   ARTICLE A, MEMBERS M
+			WHERE  M.MEMBER_ID = A.MEMBER_ID
+		</getArticleInfo>
+		
+		<getOneArticleInfoByArticleId>
+			SELECT *
+			FROM   ARTICLE A, MEMBERS M
+			WHERE  M.MEMBER_ID = A.MEMBER_ID
+			WHERE  A.ARTICLE_ID = ?
+		</getOneArticleInfoByArticleId>
+	</article>
+</query>

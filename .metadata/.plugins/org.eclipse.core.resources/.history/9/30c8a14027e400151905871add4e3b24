@@ -1,0 +1,5 @@
+package com.ktds.jmj.member.vo;
+
+public class ArticleVO {
+
+}

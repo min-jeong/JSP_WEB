@@ -1,0 +1,77 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>Insert title here</title>
+<script type="text/javascript" src="/resource/js/jquery-1.12.1.js"></script>
+<script type="text/javascript">
+	$(document).ready( function() {
+	    
+	    $("#addNewMember").click(function() {
+	       
+	       var nickName = $("#nickName").val();
+	       nickName = $.trim( nickName );
+           if ( nickName == "" ) {
+	           alert("NICKNAME을 입력하세요!");
+	           $("#nickName").focus();
+	           return;
+           }
+           
+           var password = $("#password").val();
+           password = $.trim( password );
+           if ( password == "" ) {
+	           alert("비밀번호를 입력하세요!");
+	           $("#password").focus();
+	           return;
+           }
+           
+           var email = $("#email").val();
+           email = $.trim( email );
+           if ( email == "" ) {
+	           alert("이메일을 입력하세요!");
+	           $("#email").focus();
+	           return;
+           }
+	   
+	       var form = $("#addNewMemberForm");
+	       form.attr("method", "POST");
+	       form.attr("action", "/addNewMember");
+	       form.submit();
+	       // 데이터를 넘겨준다.(1번) > AddNewActorActionServlet. 으로 
+	       
+	    } );
+	    
+	 });
+</script>
+</head>
+<body>
+
+<form id = "writeForm" >
+	<table>
+		<tr>
+			<td>TITLE</td>
+			<td>
+				<input type="text" id="title" name="title" style="width:250px;" />
+			</td>
+		</tr>
+		<tr>
+			<td>DESCRIPTION</td>
+			<td>
+				<textarea id="description" name="description" style="width:250px; height:150px;" />
+			</td>
+		</tr>
+		<tr>
+			<td></td>
+			<td></td>
+		</tr>
+	</table>
+	<input type="button" id="doWrite" value="등록" />
+	<input type="reset" value="다시 쓰기" />
+	<input type="button" id="cancel" value="취소" />
+	
+</form>
+
+</body>
+</html>

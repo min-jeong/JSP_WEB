@@ -11,16 +11,16 @@
 	
 	$(document).ready (function() {
 		
-		$("#directors").click( function() {
+/* 		$("#directors").click( function() {
 			var selectedDirectors = "";
 			$("#directors option:selected").each(function(index, data) {// data에는 값이 넘어오고 index는 몇번째인지
 				selectedDirectors += data.text;
 				selectedDirectors += "," 
 			});
 			$("#directorsName").text(selectedDirectors);
-		});
+		}); */
 		
-		$("#addNewMovie").click( function() {
+/* 		$("#addNewMovie").click( function() {
 			var form = $("#addNewMovieForm");
 			
 			form.attr("method", "POST");
@@ -30,13 +30,96 @@
 		//http://api.jquery.com/selected-selector/
 		//http://api.jquery.com/checked-selector/
 		
-/* 		$("#addNewMovieForm").hide();
+		$("#addNewMovieForm").hide();
  		$("#addNewMovieForm").slideDown(5000);
 		$("#addNewMovieForm").slideUp(5000); 
 		$("#addNewMovieForm").fadeIn();
-		$("#addNewMovieForm").fadeOut(); */
+		$("#addNewMovieForm").fadeOut(); 
 		
-	});
+	
+*/
+		$("#addNewMovie").click( function() {
+			
+			// Validation Check
+			var movieTitle = $("#movieTitle").val();
+			movieTitle = $.trim( movieTitle ); // side 의 공백을 날려버린다.
+			if ( movieTitle == "" ) {
+				alert("영화명을 입력하세요.");
+				return; //밑에 꺼는 실행 안되게 막는다.
+			}
+			
+			var rate = $("#rate").val();
+			rate = $.trim( rate ); // side 의 공백을 날려버린다.
+			if ( rate == "" ) {
+				alert("평점을 입력하세요.");
+				return; //밑에 꺼는 실행 안되게 막는다.
+			}
+			
+			//rate = parseFloat(rate); //parseInt하면 소수점이 날라가기 때문에 parseFloat로 한다.
+			if( isNaN(rate) ){
+				alert("평점을 올바르게 입력하세요!\n평점은 소수점을 포함한 숫자로 적을 수 있습니다.");
+				return;
+			}
+			
+			/* var isNumber = isNan(rate); //is not a number
+			alert(isNumber);
+			return; */
+			
+			var runningTime = $("#runningTime").val();
+			runningTime = $.trim( runningTime ); // side 의 공백을 날려버린다.
+			if ( runningTime == "" ) {
+				alert("상영시간을 입력하세요.");
+				return; //밑에 꺼는 실행 안되게 막는다.
+			}
+			if( runningTime.length > 5 ) { // 한글영어숫자 모두 한 글자를 1로본다. 
+				alert("상영시간을 올바르게 입력하세요.");
+				return;
+			}
+			
+			var regExp = new RegExp("^[0-2][0-9]:[0-5][0-9]$"); //^는 반드시 [0-9]{1,2}의 문자열로 시작한다는 의미 , $는 반드시 [0-9]{1,2}의 문자열로 끝난다는 의미
+			var isValidRunningTime = regExp.test( runningTime ); // side 의 공백을 날려버린다.
+			if ( isValidRunningTime == false ) {
+				alert("상영시간을 올바르게 입력하세요.");
+				return;
+			}
+			
+			
+			var openDate = $("#openDate").val();
+			openDate = $.trim( openDate ); // side 의 공백을 날려버린다.
+			if ( openDate == "" ) {
+				alert("개봉일을 입력하세요.");
+				return; //밑에 꺼는 실행 안되게 막는다.
+			}
+			
+			var grade = $(".grade:checked").val(); //class는 .으로 표현한다.
+			grade = $.trim( grade ); // side 의 공백을 날려버린다.
+			if ( grade == "" ) {
+				alert("등급을 입력하세요.");
+				return; //밑에 꺼는 실행 안되게 막는다.
+			}
+			
+			var directors = $("#directors option:selected").val().each();
+			directors = $.trim( directors ); // side 의 공백을 날려버린다.
+			alert(directors);
+			if ( directors == "" ) {
+				alert("감독을 선택하세요.");
+				return; //밑에 꺼는 실행 안되게 막는다.
+			}
+			
+			var genres = $(".genres:checked").val(); //class는 .으로 표현한다.
+			genres = $.trim( genres ); // side 의 공백을 날려버린다.
+			if ( genres == "" ) {
+				alert("장르를 선택하세요.");
+				return; //밑에 꺼는 실행 안되게 막는다.
+			}
+			
+			var form = $("#addNewMovieForm");
+			form.attr("method", "post");
+			form.attr("action", "<c:url value="/addNewMovieAction" />");
+			//form.submit();
+		});
+		
+	}); 
 </script>
 </head>
 <body>
@@ -46,7 +129,7 @@
 	<form id="addNewMovieForm">
 		영화명 : <input type="text" id="movieTitle" name="movieTitle" /><br/>
 		평점 : <input type="text" id="rate" name="rate" /><br/>
-		상영시간 : <input type="text" id="runningTime" name="runningTime" /><br/>
+		상영시간 : <input type="text" id="runningTime" name="runningTime"/> <br/>
 		개봉일 : <input type="date" id="openDate" name="openDate" /><br/>
 		상영등급 : 
 		

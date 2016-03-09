@@ -1,3 +1,0 @@
-#Tomcat publish data
-#Mon Feb 29 17:35:08 KST 2016
-org.eclipse.jst.jee.server\:HumanResource=C\:\\Users\\206-001\\Desktop\\sts-bundle\\pivotal-tc-server-developer-3.1.2.RELEASE\\base-instance\\wtpwebapps\\HumanResource

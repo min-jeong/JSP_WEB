@@ -1,0 +1,30 @@
+package com.ktds.jmj.member.biz;
+
+import javax.servlet.http.HttpServletRequest;
+
+import com.ktds.jmj.member.dao.MemberDAO;
+import com.ktds.jmj.member.vo.MemberVO;
+
+public class MemberBiz {
+	
+	private MemberDAO memberDAO;
+	
+	public MemberBiz() {
+		memberDAO = new MemberDAO();
+	}
+	
+	public boolean login(MemberVO member, HttpServletRequest request){
+		// 1. 회원 정보를 가져온다.
+		MemberVO loginMember = memberDAO.getMemberByIdAndPassword(member);
+		
+		// 2. 회원 정보가 존재한다면, 세션에 집어 넣는다.
+		if( loginMember != null ){
+			
+		}
+		// 3. 결과를 보고한다.
+		
+		
+		return false;
+	}
+
+}

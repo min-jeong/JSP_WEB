@@ -1,0 +1,19 @@
+package com.ktds.jmj.member.biz;
+
+import com.ktds.jmj.member.dao.MemberDAO;
+import com.ktds.jmj.member.vo.MemberVO;
+
+public class MemberBiz {
+	
+	private MemberDAO memberDAO;
+	
+	public MemberBiz() {
+		memberDAO = new MemberDAO();
+	}
+	
+	public boolean login(MemberVO member){
+		
+		return false;
+	}
+
+}
