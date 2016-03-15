@@ -14,11 +14,11 @@ $(document).ready( function() {
 </script>
 
 <c:set var="loginId" value="${ sessionScope._MEMBER_.memberId }" />
-
+<div id=""></div>
 	<div id="logout">
 
-		<img src="/resource/img/logout.png" id="btnLogout" />
-		${ loginId } 님 로그인 중...
+		<img src="/resource/img/logout_btn.png" id="btnLogout" />
+		<b>${ loginId } 님 로그인 중...</b>
 	
 	</div>
 	

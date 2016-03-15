@@ -1,0 +1,11 @@
+package com.ktds.jmj.file.biz;
+
+import com.ktds.jmj.file.dao.FileDAO;
+
+public class FileBiz {
+	private FileDAO fileDAO;
+	
+	public FileBiz() {
+		fileDAO = new FileDAO();
+	}
+}

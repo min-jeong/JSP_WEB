@@ -156,6 +156,8 @@ public class MovieDAO {
 		
 		return insertCount; 
 	}
+	
+	
 	private void loadOracleDriver() {
 		try {
 			Class.forName("oracle.jdbc.driver.OracleDriver");

@@ -4,8 +4,9 @@ div#logout {
 	text-align: right;
 }
 
-img {
-	height: 25px;
+#logout img {
+	height: 50px;
+	width: 50px;
 	float: right;
 }
 

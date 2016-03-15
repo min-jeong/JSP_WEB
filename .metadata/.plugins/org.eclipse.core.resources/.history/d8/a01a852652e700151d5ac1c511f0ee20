@@ -1,0 +1,99 @@
+package com.ktds.jmj.reply.dao;
+
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+
+import com.ktds.jmj.Const;
+import com.ktds.jmj.reply.vo.ReplyVO;
+import com.ktds.jmj.util.xml.XML;
+
+public class ReplyDAO {
+	public int insertReply(ReplyVO reply) {
+/*		ARTICLE_ID ?
+			, DEPTH
+			, DESCRIPTION ?
+			, GROUP_ID
+			, MEMBER_ID ?
+			, ORDER_NO
+			, PARENT_REPLY_ID
+			, REPLY_ID*/
+		int insertCount = 0;
+		loadOracleDriver();
+		
+		Connection conn = null;
+		PreparedStatement stmt = null;
+		
+		try {
+			conn = DriverManager.getConnection(Const.DB_URL, Const.DB_USER, Const.DB_PASSWORD);
+			String query = XML.getNodeString("//query/article/writeArticle/text()");
+			stmt = conn.prepareStatement(query);
+			stmt.setInt(1, reply.getArticleId());
+			stmt.setString(2, reply.getDescription());
+			stmt.setString(3, reply.getMemberId());
+			
+			insertCount = stmt.executeUpdate();
+			
+			if ( insertCount > 0 ) {
+				stmt.close();
+				query = XML.getNodeString("//query/article/getLastestArticleId/text()");
+				stmt = conn.prepareStatement(query);
+				
+				ResultSet rs = stmt.executeQuery();
+				int articleId = 0;
+				
+				if( rs.next() ) {
+					articleId = rs.getInt(1); // 첫번째 컬럼을 가지고 와라.
+				}
+				
+				rs.close();
+				return insertCount;
+			}
+						
+		} catch (SQLException e) {
+			throw new RuntimeException(e.getMessage(), e);
+		}
+		finally {
+			closeDB(conn, stmt, null);
+		}
+		
+		return insertCount; 
+	} //wirteArticle end
+	
+	
+	
+	private void loadOracleDriver() {
+		try {
+			Class.forName("oracle.jdbc.driver.OracleDriver");
+		} catch (ClassNotFoundException e) {
+			throw new RuntimeException(e.getMessage(), e);
+		}
+	}
+	
+	/**
+	 * Close DB
+	 */
+	private void closeDB(Connection conn, PreparedStatement stmt, ResultSet rs) {
+		if ( rs != null ) {
+			try {
+				rs.close();
+			} catch (SQLException e) {
+			}
+		}
+		if ( stmt != null ) {
+			try {
+				stmt.close();
+			} catch (SQLException e) {
+			}
+		}
+		if ( conn != null ) {
+			try {
+				conn.close();
+			} catch (SQLException e) {
+			}
+		}
+	}
+
+}

@@ -1,0 +1,263 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<query>
+	<reply>
+		<selectCountParentReplyID>
+			SELECT COUNT(REPLY_ID)
+			FROM   REPLIES
+			WHERE  PARENT_REPLY_ID = ?
+		</selectCountParentReplyID>
+		<selectMaxOrderNoByParentReplyID>
+         SELECT ORDER_NO
+         FROM (
+               SELECT   DISTINCT * 
+               FROM   REPLIES
+                     START WITH REPLY_ID = ?
+                     CONNECT BY PRIOR REPLY_IDsss = PARENT_REPLY_ID
+                     ORDER BY ORDER_NO DESC   
+            )
+          WHERE ROWNUM = 1
+		</selectMaxOrderNoByParentReplyID>
+		
+		<selectLatestOrderNoByParentReplyID>
+			SELECT  ORDER_NO
+			FROM    REPLIES
+			WHERE   REPLY_ID = ?
+		</selectLatestOrderNoByParentReplyID>
+
+		<updateOrderNoByGroupId>
+			UPDATE   REPLIES
+			SET      ORDER_NO = ORDER_NO + 1
+			WHERE    ORDER_NO >= ?
+			AND      GROUP_ID = ?
+		</updateOrderNoByGroupId>
+		<insertReply>
+         INSERT INTO REPLIES       (
+                                 REPLY_ID
+                                 , ARTICLE_ID
+                                 , MEMBER_ID
+                                 , DESCRIPTION
+                                 , GROUP_ID
+                                 , PARENT_REPLY_ID
+                                 , DEPTH
+                                 , ORDER_NO
+                              ) 
+         VALUES                  ( 
+                                 REPLY_ID_SEQ.NEXTVAL
+                                 , ?
+                                 , ?
+                                 , ?
+                                 , REPLY_ID_SEQ.CURRVAL
+                                 , 0
+                                 , 0
+                                 , 0
+                              )
+		</insertReply>
+		
+		<insertReReply>
+         INSERT INTO REPLIES       (
+                                 REPLY_ID
+                                 , ARTICLE_ID
+                                 , MEMBER_ID
+                                 , DESCRIPTION
+                                 , GROUP_ID
+                                 , PARENT_REPLY_ID
+                                 , DEPTH
+                                 , ORDER_NO
+                              ) 
+         VALUES                  ( 
+                                 REPLY_ID_SEQ.NEXTVAL
+                                 , ?
+                                 , ?
+                                 , ?
+                                 , ?
+                                 , ?
+                                 , ?
+                                 , ?
+                              )
+
+		</insertReReply>
+		
+		<getReplyListByArticleId>
+			SELECT REPLY_ID
+				   , ARTICLE_ID
+				   , M.MEMBER_ID
+				   , NICK_NAME
+				   , DESCRIPTION
+				   , GROUP_ID
+				   , PARENT_REPLY_ID
+				   , DEPTH
+				   , ORDER_NO
+		    FROM   REPLIES R
+		    	   , MEMBERS M
+		    WHERE  R.MEMBER_ID = M.MEMBER_ID
+		    AND    R.ARTICLE_ID = ?
+		    ORDER  BY GROUP_ID ASC
+		    	   , ORDER_NO ASC
+		</getReplyListByArticleId>
+	
+	</reply>
+	<file>
+		<writeFile>
+			INSERT INTO FILES (
+								FILE_ID
+								, ARTICLE_ID
+								, FILE_NAME
+								, FILE_LOCATION
+			)
+			VALUES (
+					FILE_ID_SEQ.NEXTVAL
+					, ?
+					, ?
+					, ?
+			)
+			
+		</writeFile>
+		
+		<getFileInfo>
+			SELECT *
+			FROM   FILES F
+			WHERE  ARTICLE_ID = ?
+		</getFileInfo>
+		
+		<deleteFile>
+			DELETE	
+			FROM	FILES
+			WHERE	ARTICLE_ID = ?
+		</deleteFile>
+	</file>
+	<member>
+		<getMemberByIdAndPassword>
+			SELECT 	MEMBER_ID
+					, NICK_NAME
+					, PASSWORD
+					, EMAIL
+			FROM 	MEMBERS
+			WHERE	MEMBER_ID = ?
+			AND		PASSWORD = ?
+		</getMemberByIdAndPassword>
+		<addNewMember>
+			INSERT INTO MEMBERS (
+									MEMBER_ID
+									, NICK_NAME
+									, PASSWORD
+									, EMAIL
+								)
+			VALUES				(
+									?
+									, ?
+									, ?
+									, ?
+								)			
+		</addNewMember>
+	</member>
+	
+	<article>
+		<getAllArticleCount>
+			SELECT  COUNT(A.ARTICLE_ID)
+			FROM    ARTICLE A
+					, MEMBERS M
+			WHERE	A.MEMBER_ID = M.MEMBER_ID
+		</getAllArticleCount>
+		
+		<getAllArticleList>
+			SELECT *
+			FROM   (
+					SELECT  ROWNUM AS RNUM
+							, A.*
+					FROM    (
+							SELECT  A.ARTICLE_ID
+							        , TITLE
+							        , NICK_NAME
+							        , DESCRIPT
+							        , HITS
+							        , RECOMMENDS
+							        , COUNT(FILE_ID) FILE_COUNT
+							FROM    ARTICLE A
+							        , MEMBERS M
+							        , FILES F
+							WHERE	A.MEMBER_ID = M.MEMBER_ID
+							AND     A.ARTICLE_ID = F.ARTICLE_ID(+)
+							GROUP   BY A.ARTICLE_ID
+									, TITLE
+									, NICK_NAME
+									, DESCRIPT
+									, HITS
+									, RECOMMENDS
+							ORDER	BY ARTICLE_ID DESC	
+							) A
+					WHERE   ROWNUM &lt;= ?	
+				    )
+		WHERE		RNUM >= ?		
+		</getAllArticleList>
+		
+		<getDetailArticle>
+			SELECT  A.*
+					, M.NICK_NAME
+			FROM    ARTICLE A
+					, MEMBERS M
+			WHERE	A.ARTICLE_ID = ?
+			AND  	A.MEMBER_ID = M.MEMBER_ID
+		</getDetailArticle>
+		
+		<addHits>
+			UPDATE  ARTICLE
+			SET     HITS = (HITS+1)
+			WHERE   ARTICLE_ID = ?
+		</addHits>
+		<addRecommends>
+			UPDATE	ARTICLE
+			SET		RECOMMENDS = (RECOMMENDS+1)
+			WHERE	ARTICLE_ID = ?
+		</addRecommends>
+		
+		<deleteArticle>
+			DELETE	
+			FROM	ARTICLE
+			WHERE	ARTICLE_ID = ?
+		</deleteArticle>
+		
+		<writeArticle>
+			INSERT INTO ARTICLE (
+									ARTICLE_ID
+									, MEMBER_ID
+									, TITLE
+									, DESCRIPT
+								)
+			VALUES				(
+									ARTICLE_ID_SEQ.NEXTVAL
+									, ?
+									, ?
+									, ?
+								)
+		</writeArticle>
+		<getLastestArticleId>
+			SELECT  ARTICLE_ID_SEQ.CURRVAL
+			FROM	DUAL
+		</getLastestArticleId>
+		
+		<updateArticleOnlyTitle>
+			UPDATE	ARTICLE
+			SET		TITLE = ?
+			WHERE	ARTICLE_ID = ?
+		</updateArticleOnlyTitle>
+		
+		<updateArticleOnlyDescription>
+			UPDATE	ARTICLE
+			SET		DESCRIPT = ?
+			WHERE	ARTICLE_ID = ?
+		</updateArticleOnlyDescription>
+		
+		<updateArticle>
+			UPDATE	ARTICLE
+			SET		TITLE = ?
+					, DESCRIPT = ?
+			WHERE	ARTICLE_ID = ?
+		</updateArticle>
+		
+	</article>
+	
+</query>
+
+
+
+

@@ -21,7 +21,7 @@
 </script>
 
 	총 ${ articles.paging.totalArticleCount } 건의 게시물이 있습니다.
-<table border="1" width="500px" align="center">
+<table border="1" width="800px" align="center">
 	<tr>
 		<th>번호</th>
 		<th>제목</th>
@@ -34,7 +34,13 @@
 	<tr>
 		<td class="c">${ articles.articleId }</td>
 		<td>
-			<a href="/detail?articleId=${articles.articleId}"> ${ articles.title } </a>
+			<a href="/detail?articleId=${articles.articleId}"> 
+				${ articles.title } 
+			</a>
+			<c:if test="${ articles.fileCount gt 0 }">
+				<img src="/resource/img/file.png" />
+				<%-- [${articles.fileCount} 개의 첨부파일 있음] --%>
+			</c:if>
 		</td>
 		<td class="c">${ articles.nickName }</td>
 		<td class="c">${ articles.hits }</td>
@@ -58,12 +64,12 @@ ${ sessionScope._MEMBER_.email } --%>
 
 <c:set var="loginId" value="${ sessionScope._MEMBER_.memberId }" />
 
-<table border="1" align="center">
+<table border="1" align="center" width="80px">
 	<tr align="center">
-		<td>글 작성</td>
+		<td align="center">글 작성</td>
 	</tr>
 	<tr>
-			<td>
+			<td align="center">
 				<!-- <a href="/write">작성</a> -->
 				<input type="button" id="write" value="작성" />
 			</td>

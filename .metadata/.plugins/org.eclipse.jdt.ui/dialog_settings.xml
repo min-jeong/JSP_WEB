@@ -1,11 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <section name="Workbench">
+	<item value="false" key="SortMembers.sort_all"/>
 	<section name="org.eclipse.ltk.ui.refactoring.settings">
-		<item value="false" key="renameSubpackages"/>
+		<item value="true" key="renameSubpackages"/>
 		<item value="false" key="updateQualifiedNames"/>
 		<item value="*" key="patterns"/>
 		<item value="false" key="updateSimilarElements"/>
-		<item value="false" key="updateTextualMatches"/>
+		<item value="true" key="updateTextualMatches"/>
 		<item value="1" key="updateSimilarElementsMatchStrategy"/>
 	</section>
 	<section name="ProblemSeveritiesConfigurationBlock">
@@ -36,6 +37,7 @@
 	</section>
 	<section name="OptionalMessageDialog.hide.">
 		<item value="true" key="org.eclipse.jdt.ui.typecomment.deprecated"/>
+		<item value="false" key="SortMembersMessageDialog.optionalDialog.id"/>
 	</section>
 	<section name="DialogBounds_GetterSetterTreeSelectionDialog">
 		<item value="540" key="DIALOG_WIDTH"/>
@@ -46,8 +48,8 @@
 	</section>
 	<section name="org.eclipse.jdt.internal.ui.text.QuickOutline">
 		<item value="true" key="org.eclipse.jdt.internal.ui.text.JavaOutlineInformationControlDIALOG_USE_PERSISTED_SIZE"/>
-		<item value="350" key="org.eclipse.jdt.internal.ui.text.JavaOutlineInformationControlDIALOG_WIDTH"/>
-		<item value="300" key="org.eclipse.jdt.internal.ui.text.JavaOutlineInformationControlDIALOG_HEIGHT"/>
+		<item value="400" key="org.eclipse.jdt.internal.ui.text.JavaOutlineInformationControlDIALOG_WIDTH"/>
+		<item value="400" key="org.eclipse.jdt.internal.ui.text.JavaOutlineInformationControlDIALOG_HEIGHT"/>
 		<item value="false" key="GoIntoTopLevelTypeAction.isChecked"/>
 		<item value="false" key="org.eclipse.jdt.internal.ui.text.JavaOutlineInformationControlDIALOG_USE_PERSISTED_LOCATION"/>
 	</section>

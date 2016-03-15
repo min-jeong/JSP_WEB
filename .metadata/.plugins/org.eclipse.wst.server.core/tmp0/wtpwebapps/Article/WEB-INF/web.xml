@@ -147,4 +147,54 @@
     <servlet-name>ModifyActionServlet</servlet-name>
     <url-pattern>/modifyAction</url-pattern>
   </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>FileUploadServlet</display-name>
+    <servlet-name>FileUploadServlet</servlet-name>
+    <servlet-class>com.ktds.jmj.file.web.FileUploadServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>FileUploadServlet</servlet-name>
+    <url-pattern>/file</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>FileDownloadServlet</display-name>
+    <servlet-name>FileDownloadServlet</servlet-name>
+    <servlet-class>com.ktds.jmj.file.web.FileDownloadServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>FileDownloadServlet</servlet-name>
+    <url-pattern>/fileDownload</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>DeleteFileServlet</display-name>
+    <servlet-name>DeleteFileServlet</servlet-name>
+    <servlet-class>com.ktds.jmj.file.web.DeleteFileServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>DeleteFileServlet</servlet-name>
+    <url-pattern>/deleteFile</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>DownloadServlet</display-name>
+    <servlet-name>DownloadServlet</servlet-name>
+    <servlet-class>com.ktds.jmj.article.web.DownloadServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>DownloadServlet</servlet-name>
+    <url-pattern>/download</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>DoWriteReplyServlet</display-name>
+    <servlet-name>DoWriteReplyServlet</servlet-name>
+    <servlet-class>com.ktds.jmj.reply.web.DoWriteReplyServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>DoWriteReplyServlet</servlet-name>
+    <url-pattern>/doWriteReply</url-pattern>
+  </servlet-mapping>
 </web-app>

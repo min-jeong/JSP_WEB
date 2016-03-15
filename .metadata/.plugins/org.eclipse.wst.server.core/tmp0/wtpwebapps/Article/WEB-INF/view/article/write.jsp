@@ -49,7 +49,7 @@
     
 
 
-<form id="writeForm">
+<form id="writeForm" enctype="multipart/form-data"> <!-- enctype 을 추가. 최대2G만큼의 파일을 보낼 수 있다. -->
 	<table>
 		<tr>
 			<th>Title</th>
@@ -62,6 +62,12 @@
 			<th>Description</th>
 			<td>
 				<textarea id="description" name="description" style="width: 250px; height: 150px;">${ article.descript }</textarea>
+			</td>
+		</tr>
+		<tr>
+			<td> 업로드 </td>
+			<td>
+				<input type="file" id="file" name="file" />
 			</td>
 		</tr>
 	</table>

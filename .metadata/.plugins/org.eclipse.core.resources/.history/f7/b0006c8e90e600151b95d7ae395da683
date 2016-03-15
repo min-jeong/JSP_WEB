@@ -1,0 +1,9 @@
+package com.ktds.jmj.file.vo;
+
+public class FileVO {
+	
+	private int fileId;
+	private String fileLocation;
+	private String fileName;
+
+}

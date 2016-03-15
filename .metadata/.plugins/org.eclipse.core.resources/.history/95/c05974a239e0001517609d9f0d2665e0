@@ -1,5 +1,0 @@
-package com.ktds.jmj.web;
-
-public interface MovieValidateConst {
-
-}
