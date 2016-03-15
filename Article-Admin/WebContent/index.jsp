@@ -12,5 +12,4 @@
 		<jsp:include page="/WEB-INF/view/common/logout.jsp"></jsp:include>
 	</c:otherwise>
 </c:choose>
-<jsp:include page="/WEB-INF/view/common/footer.jsp"></jsp:include>
 

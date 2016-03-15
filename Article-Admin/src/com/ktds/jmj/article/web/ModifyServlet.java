@@ -48,7 +48,7 @@ public class ModifyServlet extends HttpServlet {
 		HttpSession session = request.getSession();
 		MemberVO member = (MemberVO) session.getAttribute("_MEMBER_");
 		
-		if ( article.getMemberId().equals(member.getMemberId()) ) {
+		if ( member.isAdmin() ) {
 			
 			String description = article.getDescript();
 			description = description.replaceAll("<br/>", "\n");

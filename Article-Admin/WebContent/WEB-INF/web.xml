@@ -197,4 +197,44 @@
     <servlet-name>DoWriteReplyServlet</servlet-name>
     <url-pattern>/doWriteReply</url-pattern>
   </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>MassiveDeleteServlet</display-name>
+    <servlet-name>MassiveDeleteServlet</servlet-name>
+    <servlet-class>com.ktds.jmj.article.web.MassiveDeleteServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>MassiveDeleteServlet</servlet-name>
+    <url-pattern>/massiveDelete</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>MemberManageServlet</display-name>
+    <servlet-name>MemberManageServlet</servlet-name>
+    <servlet-class>com.ktds.jmj.member.web.MemberManageServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>MemberManageServlet</servlet-name>
+    <url-pattern>/memberManage</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>MassiveDeleteMemberServlet</display-name>
+    <servlet-name>MassiveDeleteMemberServlet</servlet-name>
+    <servlet-class>com.ktds.jmj.member.web.MassiveDeleteMemberServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>MassiveDeleteMemberServlet</servlet-name>
+    <url-pattern>/massiveDeleteMember</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>DeleteMember</display-name>
+    <servlet-name>DeleteMember</servlet-name>
+    <servlet-class>com.ktds.jmj.member.web.DeleteMember</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>DeleteMember</servlet-name>
+    <url-pattern>/deleteMember</url-pattern>
+  </servlet-mapping>
 </web-app>

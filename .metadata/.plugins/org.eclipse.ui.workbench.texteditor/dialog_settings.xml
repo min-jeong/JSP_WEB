@@ -2,20 +2,20 @@
 <section name="Workbench">
 	<section name="org.eclipse.ui.texteditor.FindReplaceDialog">
 		<item value="false" key="isRegEx"/>
-		<item value="Reply" key="selection"/>
+		<item value="DeleteMember" key="selection"/>
 		<item value="false" key="casesensitive"/>
 		<item value="false" key="incremental"/>
 		<item value="true" key="wrap"/>
 		<item value="false" key="wholeword"/>
 		<list key="findhistory">
+			<item value="deleteMember"/>
+			<item value="getArticleList"/>
+			<item value="massiveDeleteBtn"/>
+			<item value="deleteArticleId"/>
+			<item value="massiveSelectCheckBox"/>
+			<item value="$(&quot;#massiveSelectCheckBox&quot;).click(function() {"/>
 			<item value="reply"/>
 			<item value="write"/>
-			<item value="formApp"/>
-			<item value="ordre"/>
-			<item value="replyInfo"/>
-			<item value="getReplyListByArticleId"/>
-			<item value="doWriteReply"/>
-			<item value="ArticleList"/>
 		</list>
 		<list key="replacehistory">
 			<item value="jmj"/>

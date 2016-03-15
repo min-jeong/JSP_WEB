@@ -7,10 +7,10 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <link rel="stylesheet" type="text/css" href="<c:url value="/resource/css/header.css" />" />
 <link rel="stylesheet" type="text/css" href="<c:url value="/resource/css/login.css" />" />
-<link rel="stylesheet" type="text/css" href="<c:url value="resource/css/logout.css" />" />
-<script type="text/javascript" src="<c:url value="resource/js/jquery-1.12.1.js" />"></script>
+<link rel="stylesheet" type="text/css" href="<c:url value="resource/css/logout.css"/>" />
+<script type="text/javascript" src="resource/js/jquery-1.12.1.js"></script>
 
-<title> 회원제 게시판 </title>
+<title> 회원제 게시판 :: 관리자</title>
 </head>
 <body>
 
@@ -23,5 +23,7 @@
 		</div>
 		
 		<div class="clear"></div>
+		
+	<jsp:include page="/WEB-INF/view/common/topMenu.jsp" />
 		
 		

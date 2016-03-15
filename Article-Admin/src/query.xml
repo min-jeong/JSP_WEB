@@ -126,11 +126,22 @@
 		</deleteFile>
 	</file>
 	<member>
+		<deleteMember>
+			DELETE
+			FROM	MEMBERS
+			WHERE   MEMBER_ID = ?
+		</deleteMember>
+		<getMemberList>
+			SELECT *
+			FROM   MEMBERS
+			WHERE  MEMBER_ID != 'admin'
+		</getMemberList>
 		<getMemberByIdAndPassword>
 			SELECT 	MEMBER_ID
 					, NICK_NAME
 					, PASSWORD
 					, EMAIL
+					, IS_ADMIN
 			FROM 	MEMBERS
 			WHERE	MEMBER_ID = ?
 			AND		PASSWORD = ?
@@ -150,6 +161,11 @@
 									, ?
 								)			
 		</addNewMember>
+		
+		<getAllMemberCount>
+			SELECT  COUNT(MEMBER_ID)
+			FROM    MEMBERS
+		</getAllMemberCount>
 	</member>
 	
 	<article>

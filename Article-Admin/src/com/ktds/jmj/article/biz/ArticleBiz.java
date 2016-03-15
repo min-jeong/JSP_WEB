@@ -6,6 +6,7 @@ import com.ktds.jmj.article.dao.ArticleDAO;
 import com.ktds.jmj.article.vo.ArticleListVO;
 import com.ktds.jmj.article.vo.ArticleSearchVO;
 import com.ktds.jmj.article.vo.ArticleVO;
+import com.ktds.jmj.file.biz.FileBiz;
 import com.ktds.jmj.file.dao.FileDAO;
 import com.ktds.jmj.member.vo.MemberVO;
 import com.ktds.jmj.reply.dao.ReplyDAO;
@@ -17,12 +18,14 @@ public class ArticleBiz {
 	private ArticleDAO articleDAO;
 	private FileDAO fileDAO;
 	private ReplyDAO replyDAO;
+	private FileBiz fileBiz;
 	
 	
 	public ArticleBiz() {
 		articleDAO = new ArticleDAO();
 		fileDAO = new FileDAO();
 		replyDAO = new ReplyDAO();
+		fileBiz = new FileBiz();
 	} //생성자
 	
 	
@@ -77,9 +80,9 @@ public class ArticleBiz {
 	/**
 	 * Member ID Check Task
 	 */
-	public boolean checkMemberId ( String loginMember, String articleInfo ) {
+/*	public boolean checkMemberId ( String loginMember ) {
 		
-		if ( loginMember.equals(articleInfo) ) {
+		if ( loginMember.equals() ) {
 			return true;
 		}
 		else {
@@ -87,14 +90,14 @@ public class ArticleBiz {
 		}
 		
 	} //checkMemberId end
-	
+	*/
 	
 	/**
 	 * Article Delete Task 
 	 */
 	public boolean deleteArticle ( MemberVO loginMember, ArticleVO articleInfo ) {
 		
-		if ( checkMemberId(loginMember.getMemberId(), articleInfo.getMemberId()) ) {
+		if ( loginMember.isAdmin() ) {
 			
 			// 작성자 ID와 로그인 세션 ID가 같은 경우
 			int checkDeleteAction = articleDAO.deleteArticle(articleInfo.getArticleId());
@@ -164,6 +167,25 @@ public class ArticleBiz {
 			changedArticle.setArticleId(articleId);
 			return articleDAO.updateArticle(changedArticle) > 0;
 		}
+	}
+
+
+	public void deleteArticles(String[] deleteArticleIds, MemberVO member) {
+		if (member.isAdmin() ){
+			for( String articleId : deleteArticleIds) {
+				ArticleVO targetArticleInfo = this.getDetailArticle(Integer.parseInt(articleId));
+				if ( targetArticleInfo.getFileList() != null ){ // file이 존재한다면
+					if ( fileBiz.deleteFile(Integer.parseInt(articleId))) { // file을 먼저 삭제하고
+						articleDAO.deleteArticle(Integer.parseInt(articleId)); // 게시물을 삭제한다.	
+						articleDAO.deleteArticle(Integer.parseInt(articleId));
+					}
+				}
+				else {
+					articleDAO.deleteArticle(Integer.parseInt(articleId));
+				}
+			}
+		}
+		
 	}
 	
 }

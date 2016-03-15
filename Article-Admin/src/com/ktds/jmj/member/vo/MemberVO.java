@@ -6,6 +6,23 @@ public class MemberVO {
 	private String nickName;
 	private String password;
 	private String email;
+	private String isAdmin;
+	
+	public String getIsAdmin() {
+		return isAdmin;
+	}
+	public void setIsAdmin(String isAdmin) {
+		this.isAdmin = isAdmin;
+	}
+	
+	public boolean isAdmin() {
+		if ( this.isAdmin != null && this.isAdmin.equals("Y") ) {
+			return true;
+		}
+		else { 
+			return false;
+		}
+	}
 	
 	public String getMemberId() {
 		return memberId;

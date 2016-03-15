@@ -1,9 +1,11 @@
 eclipse.preferences.version=1
 firstStartup=false
-history.repositoryURL=aHR0cHM6Ly9kZXYubmF2ZXIuY29tL3N2bi9zZWNjb2Rpbmc\=
-history.repositoryUser=c2VjY29kaW5n
+history.repositoryURL=aHR0cHM6Ly9kZXYubmF2ZXIuY29tL3N2bi9rdGRzY2Fubm9u;aHR0cHM6Ly9kZXYubmF2ZXIuY29tL3N2bi9zZWNjb2Rpbmc\=
+history.repositoryUser=YmVzdDQyMQ\=\=;c2VjY29kaW5n
 org.eclipse.team.svn.ui.panel.callback.PromptCredentialsPanel.height=216
 org.eclipse.team.svn.ui.panel.callback.PromptCredentialsPanel.width=470
 org.eclipse.team.svn.ui.panel.common.RepositoryTreePanel.height=203
 org.eclipse.team.svn.ui.panel.common.RepositoryTreePanel.width=470
+org.eclipse.team.svn.ui.panel.local.CommitPanel.height=406
+org.eclipse.team.svn.ui.panel.local.CommitPanel.width=600
 preference.repository.repositoryBrowser=false

@@ -25,7 +25,7 @@ body {
 
 div#wrapper {
 	width: 100%;
-	height: 300px;
+	height: 400px;
 /*  	background-color: #ffdddd; */ 
  	background-image:url(/resource/img/dora.png);
  	background-size:cover;
@@ -41,7 +41,7 @@ div#header img {
 
 div#header {
 	width: 120px;
-	height: 250px;
+	height: 300px;
 }
 
 div#headerFont {
@@ -53,3 +53,50 @@ div#headerFont {
 div .clear {
 	clear: both;
 }
+
+div#topNavi{
+	padding-left: 20px;
+	padding-top: 20px;
+	padding-bottom: 20px;
+
+	margin-bottom: 12px;
+}
+
+div#topNavi ul#topMenu {
+	list-style:none;
+	display:inline;
+}
+ul#topMenu li{ 
+	margin-left: 20px;
+	float:left;
+	font-weight:bold;
+}
+
+ul#topMenu li:FIRST-CHILD {
+	margin-left:0px;
+	margin-top:2.5px;
+}
+
+div#leftMenu {
+   float: left;
+   width: 250px;
+   height: 100%;
+   padding: 15px;
+   background-color: #FFFFFF;
+   margin-right: 15px;
+}
+
+div#leftMenu ul {
+   list-style: none;
+   display: inline;
+}
+
+div#leftMenu ul li {
+   padding-top: 5px;
+   padding-bottom: 5px;
+}
+
+div#leftMenu ul li:FIRST-CHILD {
+   margin-left: 0px;
+}
+
