@@ -48,9 +48,9 @@
 </script>   
     
 
-
+<br/>
 <form id="writeForm" enctype="multipart/form-data"> <!-- enctype 을 추가. 최대2G만큼의 파일을 보낼 수 있다. -->
-	<table>
+	<table align="center">
 		<tr>
 			<th>Title</th>
 			<td>
@@ -71,7 +71,8 @@
 			</td>
 		</tr>
 	</table>
-
+	<br/>
+	<div align="center">
 	<c:if test="${ empty article }">
 		<input type="button" id="doWrite" value="등록!" />
 		<input type="reset" value="다시 쓰기" />
@@ -82,6 +83,7 @@
 		<input type="button" id="reset" value="다시 쓰기" />
 	</c:if>
 	<input type="button" id="cancle" value="취소" />
+	</div>
 </form>
 
 

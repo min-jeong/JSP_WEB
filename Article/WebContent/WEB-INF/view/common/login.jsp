@@ -23,6 +23,13 @@
 
 
 	$(document).ready(function() {
+		
+		$("#userPw").keyup(function(e){
+			if( e.keyCode == 13) {
+				$("#btnLogin").click();
+			}
+		});
+		
 		$("#btnLogin").click(function() {
 			
 			var form = $("#loginForm");
@@ -52,7 +59,7 @@
 
     	<div id="login">
     		<form id="loginForm">
-    			<img src="/resource/img/join_n.png" id="btnJoin" width="50px" height="50px" />
+    			<img src="/resource/img/join_n.png" id="btnJoin" width="20px" height="20px" />
     			<img tabindex="3" src="/resource/img/login_btn.png" id="btnLogin" /> <!-- tabindex는 tab키를 누르면 옆칸으로 넘어가는 기능이다. -->
     			<input type="password" tabindex="2" id="userPw" name="userPw" placeholder="Password"> <!-- 순서번호를 줘서 tab을 누를 때마다 순서대로 넘어간다. -->
     			<input type="text" tabindex="1" id="userId" name="userId" placeholder="ID">

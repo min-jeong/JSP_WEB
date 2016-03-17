@@ -10,9 +10,7 @@
 	<tr>
 		<th>아이디</th>
 		<th>닉네임</th>
-		<th>비밀번호</th>
 		<th>이메일</th>
-		<th>차단</th>
 		<th>게시물 수</th>
 	</tr>
 	<c:forEach items="${ memberList.memberList }"  var="members">
@@ -26,13 +24,7 @@
 		${ members.nickName }
 		</td>
 		<td align="center">
-		${ members.password }
-		</td>
-		<td align="center">
 		${ members.email }
-		</td>
-		<td align="center">
-		${ members.isBlock }
 		</td>
 		<td align="center">
 		${ members.articleCount }
@@ -40,7 +32,7 @@
 	</tr>
 	</c:forEach>
 	<tr>
-		<td colspan="6">
+		<td colspan="6" align="center">
 			<form id="searchForm">
 					${ memberList.paging.getPagingList("pageNo", "[@]", "[이전]", "[다음]", "searchForm") }
 			</form>

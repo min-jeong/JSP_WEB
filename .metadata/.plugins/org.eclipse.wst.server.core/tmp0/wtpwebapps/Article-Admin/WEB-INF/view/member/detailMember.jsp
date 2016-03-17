@@ -30,6 +30,7 @@ $(document).ready( function() {
 		<th>닉네임</th>
 		<th>비밀번호</th>
 		<th>이메일</th>
+		<th>차단</th>
 	</tr>
 		<tr>
 			<td align="center">
@@ -44,6 +45,8 @@ $(document).ready( function() {
 			<td align="center">
 			${ selectedMember.email }
 			</td>
+			<td align="center">
+			${ selectedMember.isBlock }
 		</tr>
 </table>
 	<br/>

@@ -126,7 +126,7 @@
 	</c:forEach>
 	</form>
 		<tr>
-		<td colspan="6">
+		<td colspan="6" align="center">
 			<form id="searchForm">
 					${ memberList.paging.getPagingList("pageNo", "[@]", "[이전]", "[다음]", "searchForm") }
 			</form>

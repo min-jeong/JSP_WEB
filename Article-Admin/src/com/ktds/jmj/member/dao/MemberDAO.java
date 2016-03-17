@@ -213,6 +213,7 @@ public class MemberDAO {
 				member.setNickName(rs.getString("NICK_NAME"));
 				member.setPassword(rs.getString("PASSWORD"));
 				member.setEmail(rs.getString("EMAIL"));
+				member.setIsBlock(rs.getString("IS_BLOCK"));
 			}
 			
 			return member;

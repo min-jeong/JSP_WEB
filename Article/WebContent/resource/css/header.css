@@ -25,7 +25,7 @@ body {
 
 div#wrapper {
 	width: 100%;
-	height: 300px;
+	height: 400px;
 /*  	background-color: #ffdddd; */ 
  	background-image:url(/resource/img/dora.png);
  	background-size:cover;
@@ -41,7 +41,7 @@ div#header img {
 
 div#header {
 	width: 120px;
-	height: 250px;
+	height: 370px;
 }
 
 div#headerFont {
@@ -53,3 +53,5 @@ div#headerFont {
 div .clear {
 	clear: both;
 }
+
+
