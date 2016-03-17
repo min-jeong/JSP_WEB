@@ -14,6 +14,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import com.ktds.jmj.history.vo.OperationHistoryVO;
 import com.ktds.jmj.member.vo.MemberVO;
 
 /**
@@ -73,11 +74,19 @@ public class SessionCheckFilter implements Filter {
 				HttpSession session = req.getSession();
 				
 				MemberVO member = (MemberVO) session.getAttribute("_MEMBER_");
-				
+
 				if ( member == null ) {
 					HttpServletResponse res = (HttpServletResponse) response;
 					res.sendRedirect("/");
 					return;
+				}
+				else {
+					OperationHistoryVO historyVO = new OperationHistoryVO();
+					historyVO.setIp(request.getRemoteHost());
+					historyVO.setMemberId(member.getMemberId());
+					historyVO.setUrl(req.getRequestURI());
+					
+					request.setAttribute("OpeartionHistoryVO", historyVO);
 				}
 				
 			}

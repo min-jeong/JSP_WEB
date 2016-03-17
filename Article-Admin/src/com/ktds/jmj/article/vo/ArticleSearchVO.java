@@ -6,6 +6,14 @@ public class ArticleSearchVO { // 검색만을 위한 VO
 	private int startIndex;
 	private int endIndex;
 	
+	private String searchKeyword;
+	
+	public String getSearchKeyword() {
+		return searchKeyword;
+	}
+	public void setSearchKeyword(String searchKeyword) {
+		this.searchKeyword = searchKeyword;
+	}
 	public int getPageNo() {
 		return pageNo;
 	}

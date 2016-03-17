@@ -7,6 +7,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import com.ktds.jmj.article.biz.ArticleBiz;
 import com.ktds.jmj.article.vo.ArticleListVO;
@@ -42,25 +43,50 @@ public class ArticleListServlet extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
 		int pageNo = 0;
-		
+		ArticleSearchVO searchVO = new ArticleSearchVO();
+		HttpSession session = request.getSession();
+		String searchType = request.getParameter("searchType");
+		String searchKeyword = request.getParameter("searchKeyword");
 		try{
 			pageNo = Integer.parseInt(request.getParameter("pageNo"));
-		}
-		catch(NumberFormatException nfe){ }
-		ArticleSearchVO searchVO = new ArticleSearchVO();
-		searchVO.setPageNo(pageNo);
-		
-		ArticleListVO articles = articleBiz.getAllArticleList(searchVO);
-		
-		if ( articles != null ) {
-			request.setAttribute("articles", articles);
 			
-			RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/view/article/list.jsp");
-			rd.forward(request, response);
+			searchVO.setPageNo(pageNo);
+			searchVO.setSearchKeyword( searchKeyword );
+		}
+		catch(NumberFormatException nfe){ 
+			searchVO = (ArticleSearchVO) session.getAttribute("_SEARCH_");
+			if( searchVO == null ){
+				searchVO = new ArticleSearchVO();
+				searchVO.setPageNo(0);
+				searchVO.setSearchKeyword("");
+			}
+		}
+		String id = "id";
+		String nickname = "nickname";
+		session.setAttribute("_SEARCH_", searchVO); // 데이터를 셋팅하고 세션에 넣는다.
+		ArticleListVO articles = null;
+		
+		
+		if( searchType != null ){
+			if (searchType.equals(id)) {
+				articles = articleBiz.getArticleListByMemberID(searchVO);
+			}
+			else if (searchType.equals(nickname)){
+				articles = articleBiz.getArticleListByNickName(searchVO);
+			}
+			else{
+				articles = articleBiz.getAllArticleList(searchVO);
+			}
+			
 		}
 		else {
-			response.sendRedirect(Root.get(this) + "/list?errorCode=fail");
+			articles = articleBiz.getAllArticleList(searchVO);
 		}
 		
+		System.out.println(articles.getArticleList().size());
+		request.setAttribute("articles", articles);
+		request.setAttribute("searchVO", searchVO);
+		RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/view/article/list.jsp");
+		rd.forward(request, response);
 	}
 }

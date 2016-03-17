@@ -131,6 +131,7 @@
 					, NICK_NAME
 					, PASSWORD
 					, EMAIL
+					, IS_BLOCK
 			FROM 	MEMBERS
 			WHERE	MEMBER_ID = ?
 			AND		PASSWORD = ?
@@ -255,6 +256,30 @@
 		</updateArticle>
 		
 	</article>
+	<operationHistory>
+		<insertHistory>
+			INSERT INTO OPER_HIST (
+										   ACTION_CODE
+										   , CRT_DT
+										   , DESCRIPTION
+										   , HISTORY_ID
+										   , IP
+										   , MEMBER_ID
+										   , URL
+										   , ETC
+										   ) 
+			VALUES ( 
+					?
+					, SYSDATE
+					, ?
+					, HISTORY_ID_SEQ.NEXTVAL
+					, ?
+					, ?
+					, ? 
+					, ?
+					)
+		</insertHistory>
+	</operationHistory>
 	
 </query>
 

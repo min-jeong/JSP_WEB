@@ -1,0 +1,7 @@
+import java.util.List;
+
+public class ItemList {
+	
+	private List<ItemVO> items;
+	private String parentItemName;
+}

@@ -13,6 +13,19 @@
 <script type="text/javascript">
 	$(document).ready( function() {
 		
+		$("#initSearchBtn").click(function(){
+			location.href="<c:url value="/list/init" />";
+		});
+		
+		$("#searchBtn").click( function() {
+			if ($("#searchKeyword").val() == ""){
+				alert("검색어를 입력하세요!");
+				return;
+			}
+			
+			movePage('0');
+		});
+		
 		$("#write").click( function() {
 			
 	        location.href="<c:url value="/write" />";
@@ -90,7 +103,21 @@
 		<tr>
 			<td colspan="6">
 				<form id="searchForm">
-				${ articles.paging.getPagingList("pageNo", "[@]", "[이전]", "[다음]", "searchForm") }
+					<div style = "text-align:center;">
+					${ articles.paging.getPagingList("pageNo", "[@]", "[이전]", "[다음]", "searchForm") }
+					</div>
+					<div style="text-align: right;">
+					<select id="searchType" name="searchType"> 
+	                	<option id="sel" value="sel">선택</option> 	                	
+	                 	<option id="content" value="content" >내용/제목</option> 
+	                 	<option id="id" value="id">작성자 아이디</option> 
+	                	<option id="nickname" value="nickname">작성자 닉네임</option> 
+		            </select> 					
+					<input type="text" id="searchKeyword" name="searchKeyword" value="${ searchVO.searchKeyword }"/>
+					<!-- 페이지를 클릭해도 처음으로 이동하지 않도록 한다. -->
+					<input type="button" id="searchBtn" value="검색" />
+					<input type="button" id="initSearchBtn" value="검색 초기화" />
+					</div>
 				</form>
 			</td>
 		</tr>
@@ -118,7 +145,12 @@
 					<input type="button" id="massiveDeleteBtn" value="삭제" />
 				</td>
 		</tr>
+		<table>
+		
 	</table>
+	
+		
+		
 
 </div>
 <jsp:include page="/WEB-INF/view/common/footer.jsp"></jsp:include>

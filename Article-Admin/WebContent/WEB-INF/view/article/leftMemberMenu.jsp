@@ -3,7 +3,6 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <div id="leftMenu">
 	<ul>
-		<li><a href='<c:url value="/deleteMember"/>'>회원 추방</a></li>
-		<li>회원 차단</li>
+		<li><a href='<c:url value="/deleteMember"/>'>회원 추방/차단 관리</a></li>
 	</ul>
 </div>

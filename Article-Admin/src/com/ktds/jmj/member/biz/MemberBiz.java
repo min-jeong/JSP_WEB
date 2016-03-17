@@ -12,6 +12,7 @@ import com.ktds.jmj.member.dao.MemberDAO;
 import com.ktds.jmj.member.vo.MemberListVO;
 import com.ktds.jmj.member.vo.MemberSearchVO;
 import com.ktds.jmj.member.vo.MemberVO;
+import com.ktds.jmj.util.web.MultipartHttpServletRequest;
 import com.ktds.jmj.util.web.Paging;
 
 public class MemberBiz {
@@ -52,13 +53,13 @@ public class MemberBiz {
 		searchVO.setEndIndex(paging.getEndArticleNumber()); // 끝 페이지 를 가져와서 searchVO에 셋팅 시킨다.
 		
 		//2. 셀렉트하는 DAO에 전달한다. 받아온 결과를 articleListVO에 넣어준다.
-		List<MemberVO> members = memberDAO.getMemberList();
+		List<MemberVO> members = memberDAO.getMemberList(searchVO);
 		
-		ArticleListVO articleList = new ArticleListVO();
-		articleList.setArticleList(articles);
-		articleList.setPaging(paging);
+		MemberListVO memberList = new MemberListVO();
+		memberList.setMemberList(members);
+		memberList.setPaging(paging);
 		
-		return articleList;
+		return memberList;
 		
 	} //getAllArticleList end
 	/**
@@ -83,6 +84,50 @@ public class MemberBiz {
 				memberDAO.deleteMember(memberId);
 			}
 		}
+	}
+	
+	public void blockMembers(String[] blockMemberIds, MemberVO member) {
+		if ( member.isAdmin() ){
+			for( String memberId : blockMemberIds) {
+				memberDAO.blockMember(memberId);
+			}
+		}
+	}
+	
+	public void releaseBlockMembers(String[] releaseBlockMemberIds, MemberVO member) {
+		if ( member.isAdmin() ){
+			for( String memberId : releaseBlockMemberIds) {
+				memberDAO.releaseBlockMember(memberId);
+			}
+		}
+	}
+	
+	public void deleteOneMember(String memberId) {
+		memberDAO.deleteMember(memberId);
+	}
+	
+	public MemberVO getDetailMember ( String memberId ) {
+		MemberVO member = memberDAO.getDetailMember(memberId);
+		
+		return member;
+	}
+	
+	
+	public boolean modifyMember( MultipartHttpServletRequest request ){
+		String memberId = request.getParameter("memberId");
+		String nickName = request.getParameter("nickName");
+		String email = request.getParameter("email");
+		String password = request.getParameter("password");
+		
+		MemberVO changedMember = new MemberVO();
+
+		changedMember.setEmail(email);
+		changedMember.setNickName(nickName);
+		changedMember.setPassword(password);
+		changedMember.setMemberId(memberId);
+		
+		return memberDAO.updateMember(changedMember) > 0;
+		
 	}
 	
 }

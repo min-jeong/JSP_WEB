@@ -88,6 +88,8 @@ public class MemberDAO {
 				member.setNickName(rs.getString("NICK_NAME"));
 				member.setEmail(rs.getString("EMAIL"));
 				member.setPassword(rs.getString("PASSWORD"));
+				member.setIsBlock(rs.getString("IS_BLOCK"));
+				member.setArticleCount(rs.getInt("ARTICLE_COUNT"));
 
 				members.add(member);
 			}
@@ -101,6 +103,7 @@ public class MemberDAO {
 		
 		return members;
 	}
+	
 	public int getAllMemberCount() {
 		loadOracleDriver();
 		
@@ -111,7 +114,7 @@ public class MemberDAO {
 		try {
 			conn = DriverManager.getConnection(Const.DB_URL, Const.DB_USER, Const.DB_PASSWORD);
 
-			String query = XML.getNodeString("//query/article/getAllMemberCount/text()");
+			String query = XML.getNodeString("//query/member/getAllMemberCount/text()");
 			stmt = conn.prepareStatement(query);
 			rs = stmt.executeQuery();
 			
@@ -186,6 +189,140 @@ public class MemberDAO {
 		}
 	} //addNewMember end
 	
+	public MemberVO getDetailMember(String memberId) {
+
+		loadOracleDriver();
+		
+		Connection conn = null;
+		PreparedStatement stmt = null;
+		ResultSet rs = null;
+		
+		MemberVO member = new MemberVO();
+		
+		try {
+			conn = DriverManager.getConnection(Const.DB_URL, Const.DB_USER, Const.DB_PASSWORD);
+
+			String query = XML.getNodeString("//query/member/getDetailMember/text()");
+			stmt = conn.prepareStatement(query);
+			stmt.setString(1, memberId);
+			
+			rs = stmt.executeQuery();
+			
+			if ( rs.next() ) {
+				member.setMemberId(rs.getString("MEMBER_ID"));
+				member.setNickName(rs.getString("NICK_NAME"));
+				member.setPassword(rs.getString("PASSWORD"));
+				member.setEmail(rs.getString("EMAIL"));
+			}
+			
+			return member;
+		
+		} catch (SQLException e) {
+			throw new RuntimeException(e.getMessage(), e);
+		}
+		finally {
+			closeDB(conn, stmt, rs);
+		}	
+	}
+	
+	public int updateMember(MemberVO changedMember) {
+		
+		loadOracleDriver();
+		
+		Connection conn = null;
+		PreparedStatement stmt = null;
+		String query = "";
+		
+		try {
+			conn = DriverManager.getConnection(Const.DB_URL, Const.DB_USER, Const.DB_PASSWORD);
+		
+			
+			query = XML.getNodeString("//query/member/updateMember/text()");
+			
+			// 조건 별 ? 변수 값 넘김
+			stmt = conn.prepareStatement(query);
+				
+			stmt.setString(1, changedMember.getPassword());
+			stmt.setString(2, changedMember.getMemberId());
+		
+			
+			int modifyAction = stmt.executeUpdate();
+			
+			return modifyAction;
+						
+		} catch (SQLException e) {
+			throw new RuntimeException(e.getMessage(), e);
+		}
+		finally {
+			closeDB(conn, stmt, null);
+		}
+	}
+	
+	public int blockMember(String memberId) {
+		
+		loadOracleDriver();
+		
+		Connection conn = null;
+		PreparedStatement stmt = null;
+		String query = "";
+		
+		try {
+			conn = DriverManager.getConnection(Const.DB_URL, Const.DB_USER, Const.DB_PASSWORD);
+		
+			
+			query = XML.getNodeString("//query/member/blockMember/text()");
+			
+			// 조건 별 ? 변수 값 넘김
+			stmt = conn.prepareStatement(query);
+				
+			stmt.setString(1, "Y");
+			stmt.setString(2, memberId);
+		
+			
+			int modifyAction = stmt.executeUpdate();
+			
+			return modifyAction;
+						
+		} catch (SQLException e) {
+			throw new RuntimeException(e.getMessage(), e);
+		}
+		finally {
+			closeDB(conn, stmt, null);
+		}
+	}
+	
+	public int releaseBlockMember(String memberId) {
+		
+		loadOracleDriver();
+		
+		Connection conn = null;
+		PreparedStatement stmt = null;
+		String query = "";
+		
+		try {
+			conn = DriverManager.getConnection(Const.DB_URL, Const.DB_USER, Const.DB_PASSWORD);
+		
+			
+			query = XML.getNodeString("//query/member/blockMember/text()");
+			
+			// 조건 별 ? 변수 값 넘김
+			stmt = conn.prepareStatement(query);
+				
+			stmt.setString(1, "N");
+			stmt.setString(2, memberId);
+		
+			
+			int modifyAction = stmt.executeUpdate();
+			
+			return modifyAction;
+						
+		} catch (SQLException e) {
+			throw new RuntimeException(e.getMessage(), e);
+		}
+		finally {
+			closeDB(conn, stmt, null);
+		}
+	}
 	
 	/**
 	 * Oracle Driver
@@ -221,5 +358,7 @@ public class MemberDAO {
 			}
 		}
 	}
+
+
 	
 }

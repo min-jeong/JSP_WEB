@@ -41,6 +41,7 @@ public class MemberDAO {
 				validMember.setNickName(rs.getString("NICK_NAME"));
 				validMember.setPassword(rs.getString("PASSWORD"));
 				validMember.setEmail(rs.getString("EMAIL"));
+				validMember.setIsBlock(rs.getString("IS_BLOCK"));
 				
 			}
 			

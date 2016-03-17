@@ -3,11 +3,15 @@ package com.ktds.jmj.member.web;
 import java.io.IOException;
 
 import javax.servlet.ServletException;
-import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.ktds.jmj.history.biz.OperationHistoryBiz;
+import com.ktds.jmj.history.vo.ActionCode;
+import com.ktds.jmj.history.vo.BuildDescription;
+import com.ktds.jmj.history.vo.Description;
+import com.ktds.jmj.history.vo.OperationHistoryVO;
 import com.ktds.jmj.member.biz.MemberBiz;
 import com.ktds.jmj.member.vo.MemberVO;
 
@@ -17,7 +21,8 @@ import com.ktds.jmj.member.vo.MemberVO;
 public class DoLoginServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	
-	MemberBiz memberBiz;
+	private MemberBiz memberBiz;
+	private OperationHistoryBiz biz;
        
     /**
      * @see HttpServlet#HttpServlet()
@@ -25,6 +30,7 @@ public class DoLoginServlet extends HttpServlet {
     public DoLoginServlet() {
         super();
         memberBiz = new MemberBiz();
+        biz = new OperationHistoryBiz();
         // TODO Auto-generated constructor stub
     }
 
@@ -62,10 +68,31 @@ public class DoLoginServlet extends HttpServlet {
 			userPassword.setMaxAge(999);
 			response.addCookie(userPassword);*/
 			
+			OperationHistoryVO historyVO = new OperationHistoryVO();
+			historyVO.setIp(request.getRemoteHost());
+			historyVO.setMemberId(memberId);
+			historyVO.setUrl(request.getRequestURI());
+			historyVO.setActionCode(ActionCode.LOGIN);
+			historyVO.setDescription( BuildDescription
+									.get( Description.LOGIN, memberId ) );
+			
+			
+			biz.addHistory(historyVO);
 			response.sendRedirect("/list");
 			return;
 		}
 		else {
+			OperationHistoryVO historyVO = new OperationHistoryVO();
+			historyVO.setIp(request.getRemoteHost());
+			historyVO.setMemberId("");
+			historyVO.setUrl(request.getRequestURI());
+			historyVO.setActionCode(ActionCode.LOGIN);
+			historyVO.setDescription( BuildDescription
+									.get( Description.LOGIN_FAIL, request.getRemoteHost(), memberId ) );
+			
+			
+			biz.addHistory(historyVO);
+			
 			response.sendRedirect("/?errorCode=fail");
 			return;
 		}

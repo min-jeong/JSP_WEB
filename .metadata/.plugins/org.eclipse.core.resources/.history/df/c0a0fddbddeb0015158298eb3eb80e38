@@ -1,0 +1,5 @@
+package com.ktds.jmj.history.biz;
+
+public class OperationHistoryBiz {
+
+}
