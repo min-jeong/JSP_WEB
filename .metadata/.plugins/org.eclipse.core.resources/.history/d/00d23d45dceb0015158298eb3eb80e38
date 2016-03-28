@@ -1,7 +1,0 @@
-package com.ktds.jmj.history.vo;
-
-public class BuildDescription {
-	public static String get( String format, String ... strings args ){
-		
-	}
-}

@@ -1,0 +1,80 @@
+package com.ktds.pingpong.member.biz;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+
+import com.ktds.pingpong.member.dao.MemberDAO;
+import com.ktds.pingpong.member.vo.MemberVO;
+import com.ktds.pingpong.util.web.MultipartHttpServletRequest;
+
+public class MemberBiz {
+	
+	private MemberDAO memberDAO;
+	
+	public MemberBiz() {
+		memberDAO = new MemberDAO();
+	} // ������
+	
+	/**
+	 * Join Task
+	 */
+	public boolean join (MemberVO member) {
+		
+		int addResult = memberDAO.addNewMember(member);
+		
+		if ( addResult > 0 ) {
+			return true;
+		}
+		else {
+			return false;
+		}
+	} //join end
+	
+	
+	/**
+	 * Login Task
+	 */
+	public boolean login (MemberVO member, HttpServletRequest request) {
+		
+		// 1 ȸ�� ���� ��������
+		MemberVO loginMember = memberDAO.getMemberByIdAndPassword(member);
+		
+		// 2 ��ġ�ϴ� ȸ�� ���� ���ǿ� �ֱ�
+		if ( loginMember != null ) {
+			 HttpSession session = request.getSession();
+			 session.setAttribute("_MEMBER_", loginMember);
+		}
+		
+		// 3 ��� ����
+		return loginMember != null; // �α��� ���������� true ���и� false ����
+	} // login end
+	
+	/**
+	 * Check Id �ߺ�üũ
+	 */
+	public boolean isExistIdData(String email) {
+		return memberDAO.selectIdCount(email) > 0; // ���̵� �����ϸ� true 
+	}
+
+	public boolean CheckPassword(String email, String beforePw) {
+		MemberVO member = new MemberVO();
+		member = memberDAO.checkPassword(email);
+		
+		if ( member.getPassword() == beforePw ){
+			return true;
+		}
+		else {
+			return  false;
+		}
+		
+	}
+
+	public void UpdateInformation(MultipartHttpServletRequest request) {
+		String email = request.getParameter("email");
+		MemberVO changedMember = new MemberVO();
+		
+		changedMember.setEmail(email);
+		memberDAO.updateInformation()
+		
+	}
+}

@@ -6,6 +6,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import com.ktds.jmj.history.biz.OperationHistoryBiz;
 import com.ktds.jmj.history.vo.ActionCode;
@@ -48,6 +49,23 @@ public class DoLoginServlet extends HttpServlet {
 		
 		String memberId = request.getParameter("userId");
 		String memberPassword = request.getParameter("userPw");
+		String facebookLogin = request.getParameter("facebookLogin");
+		
+		System.out.println(memberId);
+		System.out.println(memberPassword);
+		
+		if( facebookLogin != null && facebookLogin.equalsIgnoreCase("Y") ) { // 이것이 호출됬다는 것은 facebook으로 정상적으로 로그인 된것이다.
+			MemberVO facebookMember = new MemberVO();
+			facebookMember.setMemberId(memberId);
+			facebookMember.setNickName(memberPassword);
+			
+			HttpSession session = request.getSession();
+			session.setAttribute("_MEMBER_", facebookMember);
+			session.setAttribute("_LOGIN_PATH_", "facebook");
+			
+			response.sendRedirect("/list");
+			return;
+		}
 		
 		MemberVO loginMember = new MemberVO();
 		loginMember.setMemberId(memberId);

@@ -1,5 +1,0 @@
-package com.ktds.jmj.history.vo;
-
-public interface Description {
-	public static final String LOGIN ="[%s] 님이 로그인 했습니다."; //%d정수, %f실수, %s문자
-}

@@ -8,7 +8,7 @@
 <link rel="stylesheet" type="text/css" href="/resource/css/login.css" />
 <link rel="stylesheet" type="text/css" href="/resource/css/logout.css" />
 <script type="text/javascript" src="resource/js/jquery-1.12.1.js"></script>
-
+<script type="text/javascript" src="resource/js/json2.js"></script>
 <title> 회원제 게시판 </title>
 </head>
 <body>

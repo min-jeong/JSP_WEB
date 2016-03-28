@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<query>
+	<member>
+		<addNewMember>
+			INSERT INTO MEMBER (
+									EMAIL
+									, NAME
+									, PASSWORD
+								)
+			VALUES				(
+									?
+									, ?
+									, ?
+								)			
+		</addNewMember>
+		
+		<getMemberByIdAndPassword>
+			SELECT 	*
+			FROM 	MEMBER
+			WHERE	EMAIL = ?
+			AND		PASSWORD = ?
+		</getMemberByIdAndPassword>
+	
+		<selectIdCount>
+			SELECT COUNT(EMAIL)
+			FROM   MEMBER
+			WHERE  EMAIL = ?
+		</selectIdCount>
+		
+		<checkPassword>
+			SELECT *
+			FROM   MEMBER
+			WHERE  EMAIL = ?
+		</checkPassword>
+		
+		<updateMember>
+			UPDATE	ARTICLE
+			SET		TITLE = ?
+			WHERE	ARTICLE_ID = ?
+		</updateMember>
+	</member>
+
+</query>

@@ -41,7 +41,7 @@
 	
 %>
 
-
+<script src="http://connect.facebook.net/en_US/all.js"></script>
 
 <c:set var="loginId" value="${ sessionScope._MEMBER_.memberId }" />
 

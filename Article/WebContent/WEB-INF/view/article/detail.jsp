@@ -11,6 +11,45 @@
 <script type="text/javascript">
 	$(document).ready( function() {
 		$(".hide").hide();
+		
+		$("#favorite").click(function(){
+			
+			$.post(
+					"/favorite"
+					, { "articleId" : "${ selectedArticle.articleId }" } //articleId의 이름으로 현재 게시물의 articleId 값을 넘긴다.
+					, function(data) {
+						
+						var jsonData3 = {};
+						try{
+							jsonData3 = JSON.parse(data);
+							alert("으아아아아아앙앙")
+						}
+						catch(e) { //자바스크립트는 타입이 없기때문에 e만 적으면 된다.
+							jsonData3.result = false;
+						}
+						
+						console.log(jsonData3);
+						
+						if( jsonData3.result ) {
+							var text = $("#favorite").text();
+							if ( jsonData3.isFavorite ) { // jsonData3에 있는 isFavorite가 true인지 아닌지 확인
+								$("#favorite").text("♥");
+							}
+							else {
+								$("#favorite").text("♡");
+							}
+						}
+						else{
+ 							alert("세션이 만료되었습니다. 다시 로그인해주세요.");
+							location.href="/"; 
+						}
+					}//요청시키고 응답이 들어왔을때 처리해야할 것(반환해야할 것) , 응답을 받아서 직접 처리해줘야 한다.
+			); // 총 3가지 파라미터가 들어간다. 첫번째는 url
+			
+			var text = $(this).text(); //하트가 들어있다.
+			
+		});
+		
 		$("#recommends").click( function() {
 			
 	        	$.get('<c:url value="/recommends?articleId=${ selectedArticle.articleId }" />', function(){
@@ -99,12 +138,15 @@
 	<table border="1" width="800px" align="center">
 		<tr>
 			<th>글 번호</th>
-			<th>글 제목</th>
+			<th>글 제목
+
+			</th>
 			<th>글쓴이 Nick</th>
 			<th>글쓴이 ID</th>
 			<th>글 내용</th>
 			<th>조회수</th>
 			<th>추천수</th>
+			<th>즐겨찾기</th>
 		</tr>
 		
 		<tr>
@@ -115,6 +157,14 @@
 			<td class="c">${ selectedArticle.descript }</td>
 			<td class="c">${ selectedArticle.hits }</td>
 			<td class="c">${ selectedArticle.recommends }</td>
+			<td class="c">
+				<c:if test="${ isExistsFavoriteData }">
+					<span id="favorite" style="color:red;">♥</span>
+				</c:if>
+				<c:if test="${ !isExistsFavoriteData }">
+					<span id="favorite" style="color:red;">♡</span>
+				</c:if>
+			</td>
 		</tr>
 		<tr>
 		

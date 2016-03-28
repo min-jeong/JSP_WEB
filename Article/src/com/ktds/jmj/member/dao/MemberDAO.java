@@ -89,6 +89,35 @@ public class MemberDAO {
 		}
 	} //addNewMember end
 	
+
+	public int selectIdCount(String memberId) {
+		loadOracleDriver();
+		
+		Connection conn = null;
+		PreparedStatement stmt = null;
+		ResultSet rs = null;
+		
+		
+		try {
+			conn = DriverManager.getConnection(Const.DB_URL, Const.DB_USER, Const.DB_PASSWORD);
+			String query = XML.getNodeString("//query/member/selectIdCount/text()");
+			stmt = conn.prepareStatement(query);
+			stmt.setString(1, memberId); // 끝나는 번호
+			
+			rs = stmt.executeQuery();
+			rs.next();
+			
+			return rs.getInt(1);
+			
+		} catch (SQLException e) {
+			throw new RuntimeException(e.getMessage(), e);
+		}
+		finally {
+			closeDB(conn, stmt, rs);
+		}
+	}
+	
+	
 	
 	/**
 	 * Oracle Driver
@@ -124,5 +153,7 @@ public class MemberDAO {
 			}
 		}
 	}
+
+
 	
 }

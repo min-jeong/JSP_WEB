@@ -49,4 +49,8 @@ public class MemberBiz {
 		}
 	} //join end
 	
+	public boolean isExistIdData(String memberId) {
+		return memberDAO.selectIdCount(memberId) > 0;
+	}
+	
 }

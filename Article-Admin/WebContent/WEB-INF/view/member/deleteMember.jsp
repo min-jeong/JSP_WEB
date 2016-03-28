@@ -133,12 +133,12 @@
 		</td>
 	</tr>
 </table>
-
-	<table border="1" align="center" width="200px">
+<br/>
+	<table border="1" align="center" width="250px">
 		<tr align="center">
-			<td align="center">회원 삭제</td>
-			<td align="center">회원 차단</td>
-			<td align="center">차단 해제</td>
+			<td align="center">회원삭제</td>
+			<td align="center">회원차단</td>
+			<td align="center">차단해제</td>
 		</tr>
 		<tr>
 			<td align="center">

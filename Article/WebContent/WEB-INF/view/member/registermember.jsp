@@ -3,7 +3,7 @@
 <jsp:include page="/WEB-INF/view/common/header.jsp"></jsp:include>
 <jsp:include page="/WEB-INF/view/common/login.jsp"></jsp:include>
 <jsp:include page="/WEB-INF/view/common/footer.jsp"></jsp:include>
-
+<script type="text/javascript" src="resource/js/json2.js"></script>
 <script type="text/javascript">
 	$(document).ready( function() {
 		
@@ -59,15 +59,70 @@
 			
 		} );
 		
+		$("#check").click( function() {
+			var memberId = document.getElementById('id').value;
+			
+			console.log(memberId);
+/* 			$.ajax({
+				type:"POST",
+				url:"/checkId",
+				data:this.memberId,
+				dataType:"memberId",
+				success:function(data){
+					var jsonData =  JSON.parse(data);
+					
+					
+					console.log(jsonData);
+					
+					if ( jsonData.isCheck ) {
+						$("#id").text("");
+						$("#id").reset();
+						alert("이미 존재하는 아이디입니다.");
+					}
+					else if ( jsonData.isCheck ) {
+						alert("사용할 수 있는 아이디입니다.");
+					}
+					
+				} 
+			}) */
+ 			$.post(
+					"/checkId"
+					, { "memberId" : $("#id").val() }
+					, function(data){
+						var jsonData = {};
+						try{
+							jsonData = JSON.parse(data);
+						}
+						catch(e) {
+							alert("으아아앙앙");
+						}
+						
+						console.log(jsonData);
+						if ( jsonData.isCheck ) {
+							var text = $("#id").text();
+							$("#id").text("");
+							$("#id").reset();
+							alert("이미 존재하는 아이디입니다.");
+						}
+						else {
+							alert("사용할 수 있는 아이디입니다.");
+						}
+						
+					} 
+				);
+		});
+		
 	} );
 </script>   
 
+<br/>
+
 <form id="registerForm">
-	<table>
+	<table id="tb" align="center">
 		<tr>
 			<th>ID :</th>
 			<td>
-				<input type="text" id="id" name="id" style="width: 250px;" />
+				<input type="text" id="id" name="id" style="width: 250px;" /><input type="button" id="check" name="check" value="중복체크" />
 			</td>
 		</tr>
 		<tr>
@@ -89,9 +144,11 @@
 			</td>
 		</tr>
 	</table>
+	<div align="center">
 	<input type="button" id="doRegister" value="등록!" />
 	<input type="reset" value="다시 쓰기" />
 	<input type="button" id="cancle" value="취소" />
+	</div>
 </form>
 
 

@@ -45,6 +45,11 @@
 		<item value="true" key="WizardZipFileResourceExportPage1.STORE_COMPRESS_CONTENTS_ID"/>
 		<item value="true" key="WizardZipFileResourceExportPage1.STORE_CREATE_STRUCTURE_ID"/>
 		<list key="WizardZipFileResourceExportPage1.STORE_DESTINATION_NAMES_ID">
+			<item value="C:\Users\206-001\Desktop\pingpong.zip"/>
+			<item value="C:\Users\206-001\Desktop\이건어드민!!!.zip"/>
+			<item value="C:\Users\206-001\Desktop\받아랏!!!.zip"/>
+			<item value="C:\Users\206-001\Desktop\ㅡㅡ^.zip"/>
+			<item value="C:\Users\206-001\Desktop\검색.zip"/>
 			<item value="C:\Users\206-001\Desktop\추출한다.zip"/>
 			<item value="C:\Users\206-001\Desktop\장호인성.zip"/>
 			<item value="C:\Users\206-001\Desktop\myArticle.zip"/>

@@ -4,5 +4,6 @@
 <div id="leftMenu">
 	<ul>
 		<li><a href='<c:url value="/deleteMember"/>'>회원 추방/차단 관리</a></li>
+		<li><a href='<c:url value="/"/>'>권한 관리</a></li>
 	</ul>
 </div>

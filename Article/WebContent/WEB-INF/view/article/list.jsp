@@ -21,7 +21,7 @@
 	}) ;
 </script>
 
-	총 ${ articles.paging.totalArticleCount } 건의 게시물이 있습니다.
+	<div style="color:red;" align="center">총 ${ articles.paging.totalArticleCount } 건의 게시물이 있습니다.</div>
 <table border="1" width="800px" align="center">
 	<tr>
 		<th>번호</th>

@@ -2,6 +2,8 @@
 
 div#logout {
 	text-align: right;
+	color: red;
+	font-weight:bold;
 }
 
 #logout img {
