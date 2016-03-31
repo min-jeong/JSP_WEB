@@ -1,13 +1,21 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <section name="Workbench">
 	<section name="SynchronizeViewSettings">
-		<item value="1458007676694" key="lastactiveparticipant_sec_id"/>
+		<item value="1459411458702" key="lastactiveparticipant_sec_id"/>
 		<item value="org.eclipse.team.svn.ui.synchronize.update.SynchronizeModelParticipant" key="lastactiveparticipant_id"/>
 		<item value="false" key="linkWithEditor"/>
 		<section name="org.eclipse.team.svn.ui.synchronize.update.SynchronizeModelParticipant.1458007575002">
 		</section>
 		<section name="org.eclipse.team.svn.ui.synchronize.update.SynchronizeModelParticipant.1458007676694">
+			<item value="org.eclipse.core.resources.modelProvider" key="org.eclipse.team.ui.activeModelProvider"/>
+		</section>
+		<section name="org.eclipse.team.svn.ui.synchronize.update.SynchronizeModelParticipant.1459411458702">
 			<item value="org.eclipse.team.ui.activeModelProvider" key="org.eclipse.team.ui.activeModelProvider"/>
 		</section>
+	</section>
+	<section name="SynchronizeWizard">
+	</section>
+	<section name="SynchronizeResourceSelectionDialog">
+		<item value="" key="SynchronizeResourceSelectionDialog.STORE_WORKING_SETS"/>
 	</section>
 </section>

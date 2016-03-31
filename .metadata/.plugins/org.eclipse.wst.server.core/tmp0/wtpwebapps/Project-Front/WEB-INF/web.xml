@@ -42,7 +42,7 @@
     <description></description>
     <display-name>TeamInfo</display-name>
     <servlet-name>TeamInfo</servlet-name>
-    <servlet-class>com.ktds.pingpong.team.web.TeamInfo</servlet-class>
+    <servlet-class>com.ktds.pingpong.chat.web.TeamInfo</servlet-class>
   </servlet>
   <servlet-mapping>
     <servlet-name>TeamInfo</servlet-name>
@@ -177,5 +177,65 @@
   <servlet-mapping>
     <servlet-name>doChangeInfo</servlet-name>
     <url-pattern>/doChangeInfo</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>ChatMemberServlet</display-name>
+    <servlet-name>ChatMemberServlet</servlet-name>
+    <servlet-class>com.ktds.pingpong.view.ChatMemberServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>ChatMemberServlet</servlet-name>
+    <url-pattern>/ChatMemberServlet</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>UpdatePhotoServlet</display-name>
+    <servlet-name>UpdatePhotoServlet</servlet-name>
+    <servlet-class>com.ktds.pingpong.member.web.UpdatePhotoServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>UpdatePhotoServlet</servlet-name>
+    <url-pattern>/updatePhoto</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>GetChatServlet</display-name>
+    <servlet-name>GetChatServlet</servlet-name>
+    <servlet-class>com.ktds.pingpong.chat.web.GetChatServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>GetChatServlet</servlet-name>
+    <url-pattern>/getChat</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>InsertChatServlet</display-name>
+    <servlet-name>InsertChatServlet</servlet-name>
+    <servlet-class>com.ktds.pingpong.chat.web.InsertChatServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>InsertChatServlet</servlet-name>
+    <url-pattern>/insertChat</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>GetNickNameServlet</display-name>
+    <servlet-name>GetNickNameServlet</servlet-name>
+    <servlet-class>com.ktds.pingpong.chat.web.GetNickNameServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>GetNickNameServlet</servlet-name>
+    <url-pattern>/getNickName</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>callImageServlet</display-name>
+    <servlet-name>callImageServlet</servlet-name>
+    <servlet-class>com.ktds.pingpong.member.web.callImageServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>callImageServlet</servlet-name>
+    <url-pattern>/callImageServlet</url-pattern>
   </servlet-mapping>
 </web-app>

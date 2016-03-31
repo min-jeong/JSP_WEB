@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<query>
+	<member>
+		<addNewMember>
+			INSERT INTO MEMBER (
+									EMAIL
+									, NAME
+									, PASSWORD
+								)
+			VALUES				(
+									?
+									, ?
+									, ?
+								)			
+		</addNewMember>
+		
+		<getMemberByIdAndPassword>
+			SELECT 	*
+			FROM 	MEMBER
+			WHERE	EMAIL = ?
+			AND		PASSWORD = ?
+		</getMemberByIdAndPassword>
+	
+		<selectIdCount>
+			SELECT COUNT(EMAIL)
+			FROM   MEMBER
+			WHERE  EMAIL = ?
+		</selectIdCount>
+		
+		<checkPassword>
+			SELECT *
+			FROM   MEMBER
+			WHERE  EMAIL = ?
+		</checkPassword>
+		
+		<updateMember>
+			UPDATE	MEMBER
+			SET		PASSWORD = ?
+					, NAME = ?
+			WHERE	EMAIL = ?
+		</updateMember>
+		<updateMemberPhoto>
+			UPDATE 	MEMBER
+			SET 	PIC_PATH = ?
+					, PIC_NAME = ?
+			WHERE 	EMAIL = ?
+		</updateMemberPhoto>
+	</member>
+	<chat>
+      <insertChat>
+         INSERT INTO CHAT (
+               CHAT_ID
+               , CHAT_DATE
+               , NICK_NAME
+               , DESCRIPTION
+               , NOTICE
+               , TEAM_ID
+         )VALUES (
+               CHAT_ID_SEQ.NEXTVAL
+               , TO_TIMESTAMP(?)
+               , ?
+               , ?
+               , ''
+               , 4
+         )      
+      </insertChat>
+      
+      <getAllChatByNickName>
+         SELECT    CHAT_ID
+               , CHAT_DATE
+               , NICK_NAME
+               , DESCRIPTION
+               , NOTICE
+               , TEAM_ID
+         FROM   CHAT
+         WHERE    NICK_NAME LIKE ?
+         AND    TEAM_ID = 4
+      </getAllChatByNickName>
+      
+      <getNickNamebyTeamId>
+         SELECT   NICK_NAME
+         FROM     CHAT
+         WHERE    TEAM_ID = 4
+         GROUP    BY NICK_NAME
+      </getNickNamebyTeamId>
+      
+      <getTalkCountbyNickName>
+         SELECT  COUNT(*), NICK_NAME
+         FROM    CHAT
+         GROUP   BY NICK_NAME;      
+      </getTalkCountbyNickName>
+      
+      <deleteAllChatByTeamId>
+         DELETE    CHAT
+         WHERE   TEAM_ID = 4
+      </deleteAllChatByTeamId>
+   </chat>
+</query>

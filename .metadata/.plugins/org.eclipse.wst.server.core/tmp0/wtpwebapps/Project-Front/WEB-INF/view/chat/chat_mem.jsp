@@ -1,5 +1,247 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<%@ taglib prefix="c"  uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ page import="java.util.List" %>
+<%@ page import="java.util.ArrayList" %>
+<%@ page import="com.ktds.pingpong.chat.dao.ChatDAO" %>
 <!DOCTYPE html>
+<style>
+::-webkit-scrollbar {width: 8px; height: 8px; border: 3px solid #fff; }
+::-webkit-scrollbar-button:start:decrement, ::-webkit-scrollbar-button:end:increment {display: block; height: 10px; background: url('./images/bg.png') #efefef}
+::-webkit-scrollbar-track {background: #efefef; -webkit-border-radius: 10px; border-radius:10px; -webkit-box-shadow: inset 0 0 4px rgba(0,0,0,.2)}
+::-webkit-scrollbar-thumb {height: 50px; width: 50px; background: rgba(0,0,0,.2); -webkit-border-radius: 8px; border-radius: 8px; -webkit-box-shadow: inset 0 0 4px rgba(0,0,0,.1)}
+html{scrollbar-3dLight-Color: #efefef; scrollbar-arrow-color: #dfdfdf; scrollbar-base-color: #efefef; scrollbar-Face-Color: #dfdfdf; scrollbar-Track-Color: #efefef; scrollbar-DarkShadow-Color: #efefef; scrollbar-Highlight-Color: #efefef; scrollbar-Shadow-Color: #efefef;}
+#myProgress {
+background-image: -webkit-linear-gradient(45deg, rgba(255, 255, 255, 0.15) 25%, transparent 25%, transparent 50%, rgba(255, 255, 255, 0.15) 50%, rgba(255, 255, 255, 0.15) 75%, transparent 75%, transparent);
+  background-image: -o-linear-gradient(45deg, rgba(255, 255, 255, 0.15) 25%, transparent 25%, transparent 50%, rgba(255, 255, 255, 0.15) 50%, rgba(255, 255, 255, 0.15) 75%, transparent 75%, transparent);
+  background-image: linear-gradient(45deg, rgba(255, 255, 255, 0.15) 25%, transparent 25%, transparent 50%, rgba(255, 255, 255, 0.15) 50%, rgba(255, 255, 255, 0.15) 75%, transparent 75%, transparent);
+  background-size: 40px 40px;
+    /*  height: 20px; 
+	position: relative;
+	background: #555;
+	-moz-border-radius: 25px;
+	-webkit-border-radius: 25px;
+	border-radius: 25px;
+	padding: 10px;
+	box-shadow: inset 0 -1px 1px rgba(255,255,255,0.3);  */
+/*   background-color: #eee;
+  border-radius: 2px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.25) inset; */
+}
+#myBar {
+ background-image: -webkit-linear-gradient(45deg, rgba(255, 255, 255, 0.15) 25%, transparent 25%, transparent 50%, rgba(255, 255, 255, 0.15) 50%, rgba(255, 255, 255, 0.15) 75%, transparent 75%, transparent);
+  background-image: -o-linear-gradient(45deg, rgba(255, 255, 255, 0.15) 25%, transparent 25%, transparent 50%, rgba(255, 255, 255, 0.15) 50%, rgba(255, 255, 255, 0.15) 75%, transparent 75%, transparent);
+  background-image: linear-gradient(45deg, rgba(255, 255, 255, 0.15) 25%, transparent 25%, transparent 50%, rgba(255, 255, 255, 0.15) 50%, rgba(255, 255, 255, 0.15) 75%, transparent 75%, transparent);
+background-color: #f44336;
+  /*     content: "";
+  position: absolute;
+  top: 0; left: 0; bottom: 0; right: 0;
+  background-image: linear-gradient(
+    -45deg, 
+    rgba(255, 255, 255, .2) 25%, 
+    transparent 25%, 
+    transparent 50%, 
+    rgba(255, 255, 255, .2) 50%, 
+    rgba(255, 255, 255, .2) 75%, 
+    transparent 75%, 
+    transparent
+  );
+  z-index: 1;
+  background-size: 50px 50px;
+  animation: move 2s linear infinite;
+  border-top-right-radius: 8px;
+  border-bottom-right-radius: 8px;
+  border-top-left-radius: 20px;
+  border-bottom-left-radius: 20px;
+  overflow: hidden;  */
+/*   background-image:
+	   -webkit-linear-gradient(-45deg, 
+	                           transparent 33%, rgba(0, 0, 0, .1) 33%, 
+	                           rgba(0,0, 0, .1) 66%, transparent 66%),
+	   -webkit-linear-gradient(top, 
+	                           rgba(255, 255, 255, .25), 
+	                           rgba(0, 0, 0, .25)),
+	   -webkit-linear-gradient(left, #09c, #f44);
 
-멤버간대화
+    border-radius: 2px; 
+    background-size: 35px 20px, 100% 100%, 100% 100%; */
+}
+
+/* 파일업로드 */
+.where {
+  display: block;
+  margin: 25px 15px;
+  font-size: 11px;
+  color: #000;
+  text-decoration: none;
+  font-family: verdana;
+  font-style: italic;
+} 
+
+.filebox input[type="file"] {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip:rect(0,0,0,0);
+    border: 0;
+}
+
+.filebox label {
+    display: inline-block;
+    padding: .5em .75em;
+    color: #999;
+    font-size: inherit;
+    line-height: normal;
+    vertical-align: middle;
+    background-color: #fdfdfd;
+    cursor: pointer;
+}
+
+/* named upload */
+.filebox .upload-name {
+    display: inline-block;
+    padding: .5em .75em;
+    font-size: inherit;
+    font-family: inherit;
+    line-height: normal;
+    vertical-align: middle;
+    background-color: #f5f5f5;
+  border: 1px solid #ebebeb;
+  border-bottom-color: #e2e2e2;
+  border-radius: .25em;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+}
+
+</style>
+<script>
+$(document).ready(function(){
+	$("#myProgress").hide();
+	$("#myBar").hide();
+	
+	  var fileTarget = $('.filebox .upload-hidden');
+
+	  fileTarget.on('change', function(){  // 값이 변경되면
+	    if(window.FileReader){  // modern browser
+	      var filename = $(this)[0].files[0].name;
+	    } 
+	    else {  // old IE
+	      var filename = $(this).val().split('/').pop().split('\\').pop();  // 파일명만 추출
+	    }
+	    
+	    // 추출한 파일명 삽입
+	    $(this).siblings('.upload-name').val(filename);
+	  });
+	  
+	  $("#upload").click( function move() {
+		    $("#myProgress").show();
+			$("#myBar").show();
+			var elem = document.getElementById("myBar"); 
+		    var width = 0;
+		    var id = setInterval(frame, 180);
+		    function frame() {
+		        if (width >= 100) {
+		            clearInterval(id);
+		        } else {
+		            width++; 
+		            elem.style.width = width + '%'; 
+		        }
+		    }
+		});
+	}); 
+</script>
+<%-- <div id="chatMem">
+	<form id="getNickName" method="post" action="/getChat">
+	 	<c:forEach items='${ memberList }' var='mem'>
+	 		<input type="submit" name="nickName" value="${ mem }"/><br/>
+	 	</c:forEach>
+	 </form>
+</div> --%>
+
+
+<div class="card">
+	<div class="card-header bgm-blue">
+	    <h2>Upload TextFile</h2>
+	</div>
+	<div id="fileUpload">
+		<form id="textFileUpload" method="post" action="/insertChat" enctype="multipart/form-data">
+			<div class="filebox bs3-primary">
+				<input class="upload-name" value="파일선택" disabled="disabled">
+				<label class="btn bgm-gray" for="ex_filename" id="isFile">Select</label> 
+			<input id="ex_filename" class="upload-hidden" type="file" name="chatText" value="file"><button class="btn bgm-gray" type="submit" id="upload"><i class="md md-trending-up" style=" margin-bottom: 2px;"></i> Upload TextFile</button><br/>
+			</div>
+		    <div id="myProgress">
+			  <div id="myBar">
+			  </div>
+			</div> 
+			<br/>
+		</form>
+	</div>
+<%
+
+	List<String> member =  new ArrayList<String>();
+	ChatDAO chatDAO = new ChatDAO();
+	member = chatDAO.getAllMember();
+
+%>	
+<div class="panel-group" role="tablist" data-collapse-color="amber" aria-multiselectable="true">
+    <div class="panel panel-collapse">
+        <div class="panel-heading" role="tab" id="headingOne">
+            <h4 class="panel-title" >
+                <a data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                  Member List
+              </a>
+          </h4>
+      </div>
+      <div id="collapseOne" class="collapse in" role="tabpanel" aria-labelledby="headingOne">
+          <div class="panel-body">
+          	 <form id="getNickName" method="post" action="/getChat">
+				<c:forEach items="<%=member%>" var="mem">
+				<a href="/getChat?nickName=${ mem }">
+				<div class="listview lv-user m-t-20">
+					<div class="lv-item media">
+				    <div class="lv-avatar bgm-red pull-left">m</div>
+				    <div class="media-body">
+				        <div class="lv-title">${ mem }</div>
+				    </div>
+				     </div>
+				</div>
+				</a>
+				</c:forEach>
+			  </form>
+           </div>
+       </div>
+   </div>
+</div>
+
+       
+</div>	
+                                
+	
+	<%--  <div class="listview">
+        <div class="lv-body">
+        	<form id="getNickName" method="post" action="/getChat">
+        		<c:forEach items='${ memberList }' var='mem'>
+             <a class="lv-item" href="/getChat?nickName=${ mem }" >
+                 <div class="media" >
+                     <div class="pull-left">
+                         <img class="lv-img-sm" src="resource/img/profile-pics/1.jpg" alt="">
+                     </div>
+                     <div class="media-body">
+                         <div class="lv-title">${ mem }</div>
+                     </div>
+                 </div>
+             </a>
+            	</c:forEach>
+            </form>
+        </div>
+    </div>
+    <br/>
+</div> --%>
+
+
+                        

@@ -1,0 +1,55 @@
+package com.ktds.pingpong.chat.biz;
+
+import java.io.File;
+import java.util.List;
+
+import com.ktds.pingpong.chat.dao.ChatDAO;
+import com.ktds.pingpong.chat.vo.ChatVO;
+import com.ktds.pingpong.util.SplitTextFile;
+
+public class ChatBiz {
+
+	private ChatDAO chatDAO;
+	
+	public ChatBiz() {
+		chatDAO = new ChatDAO();
+	}
+	
+	public List<String> getAllMemberInChat() {
+		
+		List<String> member = chatDAO.getAllMember();
+		return member;
+	}
+	
+	public boolean insertChatText(File upFile) {
+		SplitTextFile split = new SplitTextFile();
+		List<ChatVO> chatList = split.splitTextFile(upFile);
+	    
+			System.out.println(chatList.get(1).getChatDate());
+		
+		chatDAO.deleteAllChatByTeamId();
+	    int insertCount =  chatDAO.insertChatText(chatList);
+	     
+	    if ( insertCount > 0 ) {
+	    	return true;
+	    }
+	    else {
+	    	return false;
+	    }
+	      
+	   }
+
+	public List<ChatVO> getAllChatByNickName(String nickName) {
+	
+	System.out.println("getAllChatByNickName 메소드 실행");
+		
+		List<ChatVO> chatList = chatDAO.getAllChatByNickName(nickName);
+
+		return chatList;
+		
+	}
+
+	
+	
+
+}

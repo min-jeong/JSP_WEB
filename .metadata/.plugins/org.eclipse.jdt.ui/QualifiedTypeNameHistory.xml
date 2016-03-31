@@ -18,14 +18,9 @@
 <fullyQualifiedTypeName name="com.ktds.jmj.member.vo.ArticleVO"/>
 <fullyQualifiedTypeName name="javax.servlet.http.HttpServletRequest"/>
 <fullyQualifiedTypeName name="javax.servlet.http.Cookie"/>
-<fullyQualifiedTypeName name="org.apache.commons.fileupload.FileItem"/>
-<fullyQualifiedTypeName name="org.apache.commons.fileupload.servlet.ServletFileUpload"/>
-<fullyQualifiedTypeName name="org.apache.commons.fileupload.disk.DiskFileItemFactory"/>
 <fullyQualifiedTypeName name="com.ktds.jmj.util.CloneUtil"/>
 <fullyQualifiedTypeName name="jdk.internal.org.objectweb.asm.tree.MultiANewArrayInsnNode"/>
 <fullyQualifiedTypeName name="com.ktds.jmj.util.web.MultipartHttpServletRequest.MultipartFile"/>
-<fullyQualifiedTypeName name="java.io.FileInputStream"/>
-<fullyQualifiedTypeName name="java.io.OutputStream"/>
 <fullyQualifiedTypeName name="java.net.URLEncoder"/>
 <fullyQualifiedTypeName name="com.ktds.jmj.util.web.MultipartHttpServletRequest"/>
 <fullyQualifiedTypeName name="com.ktds.jmj.file.vo.FileVO"/>
@@ -45,9 +40,17 @@
 <fullyQualifiedTypeName name="java.lang.NullPointerException"/>
 <fullyQualifiedTypeName name="com.ktds.jmj.history.vo.OperationHistoryVO"/>
 <fullyQualifiedTypeName name="com.ktds.jmj.history.vo.ActionCode"/>
-<fullyQualifiedTypeName name="java.io.File"/>
 <fullyQualifiedTypeName name="java.util.List"/>
 <fullyQualifiedTypeName name="com.ktds.jmj.article.favo.vo.FavoVO"/>
 <fullyQualifiedTypeName name="javax.servlet.http.HttpServletResponse"/>
 <fullyQualifiedTypeName name="javax.servlet.http.HttpSession"/>
+<fullyQualifiedTypeName name="org.apache.commons.fileupload.servlet.ServletFileUpload"/>
+<fullyQualifiedTypeName name="org.apache.commons.fileupload.disk.DiskFileItemFactory"/>
+<fullyQualifiedTypeName name="org.apache.commons.fileupload.FileItemFactory"/>
+<fullyQualifiedTypeName name="org.apache.commons.fileupload.FileItem"/>
+<fullyQualifiedTypeName name="java.io.File"/>
+<fullyQualifiedTypeName name="java.net.URLConnection"/>
+<fullyQualifiedTypeName name="java.io.FileInputStream"/>
+<fullyQualifiedTypeName name="java.io.OutputStream"/>
+<fullyQualifiedTypeName name="java.io.FileNotFoundException"/>
 </qualifiedTypeNameHistroy>

@@ -1,16 +1,32 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<%@	page import="com.ktds.pingpong.util.PageUtil"%>
+<%-- <div class="btn-group btn-group-justified" role="group" aria-label="close">
+         <div class="btn-group" role="group">
+             <a class="btn btn-default" href="/teamInfo">Team Information</a>
+         </div>
+          <div class="btn-group" role="group">
+             <a class="btn btn-default" href="${root}/controlMain?page=${PageUtil.chatCalendar}">Chat By Calendar</a>
+         </div>
+         <div class="btn-group" role="group">
+             <a class="btn btn-default" href="${root}/controlMain?page=${PageUtil.chatMember}">Chat By Member</a>
+         </div>
+         <div class="btn-group" role="group">
+             <a class="btn btn-default" href="${root}/controlMain?page=${PageUtil.propertyMember}">Property By Member</a>
+    </div>
+</div>     메뉴 첫번째 --%>
 
-<c:set var="root" value="${pageContext.request.contextPath}" />
+<ul class="tab-nav tn-justified">
+    <li class="waves-effect"><a href="/teamInfo">Team Information</a></li>
+    <li class="waves-effect"><a href="/chatCalendar">Chat By Calendar</a></li>
+    <li class="waves-effect"><a href="/chatMember">Chat By Member</a></li>
+    <li class="waves-effect"><a href="/propertyMember">Property By Member</a></li>
+</ul>
 
-<c:set var="page_teamInfo" value="${PageUtil.teamInfo}"/>
-<c:set var="page_chatCalendar" value="${PageUtil.chatCalendar}"/>
-<c:set var="page_chatMember" value="${PageUtil.chatMember}"/>
-<c:set var="page_propertyMember" value="${PageUtil.propertyMember}"/>
-
-<div role="tabpanel">
+<%-- <ul class="nav nav-pills">
+ 	<li class="active"><a href="/teamInfo">팀원정보</a></li>
+    <li class="active"><a href="${root}/controlMain?page=${PageUtil.chatCalendar}">캘린더 대화</a></li>
+    <li class="active"><a href="${root}/controlMain?page=${PageUtil.chatMember}">맴버간 대화</a></li>
+    <li class="active"><a href="${root}/controlMain?page=${PageUtil.propertyMember}">맴버별 성향</a></li>
+</ul>  --%>
+<!-- <div role="tabpanel">
     <ul class="tab-nav" role="tablist" data-tab-color="red">
         <li class="active"><a href="#home11" aria-controls="home11" role="tab" data-toggle="tab">Team Information</a></li>
         <li><a href="#profile11" aria-controls="profile11" role="tab" data-toggle="tab">Chat By Calendar</a></li>
@@ -90,7 +106,7 @@
 	                  
 	                  <p class="f-500 c-black m-b-20">Optional Material Design Colors</p>
 	                  
-	                  <div class="btn-colors btn-demo"> <!-- Optional container for demo porpose only -->
+	                  <div class="btn-colors btn-demo"> Optional container for demo porpose only
 	                          <button class="btn bgm-cyan">Cyan</button>
 	                          <button class="btn bgm-teal">Teal</button>
 	                          <button class="btn bgm-amber">Amber</button>
@@ -153,7 +169,7 @@
       4번
       </div>
     </div>
-</div>
+</div> -->
 
 <%-- <ul class="nav nav-pills">
 <ul class="tab-nav" data-tab-color="red">
@@ -183,7 +199,7 @@
     <li class="active"><a href="${root}/controlMain?page=${PageUtil.propertyMember}">맴버별 성향</a></li>
   </ul> --%>
 
-<c:if test="${pageNum ne null}">
+<%-- <c:if test="${pageNum ne null}">
 <c:choose>
  	<c:when test="${pageNum eq page_teamInfo}">
        <jsp:include page="/WEB-INF/view/team/team_info.jsp"></jsp:include>
@@ -198,4 +214,4 @@
        <jsp:include page="/WEB-INF/view/member/property_mem.jsp"></jsp:include>
     </c:when>
 </c:choose>
-</c:if>
+</c:if> --%>

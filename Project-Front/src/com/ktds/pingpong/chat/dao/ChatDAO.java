@@ -1,0 +1,281 @@
+package com.ktds.pingpong.chat.dao;
+
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
+
+import com.ktds.pingpong.Const;
+import com.ktds.pingpong.chat.vo.ChatRate;
+import com.ktds.pingpong.chat.vo.ChatVO;
+import com.ktds.pingpong.util.DateFormatter;
+import com.ktds.pingpong.util.xml.XML;
+
+public class ChatDAO {
+	
+	/**
+	 * delete chat
+	 */
+	public void deleteAllChatByTeamId() {
+		loadOracleDriver();
+		
+		Connection conn = null;
+		PreparedStatement stmt = null;
+		
+		try {
+			System.out.println("deleteAllChatByTeamId 메소드 실행");
+			conn = DriverManager.getConnection(Const.DB_URL, Const.DB_USER, Const.DB_PASSWORD);
+			String query = XML.getNodeString("//query/chat/deleteAllChatByTeamId/text()");
+			stmt = conn.prepareStatement(query);
+			stmt.executeUpdate();
+			
+		} catch (SQLException e) {
+			throw new RuntimeException(e.getMessage(), e);
+		} finally {
+			closeDB(conn, stmt, null);
+		}
+		
+	}
+	
+	/**
+	 * getMember in 
+	 * @return
+	 */
+	public List<String> getAllMember() {
+		loadOracleDriver();
+
+		Connection conn = null;
+		PreparedStatement stmt = null;
+		ResultSet rs = null;
+		
+		List<String> member = new ArrayList<String>();
+
+		try {
+			conn = DriverManager.getConnection(Const.DB_URL, Const.DB_USER, Const.DB_PASSWORD);
+			
+			String query = XML.getNodeString("//query/chat/getNickNamebyTeamId/text()");
+			System.out.println(query);
+			stmt = conn.prepareStatement(query);
+			rs = stmt.executeQuery();
+			
+			while (rs.next()) {
+				member.add(rs.getString("NICK_NAME"));
+			}
+
+			return member;
+		} catch (SQLException e) {
+			throw new RuntimeException(e.getMessage(), e);
+		} finally {
+			closeDB(conn, stmt, null);
+		}
+	}
+	
+	/**
+	 * insertChat
+	 * @param chat
+	 * @return
+	 */
+	public int insertChatText(List<ChatVO> chat) {
+		loadOracleDriver();
+
+		int insertCount = 0;
+		Connection conn = null;
+		PreparedStatement stmt = null;
+
+		DateFormatter df = new DateFormatter();
+		try {
+			conn = DriverManager.getConnection(Const.DB_URL, Const.DB_USER, Const.DB_PASSWORD);
+			String query = XML.getNodeString("//query/chat/insertChat/text()");
+			stmt = conn.prepareStatement(query);
+
+			System.out.println("insertChatText 메소드 실행");
+			for (ChatVO chatVO : chat) {
+
+				stmt.setString(1, df.parseDate(chatVO.getChatDate()));
+				stmt.setString(2, chatVO.getNickName());
+				stmt.setString(3, chatVO.getDescription());
+				
+				insertCount = stmt.executeUpdate();
+			}
+			return insertCount;
+			
+		} catch (SQLException e) {
+			throw new RuntimeException(e.getMessage(), e);
+		} catch (java.text.ParseException pe) {
+			throw new RuntimeException(pe.getMessage(), pe);
+		} finally {
+			closeDB(conn, stmt, null);
+		}
+	}
+
+	  /**
+	   * get Memeber in chat
+	   * @return
+	   */
+	  public List<String> getAllMemberInChat() {
+	  
+	  loadOracleDriver();
+	  
+	  Connection conn = null; 
+	  PreparedStatement stmt = null; 
+	  ResultSet rs = null;
+	  
+	  List<String> memberList = new ArrayList<String>();
+	  
+	  try {
+	        conn = DriverManager.getConnection(Const.DB_URL, Const.DB_USER, Const.DB_PASSWORD);
+			  
+			  // article을 꺼내온다. String query =
+			  String query = XML.getNodeString("//query/chat/getAllArticles/text()"); 
+			  stmt = conn.prepareStatement(query); 
+			  /*stmt.setInt(1, searchVO.getEndIndex());
+			  stmt.setInt(2, searchVO.getStartIndex());*/
+			  
+			  rs = stmt.executeQuery();
+			  
+	  	while (rs.next()) { 
+		  memberList.add(rs.getString("NICK_NAME"));
+	  	}
+	  } 
+	  catch (SQLException e) { 
+		  throw new RuntimeException(e.getMessage(), e);
+	  } 
+	  finally { closeDB(conn, stmt, rs); 
+	  }
+	  
+	  return memberList; 
+	  }
+	 
+	/**
+	 * search chat by nickname
+	 * @param nickName
+	 * @return
+	 */
+	public List<ChatVO> getAllChatByNickName(String nickName) {
+	
+
+		  loadOracleDriver();
+		  
+		  Connection conn = null; 
+		  PreparedStatement stmt = null; 
+		  ResultSet rs = null;
+		  ChatVO chat = null;
+		 
+			try {
+
+				conn = DriverManager.getConnection(Const.DB_URL, Const.DB_USER, Const.DB_PASSWORD);
+
+				// article을 꺼내온다. String query =
+				String query = XML.getNodeString("//query/chat/getAllChatByNickName/text()");
+				stmt = conn.prepareStatement(query);
+				System.out.println(query);
+				System.out.println(nickName);
+				stmt.setString(1, nickName);
+
+				/*
+				 * stmt.setInt(1, searchVO.getEndIndex()); stmt.setInt(2,
+				 * searchVO.getStartIndex());
+				 */
+
+				List<ChatVO> chatList = new ArrayList<ChatVO>();
+
+				rs = stmt.executeQuery();
+
+				while (rs.next()) {
+					chat = new ChatVO();
+					chat.setChatID(rs.getInt("CHAT_ID"));
+					chat.setChatDate(rs.getString("CHAT_DATE"));
+					chat.setNickName(rs.getString("NICK_NAME"));
+					chat.setDescription(rs.getString("DESCRIPTION"));
+					chat.setNotice(rs.getString("NOTICE"));
+					chat.setTeamId(rs.getInt("TEAM_ID"));
+
+					chatList.add(chat);
+				}
+				
+				return chatList;
+			} 
+			catch (SQLException e) {
+				throw new RuntimeException(e.getMessage(), e);
+			} 
+			finally {
+				closeDB(conn, stmt, rs);
+			}
+
+	}
+	
+	public List<ChatRate> getChatRateByTeamId(int teamid) {
+		 loadOracleDriver();
+		  
+		  Connection conn = null; 
+		  PreparedStatement stmt = null; 
+		  ResultSet rs = null;
+		  ChatRate rate = null;
+		 
+			try {
+
+				conn = DriverManager.getConnection(Const.DB_URL, Const.DB_USER, Const.DB_PASSWORD);
+
+				String query = XML.getNodeString("//query/chat/getChatRateByTeamId/text()");
+				stmt = conn.prepareStatement(query);
+
+				stmt.setInt(1, teamid);
+				stmt.setInt(2, teamid);
+
+				rs = stmt.executeQuery();
+				List<ChatRate> rates = new ArrayList<ChatRate>();
+				
+				while (rs.next()) {
+					rate = new ChatRate();
+					rate.setNickName(rs.getString("NICKNAME"));
+					rate.setMemberChatRate(rs.getDouble("GCT")) ;
+				
+					rates.add(rate);
+				}
+				
+				return rates;
+			} 
+			catch (SQLException e) {
+				throw new RuntimeException(e.getMessage(), e);
+			} 
+			finally {
+				closeDB(conn, stmt, rs);
+			}
+	}
+	
+	
+	
+	private void loadOracleDriver() {
+		try {
+			Class.forName("oracle.jdbc.driver.OracleDriver");
+		} catch (ClassNotFoundException e) {
+			throw new RuntimeException(e.getMessage(), e);
+		}
+	}
+
+	private void closeDB(Connection conn, PreparedStatement stmt, ResultSet rs) {
+
+		if (rs != null) {
+			try {
+				rs.close();
+			} catch (SQLException e) {
+			}
+		}
+		if (stmt != null) {
+			try {
+				stmt.close();
+			} catch (SQLException e) {
+			}
+		}
+		if (conn != null) {
+			try {
+				conn.close();
+			} catch (SQLException e) {
+			}
+		}
+	}
+	
+}

@@ -83,8 +83,6 @@ $(document).ready( function() {
 					    notify('top', 'center', 'fa fa-comments', 'inverse', 'animated fadeInDown', 'animated fadeOutDown'); 
 					}
 				  }
-				
-		
 		);
 	});
 });
@@ -128,9 +126,13 @@ $(document).ready( function() {
 				
             <button class="btn btn-login btn-danger btn-float" id="doLogin"><i class="md md-arrow-forward"></i></button>
             
+            <ul class="login-navigation">
+                <li data-block="#l-forget-password" class="bgm-orange">Forgot Password?</li>
+            </ul>
+            
+             <!-- Forgot Password -->
         </div>
-  <!--      
-        Forgot Password
+        
         <div class="lc-block" id="l-forget-password">
             <p class="text-left">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla eu risus. Curabitur commodo lorem fringilla enim feugiat commodo sed ac lacus.</p>
             
@@ -145,11 +147,7 @@ $(document).ready( function() {
             
             <ul class="login-navigation">
                 <li data-block="#l-login" class="bgm-green">Login</li>
-                <li data-block="#l-register" class="bgm-red">Register</li>
             </ul>
-        </div> -->
-  
-
-        
+        </div>
     </body>
 </html>

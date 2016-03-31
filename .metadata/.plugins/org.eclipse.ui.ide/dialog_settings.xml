@@ -153,6 +153,13 @@
 		<item value="org.springsource.sts.package:3.7.3.201602250940-RELEASE-e45"/>
 		<item value="org.springsource.sts:3.7.3.201602250940-RELEASE"/>
 	</list>
+	<section name="CleanDialogSettings">
+		<item value="500" key="DIALOG_WIDTH"/>
+		<item value="false" key="TOGGLE_SELECTED"/>
+		<item value="377" key="DIALOG_HEIGHT"/>
+		<item value="704" key="DIALOG_X_ORIGIN"/>
+		<item value="290" key="DIALOG_Y_ORIGIN"/>
+	</section>
 	<section name="ExternalProjectImportWizard">
 		<item value="true" key="WizardProjectsImportPage.STORE_NESTED_PROJECTS"/>
 		<item value="true" key="WizardProjectsImportPage.STORE_COPY_PROJECT_ID"/>
@@ -161,6 +168,7 @@
 			<item value=""/>
 		</list>
 		<list key="WizardProjectsImportPage.STORE_ARCHIVES">
+			<item value="C:\Users\206-001\Desktop\트리3_장호.zip"/>
 			<item value="C:\Users\206-001\Desktop\Article.zip"/>
 		</list>
 	</section>

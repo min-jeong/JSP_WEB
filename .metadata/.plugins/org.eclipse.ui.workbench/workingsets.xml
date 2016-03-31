@@ -6,5 +6,7 @@
 <workingSet editPageId="org.eclipse.ui.resourceWorkingSetPage" factoryID="org.eclipse.ui.internal.WorkingSetFactory" id="1458181792152_2" label="ar" name="ar">
 <item factoryID="org.eclipse.ui.internal.model.ResourceFactory" path="/Article" type="4"/>
 </workingSet>
+<workingSet editPageId="org.eclipse.mylyn.tasks.ui.workingSet" factoryID="org.eclipse.ui.internal.WorkingSetFactory" id="1459228126987_3" label="ff" name="ff"/>
+<workingSet editPageId="org.eclipse.mylyn.tasks.ui.workingSet" factoryID="org.eclipse.ui.internal.WorkingSetFactory" id="1459308335273_4" label="Project-Front" name="Project-Front"/>
 <workingSet aggregate="true" factoryID="org.eclipse.ui.internal.WorkingSetFactory" id="1456277458343_0" label="Window Working Set" name="Aggregate for window 1456277458343"/>
 </workingSetManager>
