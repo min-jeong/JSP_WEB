@@ -13,13 +13,22 @@
     </div>
 </div>     메뉴 첫번째 --%>
 
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<c:set var="leaderEmail" value="${ sessionScope._TEAM_.leaderEmail }" />
+<c:set var="Useremail" value="${ sessionScope._MEMBER_.email }" />
+
 <ul class="tab-nav tn-justified">
     <li class="waves-effect"><a href="/teamInfo">Team Information</a></li>
-    <li class="waves-effect"><a href="/chatCalendar">Chat By Calendar</a></li>
-    <li class="waves-effect"><a href="/chatMember">Chat By Member</a></li>
     <li class="waves-effect"><a href="/propertyMember">Property By Member</a></li>
+	<c:if test="${ leaderEmail ne Useremail }">
+	</c:if>    
+	<c:if test="${ leaderEmail eq Useremail }">
+	<li class="waves-effect"><a href="/goManageTeam">Manage Team</a></li>
+	</c:if>
 </ul>
-
+ 
+ 
+ 
 <%-- <ul class="nav nav-pills">
  	<li class="active"><a href="/teamInfo">팀원정보</a></li>
     <li class="active"><a href="${root}/controlMain?page=${PageUtil.chatCalendar}">캘린더 대화</a></li>

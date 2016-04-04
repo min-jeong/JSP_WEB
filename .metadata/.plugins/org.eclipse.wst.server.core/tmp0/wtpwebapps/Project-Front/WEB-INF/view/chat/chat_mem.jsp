@@ -3,7 +3,8 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ page import="java.util.List" %>
 <%@ page import="java.util.ArrayList" %>
-<%@ page import="com.ktds.pingpong.chat.dao.ChatDAO" %>
+<%@ page import="com.ktds.pingpong.chat.biz.ChatBiz" %>
+<%@ page import="com.ktds.pingpong.team.vo.TeamVO" %>
 <!DOCTYPE html>
 <style>
 ::-webkit-scrollbar {width: 8px; height: 8px; border: 3px solid #fff; }
@@ -66,128 +67,61 @@ background-color: #f44336;
     border-radius: 2px; 
     background-size: 35px 20px, 100% 100%, 100% 100%; */
 }
-
-/* 파일업로드 */
-.where {
-  display: block;
-  margin: 25px 15px;
-  font-size: 11px;
-  color: #000;
-  text-decoration: none;
-  font-family: verdana;
-  font-style: italic;
-} 
-
-.filebox input[type="file"] {
-    position: absolute;
-    width: 1px;
-    height: 1px;
-    padding: 0;
-    margin: -1px;
-    overflow: hidden;
-    clip:rect(0,0,0,0);
-    border: 0;
-}
-
-.filebox label {
-    display: inline-block;
-    padding: .5em .75em;
-    color: #999;
-    font-size: inherit;
-    line-height: normal;
-    vertical-align: middle;
-    background-color: #fdfdfd;
-    cursor: pointer;
-}
-
-/* named upload */
-.filebox .upload-name {
-    display: inline-block;
-    padding: .5em .75em;
-    font-size: inherit;
-    font-family: inherit;
-    line-height: normal;
-    vertical-align: middle;
-    background-color: #f5f5f5;
-  border: 1px solid #ebebeb;
-  border-bottom-color: #e2e2e2;
-  border-radius: .25em;
-  -webkit-appearance: none;
-  -moz-appearance: none;
-  appearance: none;
-}
-
 </style>
 <script>
 $(document).ready(function(){
 	$("#myProgress").hide();
 	$("#myBar").hide();
-	
-	  var fileTarget = $('.filebox .upload-hidden');
-
-	  fileTarget.on('change', function(){  // 값이 변경되면
-	    if(window.FileReader){  // modern browser
-	      var filename = $(this)[0].files[0].name;
-	    } 
-	    else {  // old IE
-	      var filename = $(this).val().split('/').pop().split('\\').pop();  // 파일명만 추출
-	    }
-	    
-	    // 추출한 파일명 삽입
-	    $(this).siblings('.upload-name').val(filename);
-	  });
 	  
-	  $("#upload").click( function move() {
-		    $("#myProgress").show();
-			$("#myBar").show();
-			var elem = document.getElementById("myBar"); 
-		    var width = 0;
-		    var id = setInterval(frame, 180);
-		    function frame() {
-		        if (width >= 100) {
-		            clearInterval(id);
-		        } else {
-		            width++; 
-		            elem.style.width = width + '%'; 
-		        }
-		    }
-		});
-	}); 
+	 $("#upload").click( function move() {
+	    $("#myProgress").show();
+		$("#myBar").show();
+		var elem = document.getElementById("myBar"); 
+	    var width = 0;
+	    var id = setInterval(frame, 180);
+	    function frame() {
+	        if (width >= 100) {
+	            clearInterval(id);
+	        } else {
+	            width++; 
+	            elem.style.width = width + '%'; 
+	        }
+	    }
+	});
+}); 
 </script>
-<%-- <div id="chatMem">
-	<form id="getNickName" method="post" action="/getChat">
-	 	<c:forEach items='${ memberList }' var='mem'>
-	 		<input type="submit" name="nickName" value="${ mem }"/><br/>
-	 	</c:forEach>
-	 </form>
-</div> --%>
-
 
 <div class="card">
 	<div class="card-header bgm-blue">
 	    <h2>Upload TextFile</h2>
 	</div>
-	<div id="fileUpload">
-		<form id="textFileUpload" method="post" action="/insertChat" enctype="multipart/form-data">
-			<div class="filebox bs3-primary">
-				<input class="upload-name" value="파일선택" disabled="disabled">
-				<label class="btn bgm-gray" for="ex_filename" id="isFile">Select</label> 
-			<input id="ex_filename" class="upload-hidden" type="file" name="chatText" value="file"><button class="btn bgm-gray" type="submit" id="upload"><i class="md md-trending-up" style=" margin-bottom: 2px;"></i> Upload TextFile</button><br/>
+	<div class="card-body card-padding">
+	<div class="row">
+	    <div class="col-sm-4">
+	        <p class="f-500 c-black m-b-20">Input only text file</p>
+	        <form id="textFileUpload" method="post" action="/insertChat" enctype="multipart/form-data">
+	        <div class="fileinput fileinput-new" data-provides="fileinput">
+	            <span class="btn btn-primary btn-file m-r-10">
+	                <span class="fileinput-new">Select file</span>
+	                <span class="fileinput-exists">Change</span>
+	                <input type="file" name="chatText" value="file">
+	            </span>
+	            <span class="fileinput-filename" style="color: black;"></span>
+	            <a href="#" class="close fileinput-exists" data-dismiss="fileinput" style="color: black;">&times;</a>
+	        </div>
+	        <br/>
+	        <button class="btn bgm-red" type="submit" id="upload"><i class="md md-trending-up" style=" margin-bottom: 2px;"></i> Upload TextFile</button>
+	        <br/>
+	        <div id="myProgress">
+				  <div id="myBar">
+				  </div>
 			</div>
-		    <div id="myProgress">
-			  <div id="myBar">
-			  </div>
-			</div> 
 			<br/>
-		</form>
+	        </form>
+	    </div>
 	</div>
-<%
 
-	List<String> member =  new ArrayList<String>();
-	ChatDAO chatDAO = new ChatDAO();
-	member = chatDAO.getAllMember();
 
-%>	
 <div class="panel-group" role="tablist" data-collapse-color="amber" aria-multiselectable="true">
     <div class="panel panel-collapse">
         <div class="panel-heading" role="tab" id="headingOne">
@@ -200,7 +134,7 @@ $(document).ready(function(){
       <div id="collapseOne" class="collapse in" role="tabpanel" aria-labelledby="headingOne">
           <div class="panel-body">
           	 <form id="getNickName" method="post" action="/getChat">
-				<c:forEach items="<%=member%>" var="mem">
+				<c:forEach items="${ allChatMember }" var="mem">
 				<a href="/getChat?nickName=${ mem }">
 				<div class="listview lv-user m-t-20">
 					<div class="lv-item media">
@@ -218,30 +152,9 @@ $(document).ready(function(){
    </div>
 </div>
 
-       
+  </div>     
 </div>	
                                 
-	
-	<%--  <div class="listview">
-        <div class="lv-body">
-        	<form id="getNickName" method="post" action="/getChat">
-        		<c:forEach items='${ memberList }' var='mem'>
-             <a class="lv-item" href="/getChat?nickName=${ mem }" >
-                 <div class="media" >
-                     <div class="pull-left">
-                         <img class="lv-img-sm" src="resource/img/profile-pics/1.jpg" alt="">
-                     </div>
-                     <div class="media-body">
-                         <div class="lv-title">${ mem }</div>
-                     </div>
-                 </div>
-             </a>
-            	</c:forEach>
-            </form>
-        </div>
-    </div>
-    <br/>
-</div> --%>
 
 
                         

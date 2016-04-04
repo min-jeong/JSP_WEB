@@ -15,6 +15,7 @@
         <title>PingPong Chat</title>
         <!-- Vendor CSS -->
         <link href="${root}/resource/vendors/animate-css/animate.min.css" rel="stylesheet">
+        <link href="${root}/resource/vendors/bootgrid/jquery.bootgrid.min.css" rel="stylesheet">
         <link href="${root}/resource/vendors/fullcalendar/fullcalendar.css" rel="stylesheet">
         <link href="${root}/resource/vendors/sweet-alert/sweet-alert.min.css" rel="stylesheet">
         <link href="${root}/resource/vendors/light-gallery/lightGallery.min.css" rel="stylesheet">
@@ -27,6 +28,7 @@
         <link href="${root}/resource/css/display.property.css" rel="stylesheet">
         <link href="${root}/resource/css/profile.css" rel="stylesheet">
    	    <link href="${root}/resource/vendors/light-gallery/hovereffect.css" rel="stylesheet">
+        
         <!-- Javascript Libraries -->
         <script src="resource/js/jquery-2.1.1.min.js"></script>
         <script src="resource/js/bootstrap.min.js"></script>
@@ -37,6 +39,10 @@
         <script src="resource/vendors/bootgrid/jquery.bootgrid.min.js"></script>
         <script src="resource/vendors/bootstrap-growl/bootstrap-growl.min.js"></script>
         <script src="resource/vendors/sweet-alert/sweet-alert.min.js"></script>
+        <script src="${root}/resource/resource/vendors/fileinput/fileinput.min.js"></script>
+        <script src="resource/vendors/chosen/chosen.jquery.min.js"></script>
+		<script src="resource/vendors/bootstrap-select/bootstrap-select.min.js"></script>
+		<script src="resource/vendors/bootstrap-wizard/jquery.bootstrap.wizard.min.js"></script>
         
         <script src="resource/js/functions.js"></script>
         <script src="resource/js/demo.js"></script>
@@ -124,6 +130,22 @@ $(document).ready( function() {
                 iconUp: 'md-expand-less'
             },
         });
+		
+		$("#data-table-command").bootgrid({
+            css: {
+                icon: 'md icon',
+                iconColumns: 'md-view-module',
+                iconDown: 'md-expand-more',
+                iconRefresh: 'md-refresh',
+                iconUp: 'md-expand-less'
+            }
+            /* formatters: {
+                "commands": function(column, row) {
+                    return "<button type=\"submit\" class=\"btn btn-icon command-delete\" data-row-id=\"" + row.id + "\"><span class=\"md md-delete\"></span></button>";
+                }
+            } */
+        });
+
 		
 		var fileTarget = $('.filebox .upload-hidden');
 
@@ -252,23 +274,6 @@ html{scrollbar-3dLight-Color: #efefef; scrollbar-arrow-color: #dfdfdf; scrollbar
 				<div id="defaultPage">
 					 <div class="block-header">
                         <h2>Member Information <small> you can modify your information</small></h2>
-                        
-                        <ul class="actions m-t-20 hidden-xs">
-                            <li class="dropdown">
-                                <a href="" data-toggle="dropdown">
-                                    <i class="md md-more-vert"></i>
-                                </a>
-                    
-                                <ul class="dropdown-menu dropdown-menu-right">
-                                    <li>
-                                        <a href="">Privacy Settings</a>
-                                    </li>
-                                    <li>
-                                        <a href="">Account Settings</a>
-                                    </li>
-                                </ul>
-                            </li>
-                        </ul>
                     </div>
                     
                     <div class="card" id="profile-main">
@@ -281,60 +286,36 @@ html{scrollbar-3dLight-Color: #efefef; scrollbar-arrow-color: #dfdfdf; scrollbar
                                     <c:if test="${ picName  eq null }">
                                     	<img src="resource/img/notifications.png" class="img-responsive">
                                     </c:if>
-									<a href="#modalColor" data-target-color="lightblue" data-toggle="modal" class="pmop-edit">
-								<!-- 	<a href="#myModal" class="pmop-edit" data-toggle="modal"> 	 -->
+									<a href="#modalProfile" data-target-color="lightblue" data-toggle="modal" class="pmop-edit">
 										<i class="md md-camera-alt"></i> 
 										<span class="hidden-xs">프로필 사진 변경</span>
 									</a>
 									
                                 <!-- Modal -->
-                           <div class="modal fade" data-modal-color="bluegray" id="modalColor" data-backdrop="static" data-keyboard="false" tabindex="-1" role="dialog" aria-hidden="true">
-                                <div class="modal-dialog modal-sm">
-                                    <div class="modal-content">
-                                        <div class="modal-header">
-                                            <button type="button" class="close" data-dismiss="modal">&times;</button>
-											<h4 class="modal-title">프로필 사진 변경</h4>
-                                        </div>
-                                        <form id="profileModal" method="post" action="/updatePhoto" enctype="multipart/form-data">
-	                                        <div class="modal-body">
-												<p>원하시는 사진을 선택하세요.</p>
-												<div class="filebox bs3-primary">
-													<input class="upload-name" value="파일선택" disabled="disabled" style="color:black;">
-													<label class="btn bgm-bluegray" for="ex_filename" id="isFile">Select</label> 
-												<input id="ex_filename" class="upload-hidden" type="file" name="upPhoto" value="file">
-												</div>
-	                                       	</div>
-	                                        <div class="modal-footer">
-	                                            <button class="btn btn-link" type="submit">Save</button>
-	                                            <button type="button" class="btn btn-link" data-dismiss="modal">Close</button>
-	                                        </div>
-                                        </form>
-                                    </div>
-                                </div>
-                            </div>
-                                   <!--  
-									<div class="modal fade" id="myModal" role="dialog">
-										<div class="modal-dialog modal-lg">
-											<div class="modal-content">
-												<div class="modal-header">
-													<button type="button" class="close" data-dismiss="modal">&times;</button>
+		                           <div class="modal fade" data-modal-color="bluegray" id="modalProfile" data-backdrop="static" data-keyboard="false" tabindex="-1" role="dialog" aria-hidden="true">
+		                                <div class="modal-dialog modal-sm">
+		                                    <div class="modal-content">
+		                                        <div class="modal-header">
+		                                            <button type="button" class="close" data-dismiss="modal">&times;</button>
 													<h4 class="modal-title">프로필 사진 변경</h4>
-												</div>
-												<div class="modal-body">
-													<form id="profileModal" method="post" action="/updatePhoto"
-														enctype="multipart/form-data">
+		                                        </div>
+		                                        <form id="profileModal" method="post" action="/updatePhoto" enctype="multipart/form-data">
+			                                        <div class="modal-body">
 														<p>원하시는 사진을 선택하세요.</p>
-														<input type="file" name="upPhoto"> <input
-															type="submit" value="변경">
-													</form>
-												</div>
-												<div class="modal-footer">
-													<button type="button" class="btn btn-default"
-														data-dismiss="modal">Close</button>
-												</div>
-											</div>
-										</div>
-									</div>-->
+														<div class="filebox bs3-primary">
+															<input class="upload-name" value="파일선택" disabled="disabled" style="color:black;">
+															<label class="btn bgm-bluegray" for="ex_filename" id="isFile">Select</label> 
+														<input id="ex_filename" class="upload-hidden" type="file" name="upPhoto" value="file">
+														</div>
+			                                       	</div>
+			                                        <div class="modal-footer">
+			                                            <button class="btn btn-link" type="submit" >Save</button>
+			                                            <button type="button" class="btn btn-link" data-dismiss="modal">Close</button>
+			                                        </div>
+		                                        </form>
+		                                    </div>
+		                                </div>
+		                            </div>
 								</div>
                                 
                                 <div class="pmo-stat">
@@ -342,7 +323,6 @@ html{scrollbar-3dLight-Color: #efefef; scrollbar-arrow-color: #dfdfdf; scrollbar
                                     ${ Useremail }
                                 </div>
                             </div>
-                            
                             <!-- <div class="pmo-block pmo-contact hidden-xs">
                                 <h2>Team Information</h2>
                                 
@@ -367,12 +347,12 @@ html{scrollbar-3dLight-Color: #efefef; scrollbar-arrow-color: #dfdfdf; scrollbar
                             <ul class="tab-nav" role="tablist" data-tab-color="amber">
                                 <li class="active"><a href="#teamInfo" aria-controls="teamInfo" role="tab" data-toggle="tab">Team Information</a></li>
                                 <li><a href="#changeInfo" aria-controls="changeInfo" role="tab" data-toggle="tab">Change Information</a></li>
-                                <!-- 로그인한 사람이 팀장이라면 보여야 하는 메뉴 -->
-                                <li><a href="profile-photos.html">Manage Team</a></li>
                             </ul>
                             
                             <div class="tab-content">
 						    	
+						    	
+						    	<!-- Team Info -->
 						    	<div role="tabpanel" class="tab-pane active" id="teamInfo">
 							        <div class="pmb-block">
 		                                <div class="pmbb-header">
@@ -380,7 +360,32 @@ html{scrollbar-3dLight-Color: #efefef; scrollbar-arrow-color: #dfdfdf; scrollbar
 	                                	</div>
 	                                <div class="pmbb-body p-l-30">
 	                                    <div class="pmbb-view">
-	                                        Sed eu est vulputate, fringilla ligula ac, maximus arcu. Donec sed felis vel magna mattis ornare ut non turpis. Sed id arcu elit. Sed nec sagittis tortor. Mauris ante urna, ornare sit amet mollis eu, aliquet ac ligula. Nullam dolor metus, suscipit ac imperdiet nec, consectetur sed ex. Sed cursus porttitor leo.
+	                                        <div class="panel-group" role="tablist" data-collapse-color="amber" aria-multiselectable="true">
+											    <div class="panel panel-collapse">
+											        <div class="panel-heading" role="tab" id="headingOne">
+											            <h4 class="panel-title" >
+											                <a data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+											                  Team List
+											              </a>
+											          </h4>
+											      </div>
+											      <div id="collapseOne" class="collapse in" role="tabpanel" aria-labelledby="headingOne">
+											          <div class="panel-body">
+														<c:forEach items="${ allTeams }" var="teams">
+															<div class="listview lv-user m-t-20">
+																<div class="lv-item media">
+															    <div class="lv-avatar bgm-red pull-left">t</div>
+															    <div class="media-body">
+															        <div class="lv-title">${ teams.teamName }  ( Member Count : ${ teams.memCount } )</div>
+															        <div class="lv-small">Leader ID : ${ teams.leaderEmail }</div>
+															    </div>
+															     </div>
+															</div>
+														</c:forEach>
+											           </div>
+											       </div>
+											   </div>
+											</div>
 	                                    </div>
 	                                </div>
                             		</div>
@@ -403,7 +408,7 @@ html{scrollbar-3dLight-Color: #efefef; scrollbar-arrow-color: #dfdfdf; scrollbar
 	                            	</div>
                             	</div>
 	          				
-	          				
+	          					<!-- change Info -->
 						    	<div role="tabpanel" class="tab-pane" id="changeInfo">
 		                            	<div class="pmb-block">
 			                                <div class="pmbb-header">
@@ -472,14 +477,125 @@ html{scrollbar-3dLight-Color: #efefef; scrollbar-arrow-color: #dfdfdf; scrollbar
 	                            	</div>
 		          				</div><!-- changeInfo -->
 	          				
-	          				</div>
 	          				
+	          				
+	          				
+	          					<%-- <!-- Manage Team -->
+					    		<div role="tabpanel" class="tab-pane" id="ManageTeam">
+							        <div class="pmb-block">
+		                                <div class="pmbb-header">
+		                                    <h2><i class="md md-equalizer m-r-5"></i>Manage Team</h2>
+	                                	</div>
+	                                	<div class="listview lv-bordered lv-lg">
+	                                	<c:forEach items="${ isLeaderTeams }" var="teams">
+	                                	<div class="lv-body">
+			                                <div class="lv-item media">
+			                                    <div class="checkbox pull-left">
+			                                        <label>
+			                                            <input type="checkbox" value="">
+			                                            <i class="input-helper"></i>
+			                                        </label>
+			                                    </div>
+			                                    
+			                                    <div class="media-body">
+			                                        <div class="lv-title">${ teams.teamName }  ( Member Count : ${ teams.memCount } )</div>
+			                                        
+			                                        <div class="lv-actions actions dropdown">
+			                                            <a href="" data-toggle="dropdown" aria-expanded="true">
+			                                                <i class="md md-more-vert"></i>
+			                                            </a>
+			                                
+			                                            <ul class="dropdown-menu dropdown-menu-right">
+			                                                <li>
+			                                                    <a href="#manageTeam" data-toggle="modal" id="manageTeam">Member Manage</a><!-- Modal로 보내기 -->
+			                                                </li>
+			                                                <li>
+			                                                    <a href="/deleteTeam?teamId=${ teams.teamId }">Delete Team</a> <!-- /DeleteTeam서블릿으로 -->
+			                                                </li>
+			                                            </ul>
+			                                        </div>
+			                                        
+			                                    </div>
+			                                </div>
+		                                </div>
+	                                	</c:forEach>
+	                                	</div>
+	                                </div>
+                            		</div><!-- Manage Team --> --%>
+                            		
+                            	<%-- 	<!-- Manage Team -->
+					    		<div role="tabpanel" class="tab-pane" id="ManageTeam">
+							        <div class="pmb-block">
+		                                <div class="pmbb-header">
+		                                    <h2><i class="md md-equalizer m-r-5"></i>Manage Team</h2>
+	                                	</div>
+	                                	
+	                                	<div class="table-responsive">
+	                                	<table id="data-table-selection" class="table table-striped">
+	                                		<thead>
+				                                <tr>
+				                                    <th data-column-id="teamName">Team Name</th>
+				                                    <th data-column-id="memberEamil">Member</th>
+				                                </tr>
+				                            </thead>
+		                                	<tbody>
+			                                	<c:forEach items="${ isLeaderTeams }" var="teams">
+			                                	
+			                                	<tr>
+			                                		<td> ${ teams.teamName }  ( Member Count : ${ teams.memCount } )</td>
+			                                		<td> ${ teams.email }</td>
+			                                	</tr>
+			                                	</c:forEach>
+		                                	</tbody>
+	                                	</table>
+	                                	</div>
+	                                </div>
+                            		</div><!-- Manage Team --> --%>
+                            		
+                            		
+                            	</div><!-- tab content -->
+                            		<!-- <div class="modal" id="manage" tabindex="-1" role="dialog" aria-hidden="true">
+													<div class="modal-dialog">
+										                <div class="modal-content">
+										                     <div class="modal-header">
+										                         <h4 class="modal-title" align="center">Manage Team</h4>
+										                     </div>
+																<div class="modal-body">
+										                        <form id="manage">
+										                        	팀관리
+																
+																</form>
+										                    </div>
+										                 </div>
+										             </div>
+												</div> -->
+	          				</div>
 						</div>
 					</div>
 				</div>
-			</div>
-</section>
-
 		</section>
+		</section>
+		
+		
+<!-- 		<div class="modal" id="manage" tabindex="-1" role="dialog" aria-hidden="true">
+			<div class="modal-dialog">
+                <div class="modal-content">
+                     <div class="modal-header">
+                         <h4 class="modal-title" align="center">Manage Team</h4>
+                     </div>
+						<div class="modal-body">
+                        <form id="manage">
+                        	팀관리
+						
+						</form>
+                    </div>
+                 </div>
+             </div>
+		</div>
+		
+		 -->
 	</body>
 </html>
+
+
+		

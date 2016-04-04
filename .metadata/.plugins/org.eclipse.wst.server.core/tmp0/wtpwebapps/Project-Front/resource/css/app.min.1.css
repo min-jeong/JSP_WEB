@@ -14016,6 +14016,14 @@ input:focus {
 	background: white;
 }
 
+#morris .toggle-content {
+	margin-top : 10px;
+	height : 400px;
+	max-height : 400px;
+	background : white;
+	overflow: auto;
+	font-size: 5px;
+}
 .rating-list .rl-star {
   margin-top: 10px;
   margin-bottom: 4px;

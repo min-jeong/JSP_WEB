@@ -3,7 +3,6 @@
 
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <c:set var="root" value="${pageContext.request.contextPath}" />
-	
 <!DOCTYPE html>
 <html>
     <head>
@@ -41,6 +40,10 @@
         <script src="resource/vendors/waves/waves.min.js"></script>
         <script src="resource/vendors/bootstrap-growl/bootstrap-growl.min.js"></script>
         <script src="resource/vendors/sweet-alert/sweet-alert.min.js"></script>
+     	<script src="${root}/resource/resourcevendors/fileinput/fileinput.min.js"></script>
+     	<script src="${root}/resource/vendors/chosen/chosen.jquery.min.js"></script>
+		<script src="${root}/resource/vendors/bootstrap-select/bootstrap-select.min.js"></script>
+		<script src="${root}/resource/vendors/bootstrap-wizard/jquery.bootstrap.wizard.min.js"></script>
         
         <script src="resource/js/functions.js"></script>
         <script src="resource/js/demo.js"></script>
@@ -96,7 +99,8 @@ html{scrollbar-3dLight-Color: #efefef; scrollbar-arrow-color: #dfdfdf; scrollbar
 </head>
 <c:set var="Username" value="${ sessionScope._MEMBER_.name }" />
 <c:set var="Useremail" value="${ sessionScope._MEMBER_.email }" />
-<c:set var="root" value="${pageContext.request.contextPath}" /> 
+<c:set var="leaderEmail" value="${ sessionScope._TEAM_.leaderEmail }" />
+<c:set var="root" value="${pageContext.request.contextPath}" />
 <body id="content">
        <header id="header">
             <ul class="header-inner">
@@ -152,25 +156,14 @@ html{scrollbar-3dLight-Color: #efefef; scrollbar-arrow-color: #dfdfdf; scrollbar
 			</div>
 			<div id="main_menu">
 				<div id="defaultPage">
-					<%-- <div class="btn-group btn-group-justified" role="group" aria-label="close">
-					         <div class="btn-group" role="group">
-					             <a class="btn btn-default" href="/teamInfo">Team Information</a>
-					         </div>
-					          <div class="btn-group" role="group">
-					             <a class="btn btn-default" href="${root}/controlMain?page=${PageUtil.chatCalendar}">Chat By Calendar</a>
-					         </div>
-					         <div class="btn-group" role="group">
-					             <a class="btn btn-default" href="${root}/controlMain?page=${PageUtil.chatMember}">Chat By Member</a>
-					         </div>
-					         <div class="btn-group" role="group">
-					             <a class="btn btn-default" href="${root}/controlMain?page=${PageUtil.propertyMember}">Property By Member</a>
-					    </div>
-					</div> --%>
 					<ul class="tab-nav tn-justified">
-					    <li class="active waves-effect"><a href="/teamInfo">Team Information</a></li>
-					    <li class="waves-effect"><a href="/chatCalendar">Chat By Calendar</a></li>
-					    <li class="waves-effect"><a href="/chatMember">Chat By Member</a></li>
+					    <li class="waves-effect active"><a href="/teamInfo">Team Information</a></li>
 					    <li class="waves-effect"><a href="/propertyMember">Property By Member</a></li>
+						<c:if test="${ leaderEmail ne Useremail }">
+						</c:if>    
+						<c:if test="${ leaderEmail eq Useremail }">
+						<li class="waves-effect"><a href="/goManageTeam">Manage Team</a></li>
+						</c:if>
 					</ul>
 					<div class="tab-content">
 					    <div role="tabpanel" class="tab-pane active" id="home11">

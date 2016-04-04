@@ -30,7 +30,6 @@
 <fullyQualifiedTypeName name="javax.swing.plaf.synth.SynthSeparatorUI"/>
 <fullyQualifiedTypeName name="java.lang.Integer"/>
 <fullyQualifiedTypeName name="javax.servlet.http.HttpServlet"/>
-<fullyQualifiedTypeName name="javax.servlet.RequestDispatcher"/>
 <fullyQualifiedTypeName name="com.ktds.jmj.member.vo.MemberSearchVO"/>
 <fullyQualifiedTypeName name="com.ktds.jmj.member.vo.MemberListVO"/>
 <fullyQualifiedTypeName name="com.ktds.jmj.util.Root"/>
@@ -53,4 +52,7 @@
 <fullyQualifiedTypeName name="java.io.FileInputStream"/>
 <fullyQualifiedTypeName name="java.io.OutputStream"/>
 <fullyQualifiedTypeName name="java.io.FileNotFoundException"/>
+<fullyQualifiedTypeName name="javax.servlet.RequestDispatcher"/>
+<fullyQualifiedTypeName name="com.ktds.pingpong.team.vo.TeamVO"/>
+<fullyQualifiedTypeName name="com.ktds.pingpong.chat.biz.ChatBiz"/>
 </qualifiedTypeNameHistroy>

@@ -8,11 +8,13 @@
 	</section>
 	<section name="">
 		<item value="1000" key="org.eclipse.search.resultpage.limit"/>
-		<item value="1000" key="org.eclipse.jdt.search.resultpage.limit"/>
-		<item value="TRUE" key="org.eclipse.jdt.search.resultpage.limit_enabled"/>
 	</section>
 	<section name="">
 		<item value="1000" key="org.eclipse.search.resultpage.limit"/>
+		<item value="1000" key="org.eclipse.wst.jsdt.search.resultpage.limit"/>
+		<item value="1000" key="org.eclipse.jdt.search.resultpage.limit"/>
+		<item value="TRUE" key="org.eclipse.wst.jsdt.search.resultpage.limit_enabled"/>
+		<item value="TRUE" key="org.eclipse.jdt.search.resultpage.limit_enabled"/>
 	</section>
 	<section name="TextSearchPage">
 		<item value="12" key="HISTORY_SIZE"/>
@@ -22,31 +24,41 @@
 		<item value="false" key="SEARCH_DERIVED"/>
 		<section name="HISTORY6">
 			<item value="true" key="ignoreCase"/>
-			<item value="2" key="scope"/>
+			<item value="0" key="scope"/>
 			<item value="false" key="isWholeWord"/>
-			<item value="detail" key="textPattern"/>
+			<item value="myProgress" key="textPattern"/>
 			<item value="false" key="isRegExSearch"/>
 			<list key="fileNamePatterns">
 				<item value="*"/>
 			</list>
 			<list key="workingSets">
-				<item value="ar"/>
 			</list>
 		</section>
 		<section name="HISTORY7">
 			<item value="true" key="ignoreCase"/>
-			<item value="2" key="scope"/>
+			<item value="0" key="scope"/>
 			<item value="false" key="isWholeWord"/>
-			<item value="try" key="textPattern"/>
+			<item value="edge" key="textPattern"/>
 			<item value="false" key="isRegExSearch"/>
 			<list key="fileNamePatterns">
 				<item value="*"/>
 			</list>
 			<list key="workingSets">
-				<item value="Article-Admin"/>
 			</list>
 		</section>
 		<section name="HISTORY4">
+			<item value="true" key="ignoreCase"/>
+			<item value="0" key="scope"/>
+			<item value="false" key="isWholeWord"/>
+			<item value="&lt;div class=&quot;card-body card-padding&quot;&gt;" key="textPattern"/>
+			<item value="false" key="isRegExSearch"/>
+			<list key="fileNamePatterns">
+				<item value="*"/>
+			</list>
+			<list key="workingSets">
+			</list>
+		</section>
+		<section name="HISTORY10">
 			<item value="true" key="ignoreCase"/>
 			<item value="2" key="scope"/>
 			<item value="false" key="isWholeWord"/>
@@ -59,20 +71,24 @@
 				<item value="ff"/>
 			</list>
 		</section>
-		<section name="HISTORY10">
+		<section name="HISTORY5">
 			<item value="true" key="ignoreCase"/>
-			<item value="2" key="scope"/>
+			<item value="0" key="scope"/>
 			<item value="false" key="isWholeWord"/>
-			<item value="articles.jsp" key="textPattern"/>
+			<item value="wrap" key="textPattern"/>
 			<item value="false" key="isRegExSearch"/>
 			<list key="fileNamePatterns">
 				<item value="*"/>
 			</list>
 			<list key="workingSets">
-				<item value="Article-Admin"/>
 			</list>
 		</section>
-		<section name="HISTORY5">
+		<section name="EXTENSIONS">
+			<item value="*" key="0"/>
+			<item value="*.aj, *.ant, *.class, *.class without source, *.confluence, *.css, *.dbk, *.ddl, *.dita, *.ditamap, *.doc, *.docx, *.dtd, *.e4xmi, *.ecore, *.ecore2ecore, *.ecore2xml, *.emof, *.ent, *.exsd, *.genmodel, *.htm, *.html, *.htpl, *.jar, *.jardesc, *.java, *.jpage, *.js, *.jsf, *.json, *.jsp, *.jspf, *.jspx, *.jsv, *.jtpl, *.log, *.macrodef, *.markdown, *.md, *.mdtext, *.mediawiki, *.mod, *.patch, *.pom, *.prefs, *.product, *.properties, *.server, *.shtm, *.shtml, *.sql, *.sqlpage, *.tag, *.tagf, *.tagx, *.tagxf, *.target, *.textile, *.tld, *.tracwiki, *.twiki, *.txt, *.wml, *.wsdd, *.wsdl, *.wsil, *.wsimsg, *.xhtml, *.xjb, *.xmi, *.xml, *.xsd, *.xsl, *.xslt, *.yaml, *.yml, *.zip" key="1"/>
+			<item value="*.jsp" key="2"/>
+		</section>
+		<section name="HISTORY11">
 			<item value="true" key="ignoreCase"/>
 			<item value="2" key="scope"/>
 			<item value="false" key="isWholeWord"/>
@@ -85,51 +101,7 @@
 				<item value="ar"/>
 			</list>
 		</section>
-		<section name="EXTENSIONS">
-			<item value="*" key="0"/>
-			<item value="*.aj, *.ant, *.class, *.class without source, *.confluence, *.css, *.dbk, *.ddl, *.dita, *.ditamap, *.doc, *.docx, *.dtd, *.e4xmi, *.ecore, *.ecore2ecore, *.ecore2xml, *.emof, *.ent, *.exsd, *.genmodel, *.htm, *.html, *.htpl, *.jar, *.jardesc, *.java, *.jpage, *.js, *.jsf, *.json, *.jsp, *.jspf, *.jspx, *.jsv, *.jtpl, *.log, *.macrodef, *.markdown, *.md, *.mdtext, *.mediawiki, *.mod, *.patch, *.pom, *.prefs, *.product, *.properties, *.server, *.shtm, *.shtml, *.sql, *.sqlpage, *.tag, *.tagf, *.tagx, *.tagxf, *.target, *.textile, *.tld, *.tracwiki, *.twiki, *.txt, *.wml, *.wsdd, *.wsdl, *.wsil, *.wsimsg, *.xhtml, *.xjb, *.xmi, *.xml, *.xsd, *.xsl, *.xslt, *.yaml, *.yml, *.zip" key="1"/>
-			<item value="*.jsp" key="2"/>
-		</section>
-		<section name="HISTORY11">
-			<item value="true" key="ignoreCase"/>
-			<item value="2" key="scope"/>
-			<item value="false" key="isWholeWord"/>
-			<item value="list.jsp" key="textPattern"/>
-			<item value="false" key="isRegExSearch"/>
-			<list key="fileNamePatterns">
-				<item value="*"/>
-			</list>
-			<list key="workingSets">
-				<item value="Article-Admin"/>
-			</list>
-		</section>
 		<section name="HISTORY8">
-			<item value="true" key="ignoreCase"/>
-			<item value="2" key="scope"/>
-			<item value="false" key="isWholeWord"/>
-			<item value="totalArticleCount" key="textPattern"/>
-			<item value="false" key="isRegExSearch"/>
-			<list key="fileNamePatterns">
-				<item value="*"/>
-			</list>
-			<list key="workingSets">
-				<item value="Article-Admin"/>
-			</list>
-		</section>
-		<section name="HISTORY9">
-			<item value="true" key="ignoreCase"/>
-			<item value="2" key="scope"/>
-			<item value="false" key="isWholeWord"/>
-			<item value="&lt;a href" key="textPattern"/>
-			<item value="false" key="isRegExSearch"/>
-			<list key="fileNamePatterns">
-				<item value="*"/>
-			</list>
-			<list key="workingSets">
-				<item value="Article-Admin"/>
-			</list>
-		</section>
-		<section name="HISTORY2">
 			<item value="true" key="ignoreCase"/>
 			<item value="2" key="scope"/>
 			<item value="false" key="isWholeWord"/>
@@ -142,7 +114,7 @@
 				<item value="Project-Front"/>
 			</list>
 		</section>
-		<section name="HISTORY3">
+		<section name="HISTORY9">
 			<item value="true" key="ignoreCase"/>
 			<item value="2" key="scope"/>
 			<item value="false" key="isWholeWord"/>
@@ -155,11 +127,35 @@
 				<item value="Project-Front"/>
 			</list>
 		</section>
+		<section name="HISTORY2">
+			<item value="true" key="ignoreCase"/>
+			<item value="0" key="scope"/>
+			<item value="false" key="isWholeWord"/>
+			<item value="fileinput-filename" key="textPattern"/>
+			<item value="false" key="isRegExSearch"/>
+			<list key="fileNamePatterns">
+				<item value="*"/>
+			</list>
+			<list key="workingSets">
+			</list>
+		</section>
+		<section name="HISTORY3">
+			<item value="true" key="ignoreCase"/>
+			<item value="0" key="scope"/>
+			<item value="false" key="isWholeWord"/>
+			<item value="fileinput-exists" key="textPattern"/>
+			<item value="false" key="isRegExSearch"/>
+			<list key="fileNamePatterns">
+				<item value="*"/>
+			</list>
+			<list key="workingSets">
+			</list>
+		</section>
 		<section name="HISTORY0">
 			<item value="true" key="ignoreCase"/>
 			<item value="0" key="scope"/>
 			<item value="false" key="isWholeWord"/>
-			<item value="myProgress" key="textPattern"/>
+			<item value="form-wizard-basic" key="textPattern"/>
 			<item value="false" key="isRegExSearch"/>
 			<list key="fileNamePatterns">
 				<item value="*"/>
@@ -171,7 +167,7 @@
 			<item value="true" key="ignoreCase"/>
 			<item value="0" key="scope"/>
 			<item value="false" key="isWholeWord"/>
-			<item value="edge" key="textPattern"/>
+			<item value="fileinput" key="textPattern"/>
 			<item value="false" key="isRegExSearch"/>
 			<list key="fileNamePatterns">
 				<item value="*"/>
@@ -208,7 +204,7 @@
 		</list>
 	</section>
 	<section name="SearchDialog">
-		<item value="org.eclipse.search.internal.ui.text.TextSearchPage" key="PREVIOUS_PAGE"/>
+		<item value="org.eclipse.jdt.ui.JavaSearchPage" key="PREVIOUS_PAGE"/>
 	</section>
 	<section name="org.eclipse.jdt.ui.JavaSearchResultPage">
 		<item value="1000" key="org.eclipse.jdt.search.resultpage.limit"/>
@@ -218,7 +214,7 @@
 		<item value="977" key="DIALOG_WIDTH"/>
 		<item value="1|맑은 고딕|9.0|0|WINDOWS|1|-12|0|0|0|400|0|0|0|1|0|0|0|0|맑은 고딕" key="DIALOG_FONT_NAME"/>
 		<item value="470" key="DIALOG_HEIGHT"/>
-		<item value="818" key="DIALOG_X_ORIGIN"/>
+		<item value="801" key="DIALOG_X_ORIGIN"/>
 		<item value="375" key="DIALOG_Y_ORIGIN"/>
 	</section>
 	<section name="org.eclipse.wst.jsdt.ui.JavaSearchResultPage">

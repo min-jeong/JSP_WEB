@@ -2,7 +2,7 @@
 	pageEncoding="UTF-8"%>
 
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<c:set var="root" value="${pageContext.request.contextPath}" />
+<c:set var="root" value="${pageContext.request.contextPath}" /> 
 
 <!DOCTYPE html>
 <html>
@@ -41,20 +41,16 @@
 <link href="${root}/resource/css/moris/font-awesome.css" rel="stylesheet" />
 <link rel="stylesheet" href="http://cdn.oesmith.co.uk/morris-0.4.3.min.css">  
 <link href="${root}/resource/css/moris/style-responsive.css" rel="stylesheet">
- <link href="${root}/resource/css/moris/style.css" rel="stylesheet">
+<link href="${root}/resource/css/moris/style.css" rel="stylesheet">
 
 <!--
-
 <link rel="stylesheet" href="resource/css/jquery.mCustomScrollbar.css" />
 <script
 	src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
 <script src="/resource/js/jquery.mCustomScrollbar.concat.min.js"></script>
-
-
 <script src="resource/vendors/nicescroll/jquery.nicescroll.min.js"></script>
 <script src="resource/vendors/auto-size/jquery.autosize.min.js"></script>
 <script src="resource/vendors/waves/waves.min.js"></script>
-
 
 -->
 
@@ -103,6 +99,7 @@ html {
 </head>
 <c:set var="Username" value="${ sessionScope._MEMBER_.name }" />
 <c:set var="Useremail" value="${ sessionScope._MEMBER_.email }" />
+<c:set var="leaderEmail" value="${ sessionScope._TEAM_.leaderEmail }" />
 <c:set var="root" value="${pageContext.request.contextPath}" />
 <body id="content">
 	<header id="header">
@@ -153,43 +150,45 @@ html {
 		</div>
 		<div id="main_menu">
 			<div id="defaultPage">
-
 				<ul class="tab-nav tn-justified">
-					<li class="waves-effect"><a href="/teamInfo">Team
-							Information</a></li>
-					<li class="waves-effect"><a href="/chatCalendar">Chat By
-							Calendar</a></li>
-					<li class="waves-effect"><a href="/chatMember">Chat By
-							Member</a></li>
-					<li class="active waves-effect"><a href="/propertyMember">Property
-							By Member</a></li>
+				    <li class="waves-effect"><a href="/teamInfo">Team Information</a></li>
+				    <li class="waves-effect active"><a href="/propertyMember">Property By Member</a></li>
+					<c:if test="${ leaderEmail ne Useremail }">
+					</c:if>    
+					<c:if test="${ leaderEmail eq Useremail }">
+					<li class="waves-effect"><a href="/goManageTeam">Manage Team</a></li>
+					</c:if>
 				</ul>
 
-
 				<!-- 멤버별 속성 시작  -->
-
-
-
 					<div class="row">
 
 						<!-- page start-->
 						<div id="morris">
 							<div class="row mt">
-								<div class="col-lg-6">
+								<div class="col-lg-7">
 									<div class="content-panel">
 										<h4>
-											<i class="fa fa-angle-right"></i> Chart Example 1
+											<i class="fa fa-angle-right"></i> 날짜별 대화 참여
 										</h4>
 										<div class="panel-body">
-											<div id="hero-graph" class="graph"></div>
+											<div id="hero-graph" class="graph">
+											</div>
 										</div>
 									</div>
 								</div>
-
-								<div class="col-lg-6">
+								<div class="col-lg-1">
+								     <div class="toggle-content">
+							     		 	 
+							     		 	 <input type="checkbox" id="activate1" value="option1" />  "Series A"
+							     		 	 <input type="checkbox" id="activate2" />  "Series A"
+							     		 	 <input type="checkbox" id="activate3" />  "Series A"
+								     </div>
+								</div>
+								<div class="col-lg-4">
 									<div class="content-panel">
 										<h4>
-											<i class="fa fa-angle-right"></i> Chart Example 4
+											<i class="fa fa-angle-right"></i> 멤버별 대화 참여율
 										</h4>
 										<div class="panel-body">
 											<div id="hero-donut" class="graph"></div>
@@ -206,6 +205,7 @@ html {
 					</br>
 
 					<div class="row">
+						
 						<div class="col-sm-3">
 							<div class="epc-item bgm-transparent">
 								<div class="easy-pie main-pie" data-percent="45">
@@ -304,7 +304,7 @@ html {
 											<div class="lv-item">
 												<div class="media">
 													<div class="pull-left">
-														5 <i class="md md-star"></i>
+														5 <i class="md md-star" title="이건?"></i>
 													</div>
 
 													<div class="pull-right">22</div>
@@ -318,112 +318,11 @@ html {
 													</div>
 												</div>
 											</div>
-										</div>
-									</div>
-								</div>
-							</div>
-						</div>
-						<!-- 2번째 -->
-						<div class="col-sm-3">
-							<div class="epc-item bgm-pink">
-								<div class="easy-pie main-pie" data-percent="45">
-									<div class="percent">45</div>
-									<div class="pie-title">Total Emails Sent</div>
-								</div>
-							</div>
-							<!-- Rating -->
-							<div class="card rating-list">
-								<div class="listview">
-									<!-- <div class="lv-header">
-										<div class="m-t-5">Average Rating 3.0</div>
-
-										<div class="clearfix"></div>
-
-										<div class="rl-star">
-											<i class="md md-star active"></i> <i
-												class="md md-star active"></i> <i class="md md-star active"></i>
-											<i class="md md-star"></i> <i class="md md-star"></i>
-										</div>
-									</div> -->
-
-									<div class="lv-body">
-										<div class="p-15">
+											
 											<div class="lv-item">
 												<div class="media">
 													<div class="pull-left">
-														1 <i class="md md-star"></i>
-													</div>
-
-													<div class="pull-right">20</div>
-
-													<div class="media-body">
-														<div class="progress">
-															<div class="progress-bar progress-bar-danger"
-																role="progressbar" aria-valuenow="20" aria-valuemin="0"
-																aria-valuemax="100" style="width: 20%"></div>
-														</div>
-													</div>
-												</div>
-											</div>
-
-											<div class="lv-item">
-												<div class="media">
-													<div class="pull-left">
-														2 <i class="md md-star"></i>
-													</div>
-
-													<div class="pull-right">45</div>
-
-													<div class="media-body">
-														<div class="progress">
-															<div class="progress-bar progress-bar-warning"
-																role="progressbar" aria-valuenow="45" aria-valuemin="0"
-																aria-valuemax="100" style="width: 45%"></div>
-														</div>
-													</div>
-												</div>
-											</div>
-
-											<div class="lv-item">
-												<div class="media">
-													<div class="pull-left">
-														3 <i class="md md-star"></i>
-													</div>
-
-													<div class="pull-right">60</div>
-
-													<div class="media-body">
-														<div class="progress">
-															<div class="progress-bar progress-bar-warning"
-																role="progressbar" aria-valuenow="60" aria-valuemin="0"
-																aria-valuemax="100" style="width: 60%"></div>
-														</div>
-													</div>
-												</div>
-											</div>
-
-											<div class="lv-item">
-												<div class="media">
-													<div class="pull-left">
-														4 <i class="md md-star"></i>
-													</div>
-
-													<div class="pull-right">78</div>
-
-													<div class="media-body">
-														<div class="progress">
-															<div class="progress-bar progress-bar-success"
-																role="progressbar" aria-valuenow="78" aria-valuemin="0"
-																aria-valuemax="100" style="width: 78%"></div>
-														</div>
-													</div>
-												</div>
-											</div>
-
-											<div class="lv-item">
-												<div class="media">
-													<div class="pull-left">
-														5 <i class="md md-star"></i>
+														6 <i class="md md-star" title="이건?"></i>
 													</div>
 
 													<div class="pull-right">22</div>
@@ -437,261 +336,18 @@ html {
 													</div>
 												</div>
 											</div>
+											
 										</div>
 									</div>
 								</div>
 							</div>
 						</div>
-						<!-- 3번째 -->
-						<div class="col-sm-3">
-							<div class="epc-item bgm-pink">
-								<div class="easy-pie main-pie" data-percent="45">
-									<div class="percent">45</div>
-									<div class="pie-title">Total Emails Sent</div>
-								</div>
-							</div>
-							<!-- Rating -->
-							<div class="card rating-list">
-								<div class="listview">
-									<!-- <div class="lv-header">
-										<div class="m-t-5">Average Rating 3.0</div>
 
-										<div class="clearfix"></div>
 
-										<div class="rl-star">
-											<i class="md md-star active"></i> <i
-												class="md md-star active"></i> <i class="md md-star active"></i>
-											<i class="md md-star"></i> <i class="md md-star"></i>
-										</div>
-									</div> -->
-
-									<div class="lv-body">
-										<div class="p-15">
-											<div class="lv-item">
-												<div class="media">
-													<div class="pull-left">
-														1 <i class="md md-star"></i>
-													</div>
-
-													<div class="pull-right">20</div>
-
-													<div class="media-body">
-														<div class="progress">
-															<div class="progress-bar progress-bar-danger"
-																role="progressbar" aria-valuenow="20" aria-valuemin="0"
-																aria-valuemax="100" style="width: 20%"></div>
-														</div>
-													</div>
-												</div>
-											</div>
-
-											<div class="lv-item">
-												<div class="media">
-													<div class="pull-left">
-														2 <i class="md md-star"></i>
-													</div>
-
-													<div class="pull-right">45</div>
-
-													<div class="media-body">
-														<div class="progress">
-															<div class="progress-bar progress-bar-warning"
-																role="progressbar" aria-valuenow="45" aria-valuemin="0"
-																aria-valuemax="100" style="width: 45%"></div>
-														</div>
-													</div>
-												</div>
-											</div>
-
-											<div class="lv-item">
-												<div class="media">
-													<div class="pull-left">
-														3 <i class="md md-star"></i>
-													</div>
-
-													<div class="pull-right">60</div>
-
-													<div class="media-body">
-														<div class="progress">
-															<div class="progress-bar progress-bar-warning"
-																role="progressbar" aria-valuenow="60" aria-valuemin="0"
-																aria-valuemax="100" style="width: 60%"></div>
-														</div>
-													</div>
-												</div>
-											</div>
-
-											<div class="lv-item">
-												<div class="media">
-													<div class="pull-left">
-														4 <i class="md md-star"></i>
-													</div>
-
-													<div class="pull-right">78</div>
-
-													<div class="media-body">
-														<div class="progress">
-															<div class="progress-bar progress-bar-success"
-																role="progressbar" aria-valuenow="78" aria-valuemin="0"
-																aria-valuemax="100" style="width: 78%"></div>
-														</div>
-													</div>
-												</div>
-											</div>
-
-											<div class="lv-item">
-												<div class="media">
-													<div class="pull-left">
-														5 <i class="md md-star"></i>
-													</div>
-
-													<div class="pull-right">22</div>
-
-													<div class="media-body">
-														<div class="progress">
-															<div class="progress-bar progress-bar-info"
-																role="progressbar" aria-valuenow="22" aria-valuemin="0"
-																aria-valuemax="100" style="width: 22%"></div>
-														</div>
-													</div>
-												</div>
-											</div>
-										</div>
-									</div>
-								</div>
-							</div>
-						</div>
-						<!-- 4번째 -->
-						<div class="col-sm-3">
-							<div class="epc-item bgm-pink">
-								<div class="easy-pie main-pie" data-percent="45">
-									<div class="percent">45</div>
-									<div class="pie-title">Total Emails Sent</div>
-								</div>
-							</div>
-							<!-- Rating -->
-							<div class="card rating-list">
-								<div class="listview">
-								<!-- 	
-								<div class="lv-header">
-										<div class="m-t-5">Average Rating 3.0</div>
-
-										<div class="clearfix"></div>
-
-										<div class="rl-star">
-											<i class="md md-star active"></i> <i
-												class="md md-star active"></i> <i class="md md-star active"></i>
-											<i class="md md-star"></i> <i class="md md-star"></i>
-										</div>
-									</div> 
-									-->
-
-									<div class="lv-body">
-										<div class="p-15">
-											<div class="lv-item">
-												<div class="media">
-													<div class="pull-left">
-														1 <i class="md md-star"></i>
-													</div>
-
-													<div class="pull-right">20</div>
-
-													<div class="media-body">
-														<div class="progress">
-															<div class="progress-bar progress-bar-danger"
-																role="progressbar" aria-valuenow="20" aria-valuemin="0"
-																aria-valuemax="100" style="width: 20%"></div>
-														</div>
-													</div>
-												</div>
-											</div>
-
-											<div class="lv-item">
-												<div class="media">
-													<div class="pull-left">
-														2 <i class="md md-star"></i>
-													</div>
-
-													<div class="pull-right">45</div>
-
-													<div class="media-body">
-														<div class="progress">
-															<div class="progress-bar progress-bar-warning"
-																role="progressbar" aria-valuenow="45" aria-valuemin="0"
-																aria-valuemax="100" style="width: 45%"></div>
-														</div>
-													</div>
-												</div>
-											</div>
-
-											<div class="lv-item">
-												<div class="media">
-													<div class="pull-left">
-														3 <i class="md md-star"></i>
-													</div>
-
-													<div class="pull-right">60</div>
-
-													<div class="media-body">
-														<div class="progress">
-															<div class="progress-bar progress-bar-warning"
-																role="progressbar" aria-valuenow="60" aria-valuemin="0"
-																aria-valuemax="100" style="width: 60%"></div>
-														</div>
-													</div>
-												</div>
-											</div>
-
-											<div class="lv-item">
-												<div class="media">
-													<div class="pull-left">
-														4 <i class="md md-star"></i>
-													</div>
-
-													<div class="pull-right">78</div>
-
-													<div class="media-body">
-														<div class="progress">
-															<div class="progress-bar progress-bar-success"
-																role="progressbar" aria-valuenow="78" aria-valuemin="0"
-																aria-valuemax="100" style="width: 78%"></div>
-														</div>
-													</div>
-												</div>
-											</div>
-
-											<div class="lv-item">
-												<div class="media">
-													<div class="pull-left">
-														5 <i class="md md-star"></i>
-													</div>
-
-													<div class="pull-right">22</div>
-
-													<div class="media-body">
-														<div class="progress">
-															<div class="progress-bar progress-bar-info"
-																role="progressbar" aria-valuenow="22" aria-valuemin="0"
-																aria-valuemax="100" style="width: 22%"></div>
-														</div>
-													</div>
-												</div>
-											</div>
-										</div>
-									</div>
-								</div>
-							</div>
-						</div>
 					</div>
 
 
 					<div>테스트</div>
-
-
-
-
-
-
 
 
 
@@ -720,6 +376,10 @@ html {
         <script src="${root}/resource/vendors/sparklines/jquery.sparkline.min.js"></script>
         <script src="${root}/resource/vendors/easypiechart/jquery.easypiechart.min.js"></script>
         <script src="${root}/resource/vendors/sweet-alert/sweet-alert.min.js"></script>
+     	<script src="${root}/resource/resourcevendors/fileinput/fileinput.min.js"></script>
+     	<script src="${root}/resource/vendors/chosen/chosen.jquery.min.js"></script>
+		<script src="${root}/resource/vendors/bootstrap-select/bootstrap-select.min.js"></script>
+		<script src="${root}/resource/vendors/bootstrap-wizard/jquery.bootstrap.wizard.min.js"></script>
      	  
       <script src="${root}/resource/js/charts.js"></script>
         
@@ -739,7 +399,13 @@ html {
 		    $(function () {
 		    	
 		      // data stolen from http://howmanyleft.co.uk/vehicle/jaguar_'e'_type
-			      var tax_data = [
+			
+		      <c:forEach items="${memChatRates}" var="item"> 
+	
+			    	  
+		      </c:forEach> 
+		      
+		      var tax_data = [
 			           {d: '2016-04-01', "licensed": 3507, "sorned": 665},
 			           {d: '2016-03-01', "licensed": 3407, "sorned": 660},
 			           {d: '2016-03-07', "licensed": 3269, "sorned": 618},
@@ -750,15 +416,25 @@ html {
 			           {d: '2016-03-02', "licensed": 3245, "sorned": null},
 			           {d: '2016-03-01', "licensed": 3289, "sorned": null}
 			      ];
-			      Morris.Line({
+		    	var morrisLine = Morris.Line({
 			        element: 'hero-graph',
 			        data: tax_data,
 			        xkey: 'd',
 			        ykeys: ['licensed', 'sorned'],
 			        labels: ['Licensed', 'Off the road'],
 			        lineColors:['#4ECDC4','#ed5565']
-			      });
-				  
+			    });
+
+			/* 	jQuery(function($) {
+			   	    $('#activate1').on('change', function() {
+			   	      var isChecked1 = $('#activate1').is(':checked');
+			   	      var isChecked2 = $('#activate2').is(':checked');
+			   	      var isChecked3 = $('#activate3').is(':checked');  
+			   	      morris.setData(data(isChecked1,isChecked2,isChecked3));
+		   	      
+		   	    })}); */
+				
+			      
 			      var donutData = new Array();
 			      
 			      <c:forEach items="${memChatRates}" var="item"> 
@@ -766,6 +442,8 @@ html {
 			      
 				      data.label = "${item.nickName}";
 				      data.value = "${item.memberChatRate}";
+				      console.log( data.label  );
+				      console.log( data.value  );
 				      
 				      data.value = Math.round(data.value* 100) ;
 			    	  donutData.push(data);
@@ -774,7 +452,6 @@ html {
 			      
 			      Morris.Donut( {
 				        element: 'hero-donut',
-				         	
 				        data: donutData,
 				        colors: ['#3498db', '#2980b9', '#34495e'],
 				        formatter: function (y) { return y + "%" }
@@ -845,6 +522,9 @@ html {
 			    });
 			
 			}();
+			
+		
+			      
 	</script>
 	 <%--
 	 	이거 두개 가 문제 

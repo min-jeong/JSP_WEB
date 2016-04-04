@@ -1,0 +1,144 @@
+ @CHARSET "UTF-8";
+
+body, input, div, span, p, a, td, th, caption, lable, h1, h2, h3, h4, h5, h6, textarea, iframe, ul, ol, li, dd, dt, b, u, i, strong, pre, code, address, city, header, aside{
+	color: #333333;
+	font-family: "나눔바른고딕", "나눔고딕", "돋움체";
+	font-size: 12pt;
+}
+
+span#teamTitle {
+	font-family: "나눔고딕";
+	font-size: 15pt;
+	font-weight:bold;
+	color: #666666;
+	float: center;
+}
+
+button#deleteTeam {
+	background-color: red;
+}
+
+div#teamOption {
+	width: 100%;
+	height: 100%;
+	margin: 1%;
+	overflow: auto;
+	backgrount-color: black;
+}
+
+div#team_menu {
+	position: relative;
+	width: 100%;
+	height: 380px;
+	margin: 1%;
+	overflow: auto;
+}
+
+div#wrap {
+	position: absolute;
+	right: 20%;
+}
+div#delete {
+	position: absolute;
+	right: 5%;
+	top: 2.7%;
+}
+
+div#viewList {
+	position: absolute;
+	top: 25%;
+}
+
+p.view {
+	font-size: 17pt;
+	font-family: "돋움체";
+}
+
+div#img img {
+	width: 60%;
+	height: 45px;	
+	padding: 10px;
+}
+
+div.icon {
+	background-color: pink;
+	margin: 2%;
+	float: left;
+}
+
+div.icon div {
+	float: left;
+}
+
+div#leftMenu {
+	
+	width: 250px;
+	top: 120px;
+	height: 900px;
+	border: 2px solid black;
+	border-right:none;
+	border-left:none;
+}
+
+button.css3button {
+	padding: 2px;
+	background: -moz-linear-gradient(
+		top,
+		#fcfdff 0%,
+		#1e11d9);
+	background: -webkit-gradient(
+		linear, left top, left bottom,
+		from(#fcfdff),
+		to(#1e11d9));
+	-moz-border-radius: 12px;
+	-webkit-border-radius: 12px;
+	border-radius: 12px;
+	border: 0px solid #18191a;
+	-moz-box-shadow:
+		2px 3px 11px rgba(000,000,000,1),
+		inset 0px 0px 2px rgba(015,014,015,0.8);
+	-webkit-box-shadow:
+		2px 3px 11px rgba(000,000,000,1),
+		inset 0px 0px 2px rgba(015,014,015,0.8);
+	box-shadow:
+		2px 3px 11px rgba(000,000,000,1),
+		inset 0px 0px 2px rgba(015,014,015,0.8);
+	text-shadow:
+		0px -1px 0px rgba(000,000,000,0.8),
+		2px 1px 2px rgba(255,255,255,0.5);
+}
+p.btnfont{
+	font-size: 15px;
+	color: #f0e8f0;
+}
+
+button.css4button {
+	padding: 2px;
+	background: -moz-linear-gradient(
+		top,
+		#ffffff 0%,
+		#d11b1b 45%,
+		#bd6363);
+	background: -webkit-gradient(
+		linear, left top, left bottom,
+		from(#ffffff),
+		color-stop(0.45, #d11b1b),
+		to(#bd6363));
+	-moz-border-radius: 14px;
+	-webkit-border-radius: 14px;
+	border-radius: 14px;
+	border: 1px solid #6d8000;
+	-moz-box-shadow:
+		0px 1px 3px rgba(000,000,000,0.5),
+		inset 0px 0px 2px rgba(255,255,255,1);
+	-webkit-box-shadow:
+		0px 1px 3px rgba(000,000,000,0.5),
+		inset 0px 0px 2px rgba(255,255,255,1);
+	box-shadow:
+		0px 1px 3px rgba(000,000,000,0.5),
+		inset 0px 0px 2px rgba(255,255,255,1);
+	text-shadow:
+		0px -1px 0px rgba(000,000,000,0.2),
+		0px 1px 0px rgba(255,255,255,0.4);
+}
+

@@ -7,11 +7,12 @@ div#wrapper {
 }
 
 div#left_menu {
-	margin-top: 10px;
-	margin-left: 5px;
+/* 	margin-top: 10px;
+	margin-left: 5px; */
 	width : 12%;
 	float : left;
 	max-height: 3000px;
+	background-color: #354052;
 }
 div#main_menu {
 	margin-top: 10px;
@@ -30,6 +31,7 @@ div#right_menu {
 	width : calc(33% - 30px);
 	overflow: auto;
 	max-height: 3000px;
+	
 }
 div#profile {
 	width : 100%;
@@ -40,7 +42,7 @@ div#profile {
 }
 div#team_menu {
 	width : 100%;
-	max-height: 500px;
+	max-height: 2500px;
 	overflow: auto;
 	float:left;
 }

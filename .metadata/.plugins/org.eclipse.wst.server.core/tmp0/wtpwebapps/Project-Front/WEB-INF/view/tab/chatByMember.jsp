@@ -41,6 +41,10 @@
         <script src="resource/vendors/bootgrid/jquery.bootgrid.min.js"></script>
         <script src="resource/vendors/bootstrap-growl/bootstrap-growl.min.js"></script>
         <script src="resource/vendors/sweet-alert/sweet-alert.min.js"></script>
+     	<script src="${root}/resource/resourcevendors/fileinput/fileinput.min.js"></script>
+     	<script src="${root}/resource/vendors/chosen/chosen.jquery.min.js"></script>
+		<script src="${root}/resource/vendors/bootstrap-select/bootstrap-select.min.js"></script>
+		<script src="${root}/resource/vendors/bootstrap-wizard/jquery.bootstrap.wizard.min.js"></script>
         
         <script src="resource/js/functions.js"></script>
         <script src="resource/js/demo.js"></script>

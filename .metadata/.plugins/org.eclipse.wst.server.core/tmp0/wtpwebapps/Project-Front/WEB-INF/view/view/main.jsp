@@ -2,7 +2,6 @@
     pageEncoding="UTF-8"%>
 
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<c:set var="root" value="${pageContext.request.contextPath}" />
 	
 <!DOCTYPE html>
 <html>
@@ -13,6 +12,7 @@
         <title>PingPong Chat</title>
         <!-- Vendor CSS -->
         <link href="${root}/resource/vendors/animate-css/animate.min.css" rel="stylesheet">
+        <link href="${root}/resource/vendors/bootgrid/jquery.bootgrid.min.css" rel="stylesheet">
         <link href="${root}/resource/vendors/fullcalendar/fullcalendar.css" rel="stylesheet">
         <link href="${root}/resource/vendors/sweet-alert/sweet-alert.min.css" rel="stylesheet">
         <link href="${root}/resource/vendors/light-gallery/lightGallery.min.css" rel="stylesheet">
@@ -28,11 +28,7 @@
    	    
    	   <!-- Scrollbar CSS, Script -->
    	    <link rel="stylesheet" href="resource/css/jquery.mCustomScrollbar.css" />
-   	    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
 		<script src="/resource/js/jquery.mCustomScrollbar.concat.min.js"></script>
-
-        <script src="resource/js/jquery-2.1.1.min.js"></script>
-        <script src="resource/js/bootstrap.min.js"></script>
 
         <!-- Javascript Libraries -->
         <script src="resource/js/jquery-2.1.1.min.js"></script>
@@ -44,6 +40,10 @@
         <script src="resource/vendors/waves/waves.min.js"></script>
         <script src="resource/vendors/bootstrap-growl/bootstrap-growl.min.js"></script>
         <script src="resource/vendors/sweet-alert/sweet-alert.min.js"></script>
+     	<script src="${root}/resource/resource/vendors/fileinput/fileinput.min.js"></script>
+     	<script src="${root}/resource/vendors/chosen/chosen.jquery.min.js"></script>
+		<script src="${root}/resource/vendors/bootstrap-select/bootstrap-select.min.js"></script>
+		<script src="${root}/resource/vendors/bootstrap-wizard/jquery.bootstrap.wizard.min.js"></script>
         
         <script src="resource/js/functions.js"></script>
         <script src="resource/js/demo.js"></script> 
@@ -98,7 +98,9 @@ html{scrollbar-3dLight-Color: #efefef; scrollbar-arrow-color: #dfdfdf; scrollbar
 </head>
 <c:set var="Username" value="${ sessionScope._MEMBER_.name }" />
 <c:set var="Useremail" value="${ sessionScope._MEMBER_.email }" />
-<c:set var="root" value="${pageContext.request.contextPath}" /> 
+<c:set var="leaderEmail" value="${ sessionScope._TEAM_.leaderEmail }" />
+<c:set var="TeamID" value="${ sessionScope._TEAM_.teamId }" />
+<%-- <c:set var="root" value="${pageContext.request.contextPath}" />  --%>
 <body id="content">
        <header id="header">
             <ul class="header-inner">
@@ -153,21 +155,39 @@ html{scrollbar-3dLight-Color: #efefef; scrollbar-arrow-color: #dfdfdf; scrollbar
 				</div>
 			</div>
 			<div id="main_menu">
+				<c:if test="${ TeamID eq null }">
+				<div id="defaultPage">
+				</div>
+				</c:if>
+				<c:if test="${ TeamID ne null }">
 				<div id="defaultPage">
 					<jsp:include page="/WEB-INF/view/view/main_view.jsp"></jsp:include>
 				</div>
+				</c:if>
 			</div>
-			<div id="right_menu">
-				<div id="calendar">
-					<jsp:include page="/WEB-INF/view/calendar/calendar.jsp"></jsp:include>
+			<c:if test="${ TeamID eq null }">
+				<div id="right_menu">
+					<div id="calendar">
+					</div>
+					<div id="chatbyMem">
+					</div>
+					<div id="chatbyKeyword">
+					</div>
 				</div>
-				<div id="chatbyMem">
-					<jsp:include page="/WEB-INF/view/chat/chat_mem.jsp"></jsp:include>
+			</c:if>
+			<c:if test="${ TeamID ne null }">
+				<div id="right_menu">
+					<div id="calendar">
+						<jsp:include page="/WEB-INF/view/calendar/calendar.jsp"></jsp:include>
+					</div>
+					<div id="chatbyMem">
+						<jsp:include page="/WEB-INF/view/chat/chat_mem.jsp"></jsp:include>
+					</div>
+					<div id="chatbyKeyword">
+						<jsp:include page="/WEB-INF/view/chat/chat_keyword.jsp"></jsp:include>
+					</div>
 				</div>
-				<div id="chatbyKeyword">
-					<jsp:include page="/WEB-INF/view/chat/chat_keyword.jsp"></jsp:include>
-				</div>
-			</div>
+			</c:if>
 	    <div class="clear"></div>
 		</section>
 	</body>
