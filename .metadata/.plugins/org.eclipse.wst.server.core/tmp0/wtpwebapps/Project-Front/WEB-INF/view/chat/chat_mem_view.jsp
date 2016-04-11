@@ -1,7 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<c:set var="root" value="${pageContext.request.contextPath}" />
+	
 <!DOCTYPE html>
 <html>
     <head>
@@ -25,6 +26,10 @@
         <link href="${root}/resource/css/profile.css" rel="stylesheet">
    	    <link href="${root}/resource/vendors/light-gallery/hovereffect.css" rel="stylesheet">
    	    
+   	   <!-- Scrollbar CSS, Script -->
+   	    <link rel="stylesheet" href="resource/css/jquery.mCustomScrollbar.css" />
+		<script src="/resource/js/jquery.mCustomScrollbar.concat.min.js"></script>
+
         <!-- Javascript Libraries -->
         <script src="resource/js/jquery-2.1.1.min.js"></script>
         <script src="resource/js/bootstrap.min.js"></script>
@@ -35,16 +40,14 @@
         <script src="resource/vendors/waves/waves.min.js"></script>
         <script src="resource/vendors/bootstrap-growl/bootstrap-growl.min.js"></script>
         <script src="resource/vendors/sweet-alert/sweet-alert.min.js"></script>
-		<script src="${root}/resource/resource/vendors/fileinput/fileinput.min.js"></script>
+     	<script src="${root}/resource/resource/vendors/fileinput/fileinput.min.js"></script>
      	<script src="${root}/resource/vendors/chosen/chosen.jquery.min.js"></script>
 		<script src="${root}/resource/vendors/bootstrap-select/bootstrap-select.min.js"></script>
 		<script src="${root}/resource/vendors/bootstrap-wizard/jquery.bootstrap.wizard.min.js"></script>
         
         <script src="resource/js/functions.js"></script>
-        <script src="resource/js/demo.js"></script>
-        
-		
-		<script type="text/javascript">
+        <script src="resource/js/demo.js"></script> 
+       		<script type="text/javascript">
             $(document).ready(function(){
                 //Basic Example
                 $("#data-table-basic").bootgrid({
@@ -57,21 +60,47 @@
                     },
                 });
                 
-                $("#upload").click( function move() {
-					var elem = document.getElementById("myBar"); 
-				    var width = 0;
-				    var id = setInterval(frame, 180);
-				    function frame() {
-				        if (width >= 100) {
-				            clearInterval(id);
-				        } else {
-				            width++; 
-				            elem.style.width = width + '%'; 
-				        }
-				    }
-				});
+                $("#myProgress").hide();
+            	$("#myBar").hide();
+            	  
+            	$("#upload").click(function (){
+            		/* var fm = document.textFileUpload;
+            		var fnm = fm.chatText;
+            		var ext = fnm.value; */
+            		var fileExt = $("#isFile").val();
+            		fileExt = fileExt.slice(fileExt.indexOf(".") + 1).toLowerCase();
+            		if (fileExt != "txt" && fileExt != "") {
+            			swal("텍스트 파일만 등록가능합니다.");
+            			return false;
+            		}
+            		else if( $("#isFile") ==  null) {
+            			swal("파일을 등록해주세요.");
+            			return false;
+            		}
+            		else{
+            			var form = $("#textFileUpload");
+            	        form.attr("method", "post");
+            	        form.attr("action", "/insertChat");
+            	        form.attr("enctype", "multipart/form-data");
+            	        form.submit();
+            	        
+            	        $("#myProgress").show();
+            			$("#myBar").show();
+            			var elem = document.getElementById("myBar"); 
+            		    var width = 0;
+            		    var id = setInterval(frame, 180);
+            		    function frame() {
+            		        if (width >= 100) {
+            		            clearInterval(id);
+            		        } else {
+            		            width++; 
+            		            elem.style.width = width + '%'; 
+            		        }
+            		    }
+            		}
+            	});
             });
-        </script>
+</script>
 <style>
 ::-webkit-scrollbar {width: 8px; height: 8px; border: 3px solid #fff; }
 ::-webkit-scrollbar-button:start:decrement, ::-webkit-scrollbar-button:end:increment {display: block; height: 10px; background: url('./images/bg.png') #efefef}
@@ -91,14 +120,15 @@ html{scrollbar-3dLight-Color: #efefef; scrollbar-arrow-color: #dfdfdf; scrollbar
     background-color: green;
 }
 </style>
+
 </head>
 <c:set var="Username" value="${ sessionScope._MEMBER_.name }" />
 <c:set var="Useremail" value="${ sessionScope._MEMBER_.email }" />
 <c:set var="leaderEmail" value="${ sessionScope._TEAM_.leaderEmail }" />
-<c:set var="root" value="${pageContext.request.contextPath}" /> 
-
-<body id="content">
-       <header id="header">
+<c:set var="TeamID" value="${ sessionScope._TEAM_.teamId }" />
+<%-- <c:set var="root" value="${pageContext.request.contextPath}" />  --%>
+<body id="content" style="background-color: #edecec">
+       <header id="header" style="background-color: #ffffff">
             <ul class="header-inner">
                 <li>
                     <div class="line-wrap">
@@ -107,30 +137,28 @@ html{scrollbar-3dLight-Color: #efefef; scrollbar-arrow-color: #dfdfdf; scrollbar
                         <div class="line bottom"></div>
                     </div>
                 </li>
-            
                 <li class="logo hidden-xs">
-                    <a class="orgin" href="/goMain">PingPong Chat</a>
+                    <a class="orgin" href="/goMain"  style="color: #323e4a;">PingPong Chat</a>
                 </li>
                		 
-              <li class="pull-right">
+              <li class="pull-right"  style="color: black;">
                 <ul class="top-menu">
                 	<li class="logo" style="position: relative; top: 1px;">
-                    	<a class="my" href="/goMain">
-                    	<i class="md-timer-auto" style="width: 200%; height: 200%;"> Welcome ${ Username }  ( ${ Useremail } ) </i></a>
+                    	<a class="my" href="/goMain" style="color: black;">
+                    	<i class="md-timer-auto" style="width: 200%; height: 200%; color: #323e4a;"> Welcome ${ Username }  ( ${ Useremail } ) </i></a>
                 	</li> 
-                    <li class="dropdown">
-                        <a data-toggle="dropdown" class="tm-settings" href=""></a>
-                        <ul class="dropdown-menu dm-icon pull-right">
+                    <li class="dropdown" style="color: #323e4a; background-color: #71d1b2; border-radius : 5px 5px 5px 5px">
+                        <a data-toggle="dropdown" class="tm-settings" href=""  ></a>
+                        <ul class="dropdown-menu dm-icon pull-right" style="color: black; ">
                        		<li>
-                            	<a href="/doLogout"><i class="md md-history"></i> Logout</a>
+                            	<a href="/doLogout"><i class="md md-history"></i>로그아웃</a>
                             </li>
                             <li>
-                                <a data-action="fullscreen" href=""><i class="md md-fullscreen"></i> Toggle Fullscreen</a>
+                                <a data-action="fullscreen" href=""><i class="md md-fullscreen"></i>전체화면</a>
                             </li>
                             <li>
-                                <a href="/doAboutProfile"><i class="md md-person"></i> Privacy Settings</a>
+                                <a href="/doAboutProfile"><i class="md md-person"></i>회원정보</a>
                             </li>
-                            
                         </ul>
                     </li>
                     </ul>
@@ -150,20 +178,22 @@ html{scrollbar-3dLight-Color: #efefef; scrollbar-arrow-color: #dfdfdf; scrollbar
 					<jsp:include page="/WEB-INF/view/member/mine.jsp"></jsp:include>
 				</div>
 			</div>
-			<div id="main_menu">
+			<div id="main_menu" >
 				<div id="defaultPage">
-					<ul class="tab-nav tn-justified">
-					    <li class="waves-effect"><a href="/teamInfo">Team Information</a></li>
-					    <li class="waves-effect"><a href="/propertyMember">Property By Member</a></li>
+					<ul class="tab-nav tn-justified" data-tab-color="cyan" style="color: #323e4a; background-color: #edecec; ">
+					    <li class="waves-effect"><a href="/teamInfo" style="color: #323e4a;">Team Information</a></li>
+					    <li class="waves-effect"><a href="/propertyMember" style="color: #323e4a;">CHAT ANALYSIS</a></li>
 						<c:if test="${ leaderEmail ne Useremail }">
 						</c:if>    
 						<c:if test="${ leaderEmail eq Useremail }">
-						<li class="waves-effect"><a href="/goManageTeam">Manage Team</a></li>
+						<li class="waves-effect"><a href="/goManageTeam" style="color: #323e4a;">TEAM SETTING</a></li>
 						</c:if>
 					</ul>
-					 <div class="card">
+					 <div class="card" style="overflow: auto;">
 					 	<div class="card-header">
-                            <h2> Member Chat Information</h2>
+                            <h2> Member Chat Information
+                            <button type="button" class="md md-help" data-trigger="hover" data-toggle="popover" data-placement="bottom" data-content=""  style="border-radius :50%; background-color: #ffffff; border: 0; size: 50%;"></button>
+                            </h2>
                         </div>
 					 	
 						<div class="table-responsive">
@@ -173,7 +203,6 @@ html{scrollbar-3dLight-Color: #efefef; scrollbar-arrow-color: #dfdfdf; scrollbar
 								<th data-column-id="name">Name</th>
 								<th data-column-id="date">Date</th>
 								<th data-column-id="content">Content</th>
-							<!-- 	<th data-column-id="notice">Notice</th> -->
 							</tr>
 							</thead>
 							<tbody>
@@ -181,8 +210,7 @@ html{scrollbar-3dLight-Color: #efefef; scrollbar-arrow-color: #dfdfdf; scrollbar
 								<tr>
 									<td>${ chat.nickName }</td> 
 									<td>${ chat.chatDate }</td>
-									<td>${ chat.description }</td>
-								<%-- 	<td>${ chat.notice }</td> --%>
+									<td><c:out value="${ chat.description }"/></td>
 								</tr>
 							</c:forEach>
 							</tbody>
@@ -191,17 +219,29 @@ html{scrollbar-3dLight-Color: #efefef; scrollbar-arrow-color: #dfdfdf; scrollbar
 						</div>
 				    </div>
 				</div>
-			<div id="right_menu">
-				<div id="calendar">
-					<jsp:include page="/WEB-INF/view/calendar/calendar.jsp"></jsp:include>
+			<c:if test="${ TeamID eq null }">
+				<div id="right_menu">
+					<div id="calendar">
+					</div>
+					<div id="chatbyMem">
+					</div>
+					<div id="chatbyKeyword">
+					</div>
 				</div>
-				<div id="chatbyMem">
-					<jsp:include page="/WEB-INF/view/chat/chat_mem.jsp"></jsp:include>
+			</c:if>
+			<c:if test="${ TeamID ne null }">
+				<div id="right_menu">
+					<div id="calendar">
+						<jsp:include page="/WEB-INF/view/calendar/calendar.jsp"></jsp:include>
+					</div>
+					<div id="chatbyMem">
+						<jsp:include page="/WEB-INF/view/chat/chat_mem.jsp"></jsp:include>
+					</div>
+					<div id="chatbyKeyword">
+						<jsp:include page="/WEB-INF/view/chat/chat_keyword.jsp"></jsp:include>
+					</div>
 				</div>
-				<div id="chatbyKeyword">
-					<jsp:include page="/WEB-INF/view/chat/chat_keyword.jsp"></jsp:include>
-				</div>
-			</div>
+			</c:if>
 	    <div class="clear"></div>
 		</section>
 	</body>

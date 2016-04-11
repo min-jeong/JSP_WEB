@@ -65,6 +65,20 @@ $(document).ready( function() {
 	
 	$("#send").click(function(e) {
 		var email = $("#email").val();
+		
+		email = $.trim(email);
+		if( email == "" ){
+			swal("Email Address is empty");
+			return;
+		}
+		var regExp = /[0-9a-zA-Z][_0-9a-zA-Z-]*@[_0-9a-zA-Z-]+(\.[_0-9a-zA-Z-]+){1,2}$/;
+		if (!email.match(regExp)){
+			swal("Email Address is not match format");
+			return;
+		}
+		
+		
+		
 		var authNum = $("#authNum").val();
 		$.post(
 				"/emailAuth"
@@ -121,7 +135,11 @@ $(document).ready( function() {
 			swal("Email Address is empty");
 			return;
 		}
-		
+		var regExp = /[0-9a-zA-Z][_0-9a-zA-Z-]*@[_0-9a-zA-Z-]+(\.[_0-9a-zA-Z-]+){1,2}$/;
+		if (!email.match(regExp)){
+			swal("Email Address is not match format");
+			return;
+		}
 		
 		var authNum = $("#authNum").val();
 		authNum = $.trim(authNum);
@@ -134,6 +152,12 @@ $(document).ready( function() {
 		password = $.trim(password);
 		if( password == "" ){
 			swal("Password is empty");
+			return;
+		}
+		
+		var check_pass = $("#check_pass").val();
+		if(password != check_pass){
+			swal("Password is not match");
 			return;
 		}
 		
@@ -162,8 +186,6 @@ $(document).ready( function() {
 });
 
 </script>
-    <!--[if IE 9 ]><html class="ie9"><![endif]-->
-
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -192,14 +214,14 @@ $(document).ready( function() {
 	    <div class="input-group m-b-20">
 	        <span class="input-group-addon"><i class="md md-mail"></i></span>
 	        <div class="fg-line">
-	            <input type="text" class="form-control" placeholder="Email Address" id="email" name="email"><button class="btn btn-info" id="send"><i class="md md-arrow-forward"> Send</i></button>
+	            <input type="text" class="form-control" placeholder="Email Address" id="email" name="email"><button class="btn" style="background-color: #ff4f3e; color: white;"id="send"><i class="md md-arrow-forward"> Send</i></button>
 	        </div>
 	    </div>
 	
 	    <div class="input-group m-b-20">
 	        <span class="input-group-addon"><i class="md md-mail"></i></span>
 	        <div class="fg-line">
-	            <input type="text" class="form-control" placeholder="Authentication no." id="authNum" name="authNum">  <button class="btn btn-info" id="confirm"><i class="md md-check">Check</i></button>
+	            <input type="text" class="form-control" placeholder="Authentication no." id="authNum" name="authNum">  <button class="btn" style="background-color: #ff4f3e; color: white;" id="confirm"><i class="md md-check">Check</i></button>
 	            <!-- <button class="btn btn-default"><i class="md md-check"></i> Check</button> -->
 	<!-- <button class="btn btn-default" id="confirm">confirm</button> -->
 	    </div>
@@ -209,21 +231,20 @@ $(document).ready( function() {
 	<div class="input-group m-b-20">
 	    <span class="input-group-addon"><i class="md md-lock"></i></span>
 	    <div class="fg-line">
-	        <input type="password" class="form-control2" placeholder="Password" id="password" name="password">
+	        <input type="password" class="form-control input-sm" placeholder="Password" id="password" name="password">
 	    </div>
 	</div>
-	
+	<div class="input-group m-b-20">
+	  
+	    <span class="input-group-addon"><i class="md md-lock"></i></span>
+	    <div class="fg-line">
+	        <input type="password" class="form-control input-sm" placeholder="Confirm Password" id="check_pass" name="check_pass">
+	    </div>
+	</div>
 	<div class="clearfix"></div>
 	
-	<div class="checkbox">
-	    <label>
-	        <input type="checkbox" value="" id="agreement">
-	        <i class="input-helper"></i>
-	        Accept the license agreement
-	    </label>
-	</div>
 	
-	<button class="btn btn-login btn-danger btn-float" id="doRegister"><i class="md md-arrow-forward"></i></button>
+	<button class="btn btn-login btn-float" style="background-color: #71d1b2;" id="doRegister"><i class="md md-arrow-forward"></i></button>
 	<span style="display:none" id="check" > </span>
 	<span style="display:none" id="isTrue" > </span>
 	

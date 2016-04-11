@@ -1,0 +1,28 @@
+
+public class LGCDPlayer implements CDPlayer {
+
+	@Override
+	public void play() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void stop() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void next() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void prev() {
+		// TODO Auto-generated method stub
+		
+	}
+
+}

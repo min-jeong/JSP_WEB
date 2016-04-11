@@ -1,0 +1,38 @@
+@CHARSET "UTF-8";
+
+#p-circle .profile-edit {
+  position: absolute;
+  top: 100px;
+  left: 0;
+  color: #fff;
+  background: rgba(0, 0, 0, 0.38);
+  text-align: center;
+  padding: 10px 10px 7px;
+  -webkit-transition: opacity;
+  -o-transition: opacity;
+  transition: opacity;
+  -webkit-transition-duration: 250ms;
+  transition-duration: 250ms;
+}
+#p-circle .profile-edit:hover {
+  background: rgba(0, 0, 0, 0.8);
+}
+#p-circle .profile-edit i {
+  font-size: 18px;
+  vertical-align: middle;
+  margin-top: -3px;
+}
+@media (min-width: 768px) {
+  #p-circle .profile-edit {
+    width: 100%;
+    opacity: 0;
+    filter: alpha(opacity=0);
+  }
+  #p-circle .profile-edit i {
+    margin-right: 4px;
+  }
+}
+ #p-circle .profile-edit {
+  opacity: 1;
+  filter: alpha(opacity=100);
+}

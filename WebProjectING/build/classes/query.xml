@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<query>
+		<index>
+			INSERT INTO MEMBERS (
+									MEM_NAME
+									, MEM_NUM
+								)
+			VALUES				(
+									?
+									, MEM_NUM_SEQ.NEXTVAL
+								)
+		</index>
+		
+		<getAllIndex>
+			SELECT *
+			FROM	MEMBERS
+			
+		
+		</getAllIndex>
+		
+</query>
+
+
+
+

@@ -12,8 +12,7 @@
 		factory(jQuery, moment);
 	}
 })(function($, moment) {
-
-;;
+;
 
 var defaults = {
 

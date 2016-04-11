@@ -39,129 +39,186 @@
         <script src="resource/vendors/bootgrid/jquery.bootgrid.min.js"></script>
         <script src="resource/vendors/bootstrap-growl/bootstrap-growl.min.js"></script>
         <script src="resource/vendors/sweet-alert/sweet-alert.min.js"></script>
-        <script src="${root}/resource/resource/vendors/fileinput/fileinput.min.js"></script>
+        <script src="${root}/resource/vendors/fileinput/fileinput.min.js"></script>
         <script src="resource/vendors/chosen/chosen.jquery.min.js"></script>
 		<script src="resource/vendors/bootstrap-select/bootstrap-select.min.js"></script>
 		<script src="resource/vendors/bootstrap-wizard/jquery.bootstrap.wizard.min.js"></script>
+
+		
         
         <script src="resource/js/functions.js"></script>
         <script src="resource/js/demo.js"></script>
         
 <script type="text/javascript">
+
 $(document).ready( function() {
-		function notify(from, align, icon, type, animIn, animOut){
-		    $.growl({
-		        icon: icon,
-		        title: '',
-		        message: 'Your password is not correct',
-		        url: ''
-		    },{
-		            element: 'body',
-		            type: type,
-		            allow_dismiss: true,
-		            placement: {
-		                    from: from,
-		                    align: align
-		            },
-		            offset: {
-		                x: 20,
-		                y: 85
-		            },
-		            spacing: 10,
-		            z_index: 1031,
-		            delay: 2500,
-		            timer: 1000,
-		            url_target: '_blank',
-		            mouse_over: false,
-		            animate: {
-		                    enter: animIn,
-		                    exit: animOut
-		            },
-		            icon_type: 'class',
-		            template: '<div data-growl="container" class="alert" role="alert">' +
-		                            '<button type="button" class="close" data-growl="dismiss">' +
-		                                '<span aria-hidden="true">&times;</span>' +
-		                                '<span class="sr-only">Close</span>' +
-		                            '</button>' +
-		                            '<span data-growl="icon"></span>' +
-		                            '<span data-growl="title"></span>' +
-		                            '<span data-growl="message"></span>' +
-		                            '<a href="#" data-growl="url"></a>' +
-		                        '</div>'
-		    });
-		};
-		
-		var jsonData3 = {};
-		
-		$("#saveInfo").click( function(e) {
-			var name = $("#name").val();
-			var afterPw = $("#afterPw").val();
-			var beforePw = $("#beforePw").val();
-			$.post(
-					"/doChangeInfo"
-					, { "name" : name,
-						"afterPw" : afterPw,
-						"beforePw" : beforePw }
-					, function(data) {
-						
-						try{
-							jsonData3 = JSON.parse(data);
-						}
-						catch(e) { //자바스크립트는 타입이 없기때문에 e만 적으면 된다.
-						}
-						
-						if ( jsonData3.isUpdate ) {
-							 location.href="/doLogout";
-						}
-						if ( jsonData3.checkPw == false ) {
-						    notify('top','center', 'fa fa-comments', 'inverse', 'animated fadeInDown', 'animated fadeOutDown');
-						}
-					  }
-					);
-			
-		});
-		
-		$("#data-table-basic").bootgrid({
-            css: {
-                icon: 'md icon',
-                iconColumns: 'md-view-module',
-                iconDown: 'md-expand-more',
-                iconRefresh: 'md-refresh',
-                iconUp: 'md-expand-less'
-            },
-        });
-		
-		$("#data-table-command").bootgrid({
-            css: {
-                icon: 'md icon',
-                iconColumns: 'md-view-module',
-                iconDown: 'md-expand-more',
-                iconRefresh: 'md-refresh',
-                iconUp: 'md-expand-less'
-            }
-            /* formatters: {
-                "commands": function(column, row) {
-                    return "<button type=\"submit\" class=\"btn btn-icon command-delete\" data-row-id=\"" + row.id + "\"><span class=\"md md-delete\"></span></button>";
-                }
-            } */
-        });
 
-		
-		var fileTarget = $('.filebox .upload-hidden');
-
-		  fileTarget.on('change', function(){  // 값이 변경되면
-		    if(window.FileReader){  // modern browser
-		      var filename = $(this)[0].files[0].name;
-		    } 
-		    else {  // old IE
-		      var filename = $(this).val().split('/').pop().split('\\').pop();  // 파일명만 추출
-		    }
-		    
-		    // 추출한 파일명 삽입
-		    $(this).siblings('.upload-name').val(filename);
-		  });
+	$("#uploadPhoto").click(function() {
+		var fileExt = $("#upPhoto").val();
+		if (fileExt == "") {
+		swal("사진파일이 없습니다. ");
+		return false;
+		} 
+		else {
+				fileExt = fileExt.slice(fileExt.indexOf(".") + 1).toLowerCase();
+				
+				if (fileExt != "jpg" && fileExt != "png" && fileExt != "gif" && fileExt != "bmp" && fileExt != "") {
+					swal("사진 파일만 등록가능합니다.");
+					return false;
+				} else {
+						var form = $("#profileModal");
+						form.attr("method", "post");
+						form.attr("action","/updatePhoto");
+						form.attr("enctype","multipart/form-data");
+						form.submit();
+				}
+		}
 	});
-	</script>
+
+	function notify(from, align, icon, type, animIn, animOut) {
+			$.growl({
+					icon : icon,
+					title : '',
+					message : 'Your password is not correct',
+					url : ''
+					},
+					{
+					element : 'body',
+					type : type,
+					allow_dismiss : true,
+					placement : {
+								from : from,
+								align : align
+								},
+								offset : {
+											x : 20,
+											y : 85
+										},
+								spacing : 10,
+								z_index : 1031,
+								delay : 2500,
+								timer : 1000,
+								url_target : '_blank',
+								mouse_over : false,
+								animate : {
+											enter : animIn,
+											exit : animOut
+											},
+								icon_type : 'class',
+								template : '<div data-growl="container" class="alert" role="alert">'
+														+ '<button type="button" class="close" data-growl="dismiss">'
+														+ '<span aria-hidden="true">&times;</span>'
+														+ '<span class="sr-only">Close</span>'
+														+ '</button>'
+														+ '<span data-growl="icon"></span>'
+														+ '<span data-growl="title"></span>'
+														+ '<span data-growl="message"></span>'
+														+ '<a href="#" data-growl="url"></a>'
+														+ '</div>'
+											});
+						};
+
+						var jsonData3 = {};
+
+<<<<<<< .mine
+						$("#saveInfo").click(
+							function() {
+							$.post(
+								"/doChangeInfo",
+								{
+									"name" : name,
+									"afterPw" : afterPw,
+									"beforePw" : beforePw
+								},
+								function(data) {
+	
+									try {
+										jsonData3 = JSON
+												.parse(data);
+									} catch (e) { //자바스크립트는 타입이 없기때문에 e만 적으면 된다.
+									}
+	
+									if (jsonData3.isUpdate) {
+										location.href = "/doLogout";
+									}
+									if (jsonData3.checkPw == false) {
+										notify(
+												'top',
+												'center',
+												'fa fa-comments',
+												'inverse',
+												'animated fadeInDown',
+												'animated fadeOutDown');
+									}
+								});
+=======
+						$("#saveInfo")
+								.click(
+										function() {
+											var name = $("#name").val();
+											var afterPw = $("#afterPw").val();
+											var beforePw = $("#beforePw").val();
+
+
+											$
+													.post(
+															"/doChangeInfo",
+															{
+																"name" : name,
+																"afterPw" : afterPw,
+																"beforePw" : beforePw
+															},
+															function(data) {
+
+																try {
+																	jsonData3 = JSON
+																			.parse(data);
+																} catch (e) { //자바스크립트는 타입이 없기때문에 e만 적으면 된다.
+																}
+
+																if (jsonData3.isUpdate) {
+																	location.href = "/doLogout";
+																}
+																if (jsonData3.checkPw == false) {
+																	notify(
+																			'top',
+																			'center',
+																			'fa fa-comments',
+																			'inverse',
+																			'animated fadeInDown',
+																			'animated fadeOutDown');
+																}
+															});
+>>>>>>> .r104
+
+						});
+
+						$("#data-table-basic").bootgrid({
+							css : {
+								icon : 'md icon',
+								iconColumns : 'md-view-module',
+								iconDown : 'md-expand-more',
+								iconRefresh : 'md-refresh',
+								iconUp : 'md-expand-less'
+							},
+						});
+
+						$("#data-table-command").bootgrid({
+							css : {
+								icon : 'md icon',
+								iconColumns : 'md-view-module',
+								iconDown : 'md-expand-more',
+								iconRefresh : 'md-refresh',
+								iconUp : 'md-expand-less'
+							}
+						/* formatters: {
+						    "commands": function(column, row) {
+						        return "<button type=\"submit\" class=\"btn btn-icon command-delete\" data-row-id=\"" + row.id + "\"><span class=\"md md-delete\"></span></button>";
+						    }
+						} */
+						});
+					});
+</script>
 	<style>
 ::-webkit-scrollbar {width: 8px; height: 8px; border: 3px solid #fff; }
 ::-webkit-scrollbar-button:start:decrement, ::-webkit-scrollbar-button:end:increment {display: block; height: 10px; background: url('./images/bg.png') #efefef}
@@ -180,47 +237,6 @@ html{scrollbar-3dLight-Color: #efefef; scrollbar-arrow-color: #dfdfdf; scrollbar
     height: 100%;
     background-color: green;
 }
-
-
-.filebox input[type="file"] {
-    position: absolute;
-    width: 1px;
-    height: 1px;
-    padding: 0;
-    margin: -1px;
-    overflow: hidden;
-    clip:rect(0,0,0,0);
-    border: 0;
-}
-
-.filebox label {
-    display: inline-block;
-    padding: .5em .75em;
-    color: #999;
-    font-size: inherit;
-    line-height: normal;
-    vertical-align: middle;
-    background-color: #fdfdfd;
-    cursor: pointer;
-}
-
-/* named upload */
-.filebox .upload-name {
-    display: inline-block;
-    padding: .5em .75em;
-    font-size: inherit;
-    font-family: inherit;
-    font-color: black;
-    line-height: normal;
-    vertical-align: middle;
-    background-color: #f5f5f5;
-  border: 1px solid #ebebeb;
-  border-bottom-color: #e2e2e2;
-  border-radius: .25em;
-  -webkit-appearance: none;
-  -moz-appearance: none;
-  appearance: none;
-}
 </style>
 </head>
 <c:set var="Username" value="${ sessionScope._MEMBER_.name }" />
@@ -228,8 +244,8 @@ html{scrollbar-3dLight-Color: #efefef; scrollbar-arrow-color: #dfdfdf; scrollbar
 <c:set var="picName" value="${ sessionScope._MEMBER_.pic_name }" />
 <c:set var="picPath" value="${ sessionScope._MEMBER_.pic_path }" />
 <c:set var="root" value="${pageContext.request.contextPath}" /> 
-<body>
-       <header id="header">
+<body id="content" style="background-color: #ffffff">
+     <header id="header" style="background-color: #ffffff">
             <ul class="header-inner">
                 <li>
                     <div class="line-wrap">
@@ -239,44 +255,44 @@ html{scrollbar-3dLight-Color: #efefef; scrollbar-arrow-color: #dfdfdf; scrollbar
                     </div>
                 </li>
                 <li class="logo hidden-xs">
-                    <a class="orgin" href="/goMain">PingPong Chat</a>
+                    <a class="orgin" href="/goMain"  style="color: #323e4a;">PingPong Chat</a>
                 </li>
                		 
-              <li class="pull-right">
+              <li class="pull-right"  style="color: black;">
                 <ul class="top-menu">
                 	<li class="logo" style="position: relative; top: 1px;">
-                    	<a class="my" href="/goMain">
-                    	<i class="md-timer-auto" style="width: 200%; height: 200%;"> Welcome ${ Username }  ( ${ Useremail } ) </i></a>
+                    	<a class="my" href="/goMain" style="color: black;">
+                    	<i class="md-timer-auto" style="width: 200%; height: 200%; color: #323e4a;"> Welcome ${ Username }  ( ${ Useremail } ) </i></a>
                 	</li> 
-                    <li class="dropdown">
-                        <a data-toggle="dropdown" class="tm-settings" href=""></a>
-                        <ul class="dropdown-menu dm-icon pull-right">
+                    <li class="dropdown" style="color: #323e4a; background-color: #71d1b2; border-radius : 5px 5px 5px 5px">
+                        <a data-toggle="dropdown" class="tm-settings" href=""  ></a>
+                        <ul class="dropdown-menu dm-icon pull-right" style="color: black; ">
                        		<li>
-                            	<a href="/doLogout"><i class="md md-history"></i> Logout</a>
+                            	<a href="/doLogout"><i class="md md-history"></i>로그아웃</a>
                             </li>
                             <li>
-                                <a data-action="fullscreen" href=""><i class="md md-fullscreen"></i> Toggle Fullscreen</a>
+                                <a data-action="fullscreen" href=""><i class="md md-fullscreen"></i>전체화면</a>
                             </li>
                             <li>
-                                <a href="/doAboutProfile"><i class="md md-person"></i> Privacy Settings</a>
+                                <a href="/doAboutProfile"><i class="md md-person"></i>회원정보</a>
                             </li>
-                            
                         </ul>
                     </li>
+                    
                     </ul>
                 </li>
             </ul>
         </header>
         
-        <section id="main">
+        <section id="main" style="background-color: #ecf0f1;">
 	          <section id="content">
-                <div class="container">
+                <div class="container" >
 				<div id="defaultPage">
 					 <div class="block-header">
                         <h2>Member Information <small> you can modify your information</small></h2>
                     </div>
                     
-                    <div class="card" id="profile-main">
+                    <div class="card" id="profile-main" >
                         <div class="pm-overview c-overflow">
                             <div class="pmo-pic">
                                 <div class="p-relative">
@@ -292,24 +308,30 @@ html{scrollbar-3dLight-Color: #efefef; scrollbar-arrow-color: #dfdfdf; scrollbar
 									</a>
 									
                                 <!-- Modal -->
-		                           <div class="modal fade" data-modal-color="bluegray" id="modalProfile" data-backdrop="static" data-keyboard="false" tabindex="-1" role="dialog" aria-hidden="true">
+		                           <div class="modal fade" id="modalProfile" data-backdrop="static" data-keyboard="false" tabindex="-1" role="dialog" aria-hidden="true">
 		                                <div class="modal-dialog modal-sm">
 		                                    <div class="modal-content">
 		                                        <div class="modal-header">
 		                                            <button type="button" class="close" data-dismiss="modal">&times;</button>
 													<h4 class="modal-title">프로필 사진 변경</h4>
 		                                        </div>
-		                                        <form id="profileModal" method="post" action="/updatePhoto" enctype="multipart/form-data">
-			                                        <div class="modal-body">
+		                                        <form id="profileModal">
+			                                        <div class="modal-body" align="center">
 														<p>원하시는 사진을 선택하세요.</p>
-														<div class="filebox bs3-primary">
-															<input class="upload-name" value="파일선택" disabled="disabled" style="color:black;">
-															<label class="btn bgm-bluegray" for="ex_filename" id="isFile">Select</label> 
-														<input id="ex_filename" class="upload-hidden" type="file" name="upPhoto" value="file">
-														</div>
-			                                       	</div>
+														<div class="fileinput fileinput-new" data-provides="fileinput">
+							                                <div class="fileinput-preview thumbnail" data-trigger="fileinput"></div>
+							                                <div>
+							                                    <span class="btn btn-info btn-file" style="background-color: #7f4a82;">
+							                                        <span class="fileinput-new">선택된 이미지</span>
+							                                        <span class="fileinput-exists">변경</span>
+							                                        <input type="file" id="upPhoto" name="upPhoto" value="file">
+							                                    </span>
+							                                    <a href="#" class="btn btn-danger fileinput-exists" data-dismiss="fileinput">Remove</a>
+							                                </div>
+							                            </div>
+													</div>		
 			                                        <div class="modal-footer">
-			                                            <button class="btn btn-link" type="submit" >Save</button>
+			                                            <button class="btn btn-link" id="uploadPhoto">Save</button>
 			                                            <button type="button" class="btn btn-link" data-dismiss="modal">Close</button>
 			                                        </div>
 		                                        </form>
@@ -412,20 +434,10 @@ html{scrollbar-3dLight-Color: #efefef; scrollbar-arrow-color: #dfdfdf; scrollbar
 						    	<div role="tabpanel" class="tab-pane" id="changeInfo">
 		                            	<div class="pmb-block">
 			                                <div class="pmbb-header">
-			                                    <h2><i class="md md-person m-r-5"></i> Change Information</h2>
-			                                    <ul class="actions">
-			                                        <li class="dropdown">
-			                                            <a href="" data-toggle="dropdown">
-			                                                <i class="md md-more-vert"></i>
-			                                            </a>
-			                                            
-			                                            <ul class="dropdown-menu dropdown-menu-right">
-			                                                <li>
-			                                                    <a data-pmb-action="edit" href="">Edit</a>
-			                                                </li>
-			                                            </ul>
-			                                        </li>
-		                                    	</ul>
+			                                    <h2><i class="md md-person m-r-5"></i> Change Information
+			                                    <button type="button" class="md md-help" data-trigger="hover" data-toggle="popover" data-placement="bottom" data-content="비밀번호 변경시 다시 로그인 해주세요."  style="border-radius :50%; background-color: #ffffff; border: 0; size: 50%;"></button>
+			                                    <div align="right" style="margin-top:-20px;"><a class="btn" style="background-color: #71d1b2; color: white;" data-pmb-action="edit" href="">Edit</a></div>
+			                                    </h2>
 		                               		</div>
 			                                <div class="pmbb-body p-l-30">
 			                                    <div class="pmbb-view">
@@ -465,9 +477,6 @@ html{scrollbar-3dLight-Color: #efefef; scrollbar-arrow-color: #dfdfdf; scrollbar
 		                                            </dd>
 		                                        </dl>
 		                                        
-		                                        <dl class = "dl-horizontal">
-		                                        	Please login again.
-		                                        </dl>
 		                                        <div class="m-t-30">
 		                                            <button class="btn btn-primary btn-sm" id="saveInfo" >Save</button>
 		                                            <button data-pmb-action="reset" class="btn btn-link btn-sm">Cancel</button>

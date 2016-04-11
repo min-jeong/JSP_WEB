@@ -1,0 +1,100 @@
+@CHARSET "UTF-8";
+
+
+div#wrapper {
+	width :  100%;
+	height : 100%;	
+}
+
+div#left_menu {
+/* 	margin-top: 10px;
+	margin-left: 5px; */
+	width : 12%;
+	float : left;
+	min-height: 2200px;
+	max-height: 3000px;
+	background-color: #354052;
+}
+div#main_menu {
+	margin-top: 10px;
+	margin-left: 10px;
+	margin-right: 10px;
+	width : 55%;
+	float : left;
+	overflow-x: auto;
+	overflow-y: auto;
+	max-height: 3000px;
+	/* overflow: scroll; */
+}
+div#right_menu {
+	margin-top: 10px;
+	margin-right: 5px;
+	width : calc(33% - 30px);
+	overflow: auto;
+	min-height: 2200px;
+	max-height: 3000px;
+	background-color: #ecf0f1;
+}
+div#profile {
+	width : 100%;
+	max-height: 1000px;
+	float:left;
+	overflow: hidden;
+	margin-bottom : 5px;
+}
+div#team_menu {
+	width : 100%;
+	max-height: 2500px;
+	overflow: auto;
+	float:left;
+	margin-bottom: 10px;
+}
+div#mine {
+	margin-top: 10px;
+	width : 100%;
+	max-height : 1000px;
+	overflow: hidden;
+	float:left;
+	overflow: auto;
+}
+div#chatbyMem{
+	margin-right: 10px;
+	margin-left: 10px;
+	margin-top: -15px;
+	width :100%;
+	max-height: 1000px;
+	overflow: auto;
+	float: left;
+}
+
+div#chatbyKeyword {
+	margin-right: 10px;
+	margin-left: 10px;
+	margin-top: 5px;
+	width :100%;
+	max-height: 1000px;
+	float: left;
+	overflow-y: auto;
+	overflow-x: hidden;
+}
+
+div#calendar {
+	margin-right: 10px;
+	margin-left: 10px;
+	width :100%;
+	max-height: 700px;
+	max-width :100%;
+	overflow: auto;
+	float: left;
+}
+
+div#main_menu div.container {
+	width :90%;
+} 
+
+div#p-circle {
+	 margin-top: 0;
+     margin-bottom: 0;
+     margin-right: 0;
+     margin-left: 0;
+}

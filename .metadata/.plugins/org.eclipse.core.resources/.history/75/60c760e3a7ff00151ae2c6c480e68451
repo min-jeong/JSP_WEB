@@ -1,0 +1,6 @@
+package com.ktds.jmj;
+
+public class LoginBizImpl implements LoginBiz {
+	
+	
+}

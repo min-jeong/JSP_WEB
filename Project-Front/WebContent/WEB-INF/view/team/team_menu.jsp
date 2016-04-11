@@ -7,14 +7,23 @@
 <c:set var="nowTeamId" value="${ sessionScope._TEAM_.teamId }" />
 <script type="text/javascript">
 	$(document).ready(function() {
-		$("#input").click(function() {
+		$("#input").hide();
+		
+		$("#addEmail").click(function(){
+			$("#input").show();
+			$("#addFloor").append("<div class=\"input-group m-b-20\"><span class=\"input-group-addon\"><i class=\"md md-mail\"></i></span><div class=\"fg-line\"><input type=\"text\" class=\"form-control\" placeholder=\"Email Address\" id=\"email\" name=\"email\"></div></div>");
+			
+		});
+		
+	 	$("#input").click(function() {
+			
 			if( $("#teamName").val() ==""  ){
 				swal("Team name is empty");
 				return;
 			}
 			
 			if ( $("#email").val() == "" ){
-				alert("Member ID is empty");	
+				alert("첫번째 이메일의 입력란은 반드시 입력해주세요");	
 				return;
 			}
 			
@@ -22,29 +31,45 @@
 			form.attr("method", "post");
 			form.attr("action", "<c:url value="/create"/>");
 			form.submit();
-		});
+		});  
 	});
 </script>		
-
+<style>
+.lv-avatar1 {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  color: #FFF;
+  text-align: center;
+  line-height: 34px;
+  font-size: 15px;
+  margin-right: 15px;
+  margin-top: 4px;
+  padding: 0 !important;
+  text-transform: uppercase;
+}
+</style>
 <div id="team" class="card" style="background-color : #354052;">
-   	<div class="card-header" style="background-color : #354052; color : #71d1b2;">
-	    <h2 style="color : #71d1b2; font-weight:bold; font-size: 20px;">My Team</h2>
+   	<div class="card-header" style="background-color: #496f7a;">
+	    <h2 style="color :#323e4a; font-weight:bold; font-size: 20px;">My Team
+	    <button type="button" class="md md-help" data-trigger="hover" data-toggle="popover" data-placement="bottom" data-content="가입된 Team List"  style="border-radius :50%; background-color: #496f7a; border: 0; size: 50%;"></button>
+	    </h2>
 	    <a href="#step1" class="btn btn-float waves-effect" style="background-color: #71d1b2;" data-toggle="modal"  id="createTeam" >
 		<i class="md md-add"></i>
 		</a>
 	</div>
 
-		<div class="card-body" >
+		<div class="card-body" style="margin-left: 10px;">
 			<c:forEach items="${ allTeams }" var="list">
 			<c:if test="${ list.teamId eq nowTeamId }">
 			<a href="/SetTeamSession?teamId=${ list.teamId }">
-				<div class="listview lv-user m-t-20" style="background-color: #22252E;">
-				<div class="lv-item media">
-				    <div class="lv-avatar pull-left" style="background-color: #71d1b2;"></div>
+				<div class="listview lv-user m-t-20" style="background-color: #22252E; margin-left:-10px;">
+				<div class="lv-item media" >
+				    <div class="lv-avatar1 pull-left" style="background-color: #71d1b2; margin-left:10px;"></div>
 				    <div class="media-body"> <!-- Optional container for demo porpose only -->
 	           			<div class="lv-title" style="color : #ffffff; font-weight:bold; font-size: 15px;" >${ list.teamName } 
 	           			<c:if test="${ list.leaderEmail eq Useremail }">
-	           			   <i class="md md-star" style="color: #ffffff;"></i>
+	           			   <img src="resource/img/king.png" width="23px" height="23px" style="margin-bottom: 5px; margin-left: 3px;">
 	           			 </c:if>	<!-- 리더 이메일 빼고 리더 여부 추가/리더면 왕관모양? -->
 	           			 </div>
 	            	</div>
@@ -55,12 +80,12 @@
 			<c:if test="${ list.teamId ne nowTeamId }">
 			<a href="/SetTeamSession?teamId=${ list.teamId }">
 				<div class="listview lv-user m-t-20">
-				<div class="lv-item media">
-				    <div class="lv-avatar pull-left" style="background-color: #71d1b2;"></div>
+				<div class="lv-item media" >
+				    <div class="lv-avatar1 pull-left" style="background-color: #71d1b2; margin-left:10px" ></div>
 				    <div class="media-body"> <!-- Optional container for demo porpose only -->
-	           			<div class="lv-title" style="color : #959aa2; font-weight:bold; font-size: 15px;">${ list.teamName } 
+	           			<div class="lv-title" style="color : #959aa2;  font-size: 15px;">${ list.teamName } 
 	           			<c:if test="${ list.leaderEmail eq Useremail }">
-	           			   <i class="md md-star" style="color: #ffffff;"></i>
+	           			    <img src="resource/img/king.png" width="23px" height="23px" style="margin-bottom: 5px; margin-left: 3px;">
 	           			 </c:if>	<!-- 리더 이메일 빼고 리더 여부 추가/리더면 왕관모양? -->
 	           			 </div>
 	            	</div>
@@ -97,27 +122,21 @@
                                         </div>
 					        		</div>
 					        		<div class="tab-pane fade" id="tab2">
-						        		<p class="f-500 c-black m-b-15">Select team member</p>
-						        		<select class="tag-select" multiple data-placeholder="member email" name="email">
-						        			<c:forEach items="${ allMember }" var="mem">
-						        				<c:if test="${ mem.email eq Useremail }">
-						        					<option value="${ mem.email }" disabled="disabled"> ${ mem.email }</option>
-						        				</c:if>
-		                                        <c:if test="${ mem.email ne Useremail }">
-						        					<option value="${ mem.email }" > ${ mem.email }</option>
-						        				</c:if>
-	                                         </c:forEach>
-                                    	</select>
+						        		<div style="float: left; padding: 0px 50px 0px 0px;"><p class="f-500 c-black m-b-15">Send Invitation by e-mail</p></div>
+						        							
+						        			<div>
+										<button type="button" class="btn" style="background-color: #ff4f3e; color: white;"id="addEmail"><i class="md md-arrow-forward"> ADD</i></button>
+										</div>
+										<br />
+						        		<div id="addFloor">
 						        		
-										<!-- <i class="md md-person"></i><p>초대원 1</p><input type="text" name="email" />
-										<i class="md md-person"></i><p>초대원 2</p><input type="text" name="email" />
-										<i class="md md-person"></i><p>초대원 3</p><input type="text" name="email" />
-										<i class="md md-person"></i><p>초대원 4</p><input type="text" name="email" />
-										<i class="md md-person"></i><p>초대원 5</p><input type="text" name="email" />
-										<i class="md md-person"></i><p>초대원 6</p><input type="text" name="email" />
-										<i class="md md-person"></i><p>초대원 7</p><input type="text" name="email" />
-										<i class="md md-person"></i><p>초대원 8</p><input type="text" name="email" /> -->
-								        <input type="button" id="input" value="완료!" />
+						        		<!-- append로 생성된 email list가 들어가는 자리 -->
+						        		
+						        		</div>
+										<div id="tab3"></div>	
+										<div style="width: 30%; margin:auto;">							
+								       <button class="btn" style="background-color: #ff4f3e; color: white;" id="input"><i class="md md-check">SEND</i></button>
+								       </div>
 									</div>
 									<ul class="fw-footer pagination wizard">
                                         <li class="previous first"><a class="a-prevent" href="#tab1"><i class="md md-more-horiz"></i></a></li>

@@ -23,3 +23,15 @@ div#eventbox {
   color: black !important;
   background-color: lightblue !important;
 }
+
+#bottomDate {
+   background-color: #71d1b2;
+   color: #354052;
+   font-size: 12pt;
+   font-weight: bold;
+   
+}
+#detailInfo {
+	width: 580px;
+	float: left;
+}

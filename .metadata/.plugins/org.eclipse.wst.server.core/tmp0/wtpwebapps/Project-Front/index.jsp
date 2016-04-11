@@ -1,5 +1,43 @@
 <!DOCTYPE html>
+<%@page import="com.ktds.pingpong.member.vo.MemberVO"%>
+<%@page import="com.ktds.pingpong.history.vo.OperationHistoryVO"%>
+<%@page import="com.ktds.pingpong.history.biz.OperationHistoryBiz"%>
+<%@page import="com.ktds.pingpong.history.vo.ActionCode"%>
+<%@page import="com.ktds.pingpong.history.vo.Description"%>
+<%@page import="com.ktds.pingpong.history.vo.BuildDescription"%>
 <html lang="en">
+<%
+	MemberVO member = (MemberVO) session.getAttribute("_MEMBER_");
+	if ( member != null ){
+		OperationHistoryVO historyVO = new OperationHistoryVO();
+		historyVO.setIp(request.getRemoteHost());
+		historyVO.setEmail(member.getEmail());
+		historyVO.setUrl(request.getRequestURI());
+		historyVO.setActionCode(ActionCode.LOGIN);
+		historyVO.setDescription(BuildDescription
+				.get(Description.ALREADY_LOGIN, member.getEmail())
+				);
+		
+		OperationHistoryBiz biz = new OperationHistoryBiz();
+		biz.addHistory(historyVO);
+		
+		response.sendRedirect("/goMain");
+		return;
+	}
+
+	
+	OperationHistoryVO historyVO = new OperationHistoryVO();
+	historyVO.setIp(request.getRemoteHost());
+	historyVO.setEmail("");
+	historyVO.setUrl(request.getRequestURI());
+	historyVO.setActionCode(ActionCode.LOGIN);
+	historyVO.setDescription(BuildDescription
+			.get(Description.VISIT_LOGIN_PAGE, request.getRemoteHost())
+			);
+	
+	OperationHistoryBiz biz = new OperationHistoryBiz();
+	biz.addHistory(historyVO);
+%>
 <head>
 <meta charset="UTF-8">
 <title>PingPong Chat</title>
@@ -23,6 +61,11 @@
 h2 { 
 	color: #F44336;
 }
+html {
+  font-family: sans-serif;
+  -ms-text-size-adjust: 100%;
+  -webkit-text-size-adjust: 100%;
+}
 </style>
 </head>
 <body>
@@ -37,9 +80,8 @@ h2 {
               <h2 class="masthead-brand" color="#FFFFFF">PINGPONG CHAT</h2>
               <nav>
                 <ul class="nav masthead-nav">
-                  <li><a href="/goLogin">Login</a></li>
-                 <!--<li class="active"><a href="#">Login</a></li>--> 
-                  <li><a href="/goSignup">Sign Up</a></li>
+                  <li><a href="/goLogin" style="font-size : 17x;">Login</a></li>
+                  <li><a href="/goSignup" style="font-size : 17px;">Sign Up</a></li>
                 </ul>
               </nav>
             </div>

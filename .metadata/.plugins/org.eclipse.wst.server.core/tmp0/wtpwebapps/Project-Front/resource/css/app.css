@@ -9028,8 +9028,9 @@ body #content {
   }
 }
 #header {
-  background: #4285F4;
-  box-shadow: 0px 1px 4px rgba(0, 0, 0, 0.3);
+ /*  background: #4285F4;
+  box-shadow: 0px 1px 4px rgba(0, 0, 0, 0.3); */
+  background: #ffffff;
   height: 65px;
   position: fixed;
   z-index: 10;
@@ -11718,6 +11719,7 @@ input:focus {
 }
 #todo-lists .tl-body #add-tl-item.toggled .add-tl-body .add-tl-actions [data-tl-action="dismiss"] {
   color: #f44336;
+  
 }
 #todo-lists .tl-body #add-tl-item.toggled .add-tl-body .add-tl-actions [data-tl-action="save"] {
   color: #4caf50;

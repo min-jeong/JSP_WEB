@@ -1,3 +1,2 @@
 #Tomcat publish data
-#Mon Apr 04 09:42:40 KST 2016
-org.eclipse.jst.jee.server\:/binary\:C\:\\Users\\206-001\\workspace\\JSP_WEB\\Project-Front\\WebContent\\WEB-INF\\lib\\ojdbc6.jar=WEB-INF/lib/ojdbc6.jar
+#Tue Apr 05 09:14:06 KST 2016

@@ -42,22 +42,48 @@
         
         <script src="resource/js/functions.js"></script>
         <script src="resource/js/demo.js"></script>
-        
-		
 		<script type="text/javascript">
             $(document).ready(function(){
+            	$("#input2").hide();
+        		
+        		$("#addEmail2").click(function(){
+        			$("#input2").show();
+        			$("#addFloor2").append("<div class=\"input-group m-b-20\"><span class=\"input-group-addon\"><i class=\"md md-mail\"></i></span><div class=\"fg-line\"><input type=\"text\" class=\"form-control\" placeholder=\"Email Address\" id=\"newAddemail\" name=\"email\"></div></div>");
+        			
+        		});         	
+            	
+        		$("#input2").click(function() {
+        			 if ( $("#newAddemail").val() == "" ){
+        				alert("첫번째 이메일의 입력란은 반드시 입력해주세요");	
+        				return;
+        			} 
+        			
+        			var form = $("#createAddEmail");
+        			form.attr("method", "post");
+        			form.attr("action", "<c:url value="/addNewMember"/>");
+        			form.submit();
+        		});
+            	//위에는 멤버추가를 위한 코드
                 //Basic Example
-                $("#data-table-basic").bootgrid({
-                    css: {
-                        icon: 'md icon',
-                        iconColumns: 'md-view-module',
-                        iconDown: 'md-expand-more',
-                        iconRefresh: 'md-refresh',
-                        iconUp: 'md-expand-less'
-                    },
+                
+                var jsonData3 = {};
+                $("#deleteMember").click( function() {
+                	var email = $("#thisEmail").val();
+                	location.href="/deleteMember?emailId=${ email }";
                 });
                 
-                $("#upload").click( function move() {
+                $("#deleteWaitingMember").click( function() {
+                	var email = $("#waitingEmail").val();
+                	location.href="/deleteWaitingMember?emailId=${ email }";
+                });
+                
+                
+                $("#myProgress").hide();
+            	$("#myBar").hide();
+            	  
+            	 $("#upload").click( function move() {
+            	    $("#myProgress").show();
+            		$("#myBar").show();
 					var elem = document.getElementById("myBar"); 
 				    var width = 0;
 				    var id = setInterval(frame, 180);
@@ -71,38 +97,59 @@
 				    }
 				});
                 
-                var jsonData3 = {};
-                $("#deleteMember").click( function() {
+/*   기존 이메일 멤버 추가 방식             $("#addMember").click( function() {
+                	if ( $("#email").val() == "" ){
+        				swal("Member ID is empty");	
+        				return;
+        			}
+                	
+                	var form = $("#addMember");
+        			form.attr("method", "post");
+        			form.attr("action", "<c:url value="/addNewMember"/>");
+        			form.submit();
+                	
+                }); */
+            	
+            	$("#deleteMember").click( function() {
                 	var email = $("#thisEmail").val();
-                	alert( email );
-                	$.post(
-                			"/deleteMember"
-                			, { "email" : email }
-                			, function( data ){
-                				
-                				try{
-            						jsonData3 = JSON.parse(data);
-            					}
-            					catch(e) { //자바스크립트는 타입이 없기때문에 e만 적으면 된다.
-            					}
-            					if ( jsonData3.result ){ //성공하면 true
-            						swal("Delete" + email + "!");
-            						location.href = "/goManageTeam";
-            					}
-            					else {
-            						swal("You Can't");
-            					}
-                			}
-                	
-                	
-                	);
-                	
+                	location.href="/deleteMember?emailId=${ email }";
                 });
                 
-            });
-		</script>
+                $('#sa-params').click(function(){
+                        swal({   
+                            title: "Are you sure?",   
+                            text: "Delete Team",   
+                            type: "warning",   
+                            showCancelButton: true,   
+                            confirmButtonColor: "#DD6B55",   
+                            confirmButtonText: "Yes, delete it!",   
+                            cancelButtonText: "No, cancel!",   
+                            closeOnConfirm: false,   
+                            closeOnCancel: false 
+                        }, function(isConfirm){   
+                            if (isConfirm) {
+                            	 swal({   
+                                     title: "Deleted!",   
+                                     text: "Your team has been deleted.",   
+                                     type: "success",
+                                     timer: 4000,
+                                     showConfirmButton: false 
+                                 });
+                            	/* swal("Deleted!", "Your team has been deleted.", "success");  */
+                            	location.href="/deleteTeam";
+                            } else { 
+                                swal("Cancelled", "Your team is safe :)", "error");   
+                            }
+                        });
+                    });
+			  });
+			  
+            	/* $("#myProgress").hide();
+            	$("#myBar").hide(); */
+            	
+			</script>
 <style>
-::-webkit-scrollbar {width: 8px; height: 8px; border: 3px solid #fff; }
+::-webkit-scrollbar {width: 12px; height: 12px; border: 3px solid #fff; }
 ::-webkit-scrollbar-button:start:decrement, ::-webkit-scrollbar-button:end:increment {display: block; height: 10px; background: url('./images/bg.png') #efefef}
 ::-webkit-scrollbar-track {background: #efefef; -webkit-border-radius: 10px; border-radius:10px; -webkit-box-shadow: inset 0 0 4px rgba(0,0,0,.2)}
 ::-webkit-scrollbar-thumb {height: 50px; width: 50px; background: rgba(0,0,0,.2); -webkit-border-radius: 8px; border-radius: 8px; -webkit-box-shadow: inset 0 0 4px rgba(0,0,0,.1)}
@@ -124,11 +171,11 @@ html{scrollbar-3dLight-Color: #efefef; scrollbar-arrow-color: #dfdfdf; scrollbar
 <c:set var="Username" value="${ sessionScope._MEMBER_.name }" />
 <c:set var="Useremail" value="${ sessionScope._MEMBER_.email }" />
 <c:set var="leaderEmail" value="${ sessionScope._TEAM_.leaderEmail }" />
-<c:set var="teamId" value="${ sessionScopre._TEAM_.teamId }" />
+<c:set var="TeamID" value="${ sessionScope._TEAM_.teamId }" />
 <c:set var="root" value="${pageContext.request.contextPath}" /> 
 
-<body id="content">
-       <header id="header">
+<body id="content" style="background-color: #edecec">
+       <header id="header" style="background-color: #ffffff">
             <ul class="header-inner">
                 <li>
                     <div class="line-wrap">
@@ -137,30 +184,28 @@ html{scrollbar-3dLight-Color: #efefef; scrollbar-arrow-color: #dfdfdf; scrollbar
                         <div class="line bottom"></div>
                     </div>
                 </li>
-            
                 <li class="logo hidden-xs">
-                    <a class="orgin" href="/goMain">PingPong Chat</a>
+                    <a class="orgin" href="/goMain"  style="color: #323e4a;">PingPong Chat</a>
                 </li>
                		 
-              <li class="pull-right">
+              <li class="pull-right"  style="color: black;">
                 <ul class="top-menu">
                 	<li class="logo" style="position: relative; top: 1px;">
-                    	<a class="my" href="/goMain">
-                    	<i class="md-timer-auto" style="width: 200%; height: 200%;"> Welcome ${ Username }  ( ${ Useremail } ) </i></a>
+                    	<a class="my" href="/goMain" style="color: black;">
+                    	<i class="md-timer-auto" style="width: 200%; height: 200%; color: #323e4a;"> Welcome ${ Username }  ( ${ Useremail } ) </i></a>
                 	</li> 
-                    <li class="dropdown">
-                        <a data-toggle="dropdown" class="tm-settings" href=""></a>
-                        <ul class="dropdown-menu dm-icon pull-right">
+                    <li class="dropdown" style="color: #323e4a; background-color: #71d1b2; border-radius : 5px 5px 5px 5px">
+                        <a data-toggle="dropdown" class="tm-settings" href=""  ></a>
+                        <ul class="dropdown-menu dm-icon pull-right" style="color: black; ">
                        		<li>
-                            	<a href="/doLogout"><i class="md md-history"></i> Logout</a>
+                            	<a href="/doLogout"><i class="md md-history"></i>로그아웃</a>
                             </li>
                             <li>
-                                <a data-action="fullscreen" href=""><i class="md md-fullscreen"></i> Toggle Fullscreen</a>
+                                <a data-action="fullscreen" href=""><i class="md md-fullscreen"></i>전체화면</a>
                             </li>
                             <li>
-                                <a href="/doAboutProfile"><i class="md md-person"></i> Privacy Settings</a>
+                                <a href="/doAboutProfile"><i class="md md-person"></i>회원정보</a>
                             </li>
-                            
                         </ul>
                     </li>
                     </ul>
@@ -182,67 +227,189 @@ html{scrollbar-3dLight-Color: #efefef; scrollbar-arrow-color: #dfdfdf; scrollbar
 			</div>
 			<div id="main_menu">
 				<div id="defaultPage">
-					<ul class="tab-nav tn-justified">
-					    <li class="waves-effect"><a href="/teamInfo">Team Information</a></li>
-					    <li class="waves-effect"><a href="/propertyMember">Property By Member</a></li>
+					<ul class="tab-nav tn-justified" data-tab-color="cyan" style="color: #323e4a; background-color: #edecec; ">
+					    <li class="waves-effect"><a href="/teamInfo" style="color: #323e4a;">Team Information</a></li>
+					    <li class="waves-effect"><a href="/propertyMember" style="color: #323e4a;">CHAT ANALYSIS</a></li>
 						<c:if test="${ leaderEmail ne Useremail }">
 						</c:if>    
 						<c:if test="${ leaderEmail eq Useremail }">
-						<li class="waves-effect active"><a href="/goManageTeam">Manage Team</a></li>
+							<li class="waves-effect active"><a href="/goManageTeam" style="color: #323e4a;">TEAM SETTING</a></li>
 						</c:if>
 					</ul>
 					 <div class="card" id="profile-main">
 					<div class="pmb-block">
                        <div class="p-header">
                            <ul class="p-menu">
-                               <li class="active"><a href=""><i class="md md-people hidden-xs"></i> Team Member List </a></li>
+                               <li class="active"><a><i class="md md-people hidden-xs"></i> Team Member List </a></li>
+                               <button class="btn btn-info" id="sa-params" style=" color: white; background-color: #71d1b2; float: right;  box-shadow: 0 2px 7px rgba(0, 0, 0, 0);" id="deleteTeam">Delete Team</button>
+                               
+                               <!-- background-color: #71d1b2; -->
                            </ul>
-                        
+                        </div>	
 						<div class="contacts clearfix row">
-							<c:forEach items="${ memberList }" var="memEmail">
-							<form method="post" action="deleteMember">
-							<c:if test = "${ memEmail.email ne Useremail }">
-                            <div class="col-md-3 col-sm-6 col-xs-6">
-                                <div class="c-item">
-                                    <div class="ci-avatar">
-                                    	<c:if test="${ memEmail.pic_name eq null }">
-                                    		<img src="resource/img/notifications.png" class="img-responsive" height="200px">
-                                    	</c:if>
-                                    	<c:if test="${ memEmail.pic_name ne null }">
-                                       		<img src="/callMemberImage?picName=${ memEmail.pic_name }" alt="" height="200px">
-                                    	</c:if>
-                                    </div>
-                                    
-                                    <div class="c-info">
-                                        <strong>${ memEmail.name }</strong>
-                                        <input type="hidden" id="thisEmail" name="thisEmail" value="${ memEmail.email }"><small>${ memEmail.email }</small>
-                                    </div>
-                                    <div class="c-footer">
-                                        <button class="waves-effect" type="submit">Delete</button>
-                                    </div>
-                                </div>
-                            </div>
-                            </c:if>
-                            </form>
+						
+						<c:forEach items="${ memberList }" var="memEmail" varStatus="status">
+								<form method="post" action="deleteMember">
+									<c:if test="${(status.index mod 5) eq 4}">
+									<div class="row">
+									</c:if>
+									
+									<c:if test = "${ memEmail.email ne Useremail }">
+		                            <div class="col-md-3 col-sm-6 col-xs-6">
+		                                <div class="c-item" style="">
+		                                    <div class="ci-avatar">
+		                                    	<c:if test="${ memEmail.pic_name eq null }">
+		                                    		<img src="resource/img/notifications.png"  height="170px">
+		                                    	</c:if>
+		                                    	<c:if test="${ memEmail.pic_name ne null }">
+		                                       		<img src="/callMemberImage?picName=${ memEmail.pic_name }"  alt="" height="170px">
+		                                    	</c:if>
+		                                    </div>
+		                                    <div class="c-info">
+		                                        <strong>${ memEmail.name }</strong>
+		                                        <input type="hidden" id="thisEmail" name="thisEmail" value="${ memEmail.email }"><small>${ memEmail.email }</small>
+		                                    </div>
+		                                    <div class="c-footer">
+		                                        <button class="waves-effect" type="submit">Delete</button>
+		                                    </div>
+		                                </div>
+		                            </div>
+		                            </c:if>
+		                            
+	                                <c:if test="${(status.index mod 5) eq 4}">
+									</div>
+									</c:if>
+		                            
+		                            
+	                            </form>
                             </c:forEach>
+                            
+                             <div class="col-md-3 col-sm-6 col-xs-6" >
+	                                <div class="c-item">
+	                                    <div class="ci-avatar">
+                                    		<a href="#addMem"  data-toggle="modal" id="add"><img src="resource/img/add.png" height="170px" style="padding-right: 100px; padding-left: 100px; padding-bottom: 70px; padding-top: 70px;"></a>
+	                                    </div>
+	                                    <div class="c-info">
+	                                    		<strong>NICK NAME</strong>
+		                                        <small>EMAIL</small>
+	                                    </div>
+	                                     <div class="c-footer">
+	                                     	 <button class="waves-effect" id="add">Add</button>
+	                                     </div>
+	                                </div>
+	                            </div>
 						</div>
-					</div>
 			    </div>
 			</div>
-			</div>
-			</div>
-			<div id="right_menu">
-				<div id="calendar">
-					<jsp:include page="/WEB-INF/view/calendar/calendar.jsp"></jsp:include>
+			
+				 <div class="card" id="profile-sub">
+					<div class="pmb-block" style="position:relative;">
+                       <div class="p-header">
+                           <div style="float:left;">
+                           <ul class="p-menu">
+                               <li class="active"><a><i class="md md-people hidden-xs"></i> Waiting List 
+                               <button type="button" class="md md-help" data-trigger="hover" data-toggle="popover" data-placement="bottom" data-content="해당 이메일의 회원정보가 존재하지 않는 타겟들만 보여지는 리스트 입니다. 가입 후 에는 멤버 리스트 열에 자동으로 추가됩니다."  style="border-radius :50%; margin-top:3px; background-color: #fff; border: 0;"></button>
+                               </a></li>
+                           </ul>
+                           </div>
+
+                        </div>	
+                        <br />
+						<div class="contacts clearfix row" style="clear:both;">
+							<c:forEach items="${ waitList }" var="waitList" varStatus="status">
+								<form method="post" action="deleteWaitingMember">
+									<c:if test="${(status.index mod 5) eq 4}">
+									<div class="row">
+									</c:if>
+									
+									<c:if test = "${ waitList.email ne Useremail }">
+									
+		                            <div class="col-md-3 col-sm-6 col-xs-6">
+		                                <div class="c-item" style="">
+		                                    <div class="ci-avatar">
+		                                    		<img src="resource/img/nullprofile2.png" height="170px" style="padding-right:20px; padding-left:20px;">
+		                                    </div>
+		                                    <div class="c-info">
+		                                        <strong>${ waitList.email }</strong>
+		                                        <input type="hidden" id="waitingEmail" name="waitingEmail" value="${ waitList.email }">
+		                                    </div>
+		                                    <div class="c-footer">
+		                                        <button class="waves-effect" type="submit">Delete</button>
+		                                    </div>
+		                                </div>
+		                            </div>
+		                            </c:if>
+		                            
+	                                <c:if test="${(status.index mod 5) eq 4}">
+									</div>
+									</c:if>
+		                            
+	                            </form>
+                            </c:forEach>
+						</div>
+			   		 </div>
 				</div>
-				<div id="chatbyMem">
-					<jsp:include page="/WEB-INF/view/chat/chat_mem.jsp"></jsp:include>
-				</div>
-				<div id="chatbyKeyword">
-					<jsp:include page="/WEB-INF/view/chat/chat_keyword.jsp"></jsp:include>
-				</div>
+			
 			</div>
+		 </div>
+		 <div class="clear"></div>
+			<c:if test="${ TeamID eq null }">
+				<div id="right_menu">
+					<div id="calendar">
+					</div>
+					<div id="chatbyMem">
+					</div>
+					<div id="chatbyKeyword">
+					</div>
+				</div>
+			</c:if>
+			<c:if test="${ TeamID ne null }">
+				<div id="right_menu">
+					<div id="calendar">
+						<jsp:include page="/WEB-INF/view/calendar/calendar.jsp"></jsp:include>
+					</div>
+					<div id="chatbyMem">
+						<jsp:include page="/WEB-INF/view/chat/chat_mem.jsp"></jsp:include>
+					</div>
+					<div id="chatbyKeyword">
+						<jsp:include page="/WEB-INF/view/chat/chat_keyword.jsp"></jsp:include>
+					</div>
+				</div>
+			</c:if>
 	    <div class="clear"></div>
 		</section>
 	</body>
+		<div class="modal" id="addMem" tabindex="-1" role="dialog"
+			aria-hidden="true">
+			<div class="modal-dialog">
+				<div class="modal-content">
+					<div class="modal-header">
+						<h4 class="modal-title" align="center">ADD MEMBER</h4>
+					</div>
+					<div class="modal-body">
+						<form id="createAddEmail">
+		
+							<div style="float: left; padding: 0px 50px 0px 0px;">
+								<p class="f-500 c-black m-b-15">Send Invitation by e-mail</p>
+							</div>
+		
+							<div>
+								<button type="button" class="btn"
+									style="background-color: #ff4f3e; color: white;" id="addEmail2">
+									<i class="md md-arrow-forward"> ADD</i>
+								</button>
+							</div>
+							<br />
+							<div id="addFloor2"></div>
+							<div id="tab32"></div>
+							<div style="width: 30%; margin: auto;">
+								<button class="btn" style="background-color: #ff4f3e; color: white;" id="input2">
+									<i class="md md-check">SEND</i>
+								</button>
+							</div>
+						</form>
+					</div>
+				</div>
+			</div>
+		</div>
 </html>

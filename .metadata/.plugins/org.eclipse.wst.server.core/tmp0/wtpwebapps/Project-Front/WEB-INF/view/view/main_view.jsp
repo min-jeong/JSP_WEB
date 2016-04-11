@@ -17,14 +17,12 @@
 <c:set var="leaderEmail" value="${ sessionScope._TEAM_.leaderEmail }" />
 <c:set var="Useremail" value="${ sessionScope._MEMBER_.email }" />
 
-<ul class="tab-nav tn-justified">
-    <li class="waves-effect"><a href="/teamInfo">Team Information</a></li>
-    <li class="waves-effect"><a href="/propertyMember">Property By Member</a></li>
-	<c:if test="${ leaderEmail ne Useremail }">
-	</c:if>    
-	<c:if test="${ leaderEmail eq Useremail }">
-	<li class="waves-effect"><a href="/goManageTeam">Manage Team</a></li>
-	</c:if>
+<ul class="tab-nav tn-justified" style="color: #323e4a; background-color: #edecec; ">
+    <li class="waves-effect"><a href="/teamInfo" style="color: #323e4a;">Team Information</a></li>
+    <li class="waves-effect"><a href="/propertyMember" style="color: #323e4a;">CHAT ANALYSIS</a></li>
+		<c:if test="${ leaderEmail eq Useremail }">
+	<li class="waves-effect"><a href="/goManageTeam" style="color: #323e4a;">TEAM SETTING</a></li>
+		</c:if>
 </ul>
  
  

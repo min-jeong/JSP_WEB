@@ -92,11 +92,13 @@ $(document).ready(function(){
 </script>
 
 <div class="card">
-	<div class="card-header bgm-blue">
-	    <h2>Upload TextFile</h2>
+	<div class="card-header" style="background-color: #71d1b2;">
+	    <h2>Text Diary by Member
+	     <button type="button" class="md md-help" data-trigger="hover" data-toggle="popover" data-placement="bottom" data-content="대화방에 존재하는 멤버별 대화 추출"  style="border-radius :50%; background-color: #71d1b2; border: 0; size: 50%;"></button>
+	    </h2>
 	</div>
 	<div class="card-body card-padding">
-	<div class="row">
+	<!-- <div class="row">
 	    <div class="col-sm-4">
 	        <p class="f-500 c-black m-b-20">Input only text file</p>
 	        <form id="textFileUpload" method="post" action="/insertChat" enctype="multipart/form-data">
@@ -119,13 +121,13 @@ $(document).ready(function(){
 			<br/>
 	        </form>
 	    </div>
-	</div>
+	</div> -->
 
 
 <div class="panel-group" role="tablist" data-collapse-color="amber" aria-multiselectable="true">
     <div class="panel panel-collapse">
         <div class="panel-heading" role="tab" id="headingOne">
-            <h4 class="panel-title" >
+            <h4 class="panel-title"  >
                 <a data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
                   Member List
               </a>
@@ -133,20 +135,23 @@ $(document).ready(function(){
       </div>
       <div id="collapseOne" class="collapse in" role="tabpanel" aria-labelledby="headingOne">
           <div class="panel-body">
-          	 <form id="getNickName" method="post" action="/getChat">
-				<c:forEach items="${ allChatMember }" var="mem">
-				<a href="/getChat?nickName=${ mem }">
-				<div class="listview lv-user m-t-20">
-					<div class="lv-item media">
-				    <div class="lv-avatar bgm-red pull-left">m</div>
-				    <div class="media-body">
-				        <div class="lv-title">${ mem }</div>
-				    </div>
-				     </div>
-				</div>
-				</a>
-				</c:forEach>
-			  </form>
+          	  <form id="getNickName" method="post" action="/getChat">
+         
+            <c:forEach items="${ allChatMember }" var="mem">
+            <a href="/getChat?nickName=${ mem }">
+            <div class="listview lv-user m-t-20">
+               <div class="lv-item media">
+                <div class="lv-avatar pull-left" style="background-color: #ff4f3e;">m</div>
+                <div class="media-body">
+                    <div class="lv-title" style="margin-top: 4px; font-size:13px;">${ mem }</div>
+                </div>
+                 </div>
+            </div>
+            </a>
+            </c:forEach>
+            <br>
+            <a href="/getChat?nickName=all">모두 보기</a>
+           </form>
            </div>
        </div>
    </div>

@@ -1,0 +1,24 @@
+package com.ktds.pingpong.history.vo;
+
+public interface Description {
+
+	
+	
+	public static final String VISIT_LOGIN_PAGE = "[%s]가 로그인 페이지에 접근했습니다.";
+	public static final String LOGIN = "[%s]님이 로그인 했습니다.";
+	public static final String LOGOUT = "[%s]님이 로그아웃 했습니다.";
+	public static final String ALREADY_LOGIN = "[%s]님이 이미 로그인되어, List페이지로 이동합니다.";
+	public static final String LOGIN_FAIL = "[%s]가 [%s]로 로그인을 시도했지만, 실패 했습니다.";
+	public static final String TEAM_CREATE_FAIL = "[%s]가 [%s]들에 대한 팅 등록을 시도 했지만, 실패 했습니다.";
+	public static final String TEAM_CREATE = "[%s] 팀에 [%s] 님이 초대되었습니다.";
+	public static final String TEAM_SELECT = "[%s]님이 팀 아이디: ([%s])를 클릭했습니다.";
+	public static final String MEMBER_LEAVE = "[%s]에서 [%s]에 대한 회원 정보를 삭제하였습니다.";
+	public static final String MEMBERSHIP = "[%s]에서 [%s] 이메일로 회원 아이디를 생성하였습니다.";
+	public static final String MEMBERSHIP_FAIL = "[%s]에서 회원 아이디를 생성하려 했지만 실패하였습니다..";
+	public static final String WAIT_LIST_LEAVE = "[%s]님이 [%s] 팀 에서 [%s]에 대한 대기자 정보를 삭제하였습니다.";
+	public static final String CREATE_CHAT = "[%s] 팀 에서 [%s] 님이 새로운 CHAT을 업로드 하였습니다.";
+	public static final String UP_LOAD_PROFILE = "[%s]님이 [%s]에 대한 프로필 사진을 업로드 하였습니다.";
+	public static final String SEARCH_CHA = "[%s]님이 [%s]라는 키워드로 검색을 하였습니다.";
+//	public static final String LIST = "[%s]님이 목록보기 페이지에 접근했습니다.";
+//	public static final String LIST_PAGING = "[%s]님이 [%s]번째 페이지로 "
+}

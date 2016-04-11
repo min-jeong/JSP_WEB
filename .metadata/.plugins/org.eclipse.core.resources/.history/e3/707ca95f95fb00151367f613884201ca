@@ -1,0 +1,287 @@
+package com.ktds.pingpong.chat.web;
+
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import javax.servlet.RequestDispatcher;
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+
+import com.ktds.pingpong.chat.biz.ChatBiz;
+import com.ktds.pingpong.chat.vo.ChatRate;
+import com.ktds.pingpong.member.biz.MemberBiz;
+import com.ktds.pingpong.member.vo.MemberVO;
+import com.ktds.pingpong.team.biz.TeamBiz;
+import com.ktds.pingpong.team.vo.TeamVO;
+
+/**
+ * Servlet implementation class PropertyByMember
+ */
+public class PropertyByMember extends HttpServlet {
+	private static final long serialVersionUID = 1L;
+	private MemberBiz memberBiz;
+	private TeamBiz teamBiz;
+	private ChatBiz chatbiz;
+
+	/**
+	 * @see HttpServlet#HttpServlet()
+	 */
+	public PropertyByMember() {
+		super();
+		memberBiz = new MemberBiz();
+		teamBiz = new TeamBiz();
+		chatbiz = new ChatBiz();
+	}
+
+	/**
+	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse
+	 *      response)
+	 */
+	protected void doGet(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+		this.doPost(request, response);
+	}
+
+	/**
+	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse
+	 *      response)
+	 */
+	protected void doPost(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+		HttpSession session = request.getSession();
+		MemberVO loginMember = (MemberVO) session.getAttribute("_MEMBER_");
+		TeamVO loginTeam = (TeamVO) session.getAttribute("_TEAM_");
+
+		List<MemberVO> members = memberBiz.getAllMember();
+		List<TeamVO> teams = teamBiz.getListTeamById(loginMember.getEmail());
+		List<String> keywords = chatbiz.getKeywordByTeamId(loginTeam.getTeamId());
+		
+		// System.out.println("팀사이즈"+teams.size());
+
+		request.setAttribute("allTeams", teams);
+		request.setAttribute("allMember", members);
+		request.setAttribute("keywords", keywords);
+		int teamId = 0;
+		if(loginTeam!= null){
+			teamId = loginTeam.getTeamId();
+			
+			List<String> memberList = chatbiz.getMemberByTeamId(teamId);
+			request.setAttribute("allChatMember", memberList);
+		}else{
+			// 팀을선택해야한다는 에러 페이지 띄워줌
+		}
+		Map<String, ChatRate> totalRates = new HashMap<String, ChatRate>();
+		List<ChatRate> totalRateList = new ArrayList<ChatRate>();
+		List<String> nickNames = new ArrayList<String>();
+
+		ChatRate rate = null;
+
+		List<ChatRate> memChatRates = chatbiz.getChatRateByTeamId(teamId);
+		List<ChatRate> chatTimeCounts = chatbiz.getTimeChatCountByTeamId(teamId);
+		List<ChatRate> firstChatCounts = chatbiz.getFirstChatCountByTeamId(teamId);
+		List<ChatRate> fastReplyChatCounts = chatbiz.getFastReplyChatCountByTeamId(teamId);
+		List<ChatRate> howManyChatCounts = chatbiz.getHowManyChatByTeamId(teamId);
+		List<ChatRate> smileChatCounts = chatbiz.getSmileChatByTeamId(teamId);
+		List<ChatRate> angryChatCounts = chatbiz.getAngryChatByTeamId(teamId);
+		List<ChatRate> dayChatCounts = chatbiz.getDayChatByTeamId(teamId);
+
+		if (memChatRates.size() == 0 && memChatRates == null) {
+			// redirect처리
+		}
+
+		/* System.out.println("ChatRateSize"+memChatRates.size()); */
+		if (memChatRates != null) {
+			// System.out.println("ChatRateSize");
+			request.setAttribute("memChatRates", memChatRates);
+		}
+		if (chatTimeCounts != null) {
+			System.out.println("----------1---------------------------------------");
+			for (int i = 0; i < chatTimeCounts.size(); i++) {
+				rate = new ChatRate();
+				rate.setNickName(chatTimeCounts.get(i).getNickName());
+				rate.setMorningChatCount(chatTimeCounts.get(i).getMorningChatCount());
+				rate.setNightChatCount(chatTimeCounts.get(i).getNightChatCount());
+				rate.setSumMorningChatCount(chatTimeCounts.get(i).getSumMorningChatCount());
+				rate.setSumNightChatCount(chatTimeCounts.get(i).getSumNightChatCount());
+
+				/*
+				 * System.out.println(chatTimeCounts.get(i).getNickName());
+				 * System.out.println(chatTimeCounts.get(i).getMorningChatCount(
+				 * ));
+				 * System.out.println(chatTimeCounts.get(i).getNightChatCount())
+				 * ;
+				 */
+				totalRates.put(chatTimeCounts.get(i).getNickName(), rate);
+			}
+		}
+		System.out.println("1번"+chatTimeCounts.size());
+		if (firstChatCounts != null) {
+			System.out.println("------------2----------------------------------");
+			for (int i = 0; i < firstChatCounts.size(); i++) {
+				if (totalRates.containsKey(firstChatCounts.get(i).getNickName())) {
+					rate = totalRates.get(firstChatCounts.get(i).getNickName());
+
+					rate.setFirstChatCount(firstChatCounts.get(i).getFirstChatCount());
+					rate.setSumFirstChatCount(firstChatCounts.get(i).getSumFirstChatCount());
+				}
+				/*
+				 * System.out.println(firstChatCounts.get(i).getNickName());
+				 * System.out.println(firstChatCounts.get(i).getFirstChatCount()
+				 * ); System.out.println(firstChatCounts.get(i).
+				 * getSumFirstChatCount());
+				 */
+				totalRates.put(firstChatCounts.get(i).getNickName(), rate);
+
+			}
+		}
+		System.out.println("2번"+firstChatCounts.size());
+		if (fastReplyChatCounts != null) {
+			System.out.println("--------3---------------------------------------");
+			for (int i = 0; i < fastReplyChatCounts.size(); i++) {
+				if (totalRates.containsKey(fastReplyChatCounts.get(i).getNickName())) {
+					rate = totalRates.get(fastReplyChatCounts.get(i).getNickName());
+
+					rate.setFirstReplyCountTalk(fastReplyChatCounts.get(i).getFirstReplyCountTalk());
+					rate.setFirstReplySumTalk(fastReplyChatCounts.get(i).getFirstReplySumTalk());
+					rate.setFirstReplyAvgTalk(fastReplyChatCounts.get(i).getFirstReplyAvgTalk());
+
+					/*
+					 * System.out.println(fastReplyChatCounts.get(i).getNickName
+					 * ()); System.out.println(fastReplyChatCounts.get(i).
+					 * getFirstReplyCountTalk());
+					 * System.out.println(fastReplyChatCounts.get(i).
+					 * getFirstReplySumTalk());
+					 * System.out.println(fastReplyChatCounts.get(i).
+					 * getFirstReplyAvgTalk());
+					 */
+					totalRates.put(fastReplyChatCounts.get(i).getNickName(), rate);
+				}
+				
+			}
+		}
+		System.out.println("3번"+totalRates.size());
+		if (fastReplyChatCounts != null) {
+			System.out.println("-------------4-----------------------------------");
+			for (int i = 0; i < howManyChatCounts.size(); i++) {
+				if (totalRates.containsKey(howManyChatCounts.get(i).getNickName())) {
+					rate = totalRates.get(howManyChatCounts.get(i).getNickName());
+
+					rate.setHowManySumText(howManyChatCounts.get(i).getHowManySumText());
+					rate.setHowManyAvgText(howManyChatCounts.get(i).getHowManyAvgText());
+					rate.setHowMnayTotalCount(howManyChatCounts.get(i).getHowMnayTotalCount());
+
+					/*
+					 * System.out.println(howManyChatCounts.get(i).getNickName()
+					 * ); System.out.println(howManyChatCounts.get(i).
+					 * getHowManySumText ());
+					 * System.out.println(howManyChatCounts.get(i).
+					 * getHowManyAvgText ());
+					 * System.out.println(howManyChatCounts.get(i).
+					 * getHowMnayTotalCount());
+					 */
+
+					totalRates.put(howManyChatCounts.get(i).getNickName(), rate);
+				}
+			}
+		}
+		System.out.println("4번"+howManyChatCounts.size());
+		if (smileChatCounts != null) {
+			System.out.println("-----------------5--------------------------------");
+			for (int i = 0; i < smileChatCounts.size(); i++) {
+				if (totalRates.containsKey(smileChatCounts.get(i).getNickName())) {
+
+					rate = totalRates.get(smileChatCounts.get(i).getNickName());
+
+					rate.setSmileChatCount(smileChatCounts.get(i).getSmileChatCount());
+					rate.setSmileSumChatCount(smileChatCounts.get(i).getSmileSumChatCount());
+
+					/*
+					 * System.out.println(smileChatCounts.get(i).getNickName());
+					 * System.out.println(smileChatCounts.get(i).
+					 * getSmileChatCount());
+					 * System.out.println(smileChatCounts.get(i).
+					 * getSmileSumChatCount());
+					 */
+
+					totalRates.put(smileChatCounts.get(i).getNickName(), rate);
+				}
+			}
+		}
+		System.out.println("5번"+smileChatCounts.size());
+		if (angryChatCounts != null) {
+			System.out.println("------------6------------------------------------");
+			for (int i = 0; i < angryChatCounts.size(); i++) {
+				if (totalRates.containsKey(angryChatCounts.get(i).getNickName())) {
+					rate = totalRates.get(angryChatCounts.get(i).getNickName());
+
+					rate.setAngryChatCount(angryChatCounts.get(i).getAngryChatCount());
+					rate.setAngrySumChatCount(angryChatCounts.get(i).getAngrySumChatCount());
+
+					/*
+					 * System.out.println(angryChatCounts.get(i).getNickName());
+					 * System.out.println(angryChatCounts.get(i).
+					 * getAngryChatCount());
+					 * System.out.println(angryChatCounts.get(i).
+					 * getAngrySumChatCount());
+					 */
+
+					totalRates.put(angryChatCounts.get(i).getNickName(), rate);
+				}
+			}
+		}
+		System.out.println("6번"+angryChatCounts.size());
+		if (dayChatCounts != null) {
+			System.out.println("-------------------------7------------------------");
+			for (int i = 0; i < dayChatCounts.size(); i++) {
+				if (totalRates.containsKey(dayChatCounts.get(i).getNickName())) {
+
+					rate = totalRates.get(dayChatCounts.get(i).getNickName());
+					rate.setDayChatCount(dayChatCounts.get(i).getDayChatCount());
+					rate.setChatDay(dayChatCounts.get(i).getChatDay());
+					rate.setDaySumChatCount(dayChatCounts.get(i).getDaySumChatCount());
+
+					/*
+					 * System.out.println(dayChatCounts.get(i).getNickName());
+					 * System.out.println(dayChatCounts.get(i).getDayChatCount()
+					 * ); System.out.println(dayChatCounts.get(i).getChatDay());
+					 * System.out.println(dayChatCounts.get(i).
+					 * getDaySumChatCount()) ;
+					 */
+					// totalRates.put(dayChatCounts.get(i).getNickName(), rate);
+				}
+			}
+			request.setAttribute("dayChatCounts", dayChatCounts);
+		}
+		System.out.println("7번"+dayChatCounts.size());
+		// 닉네임 값들을 가져온다.
+		if (memChatRates != null) {
+			for (int i = 0; i < memChatRates.size(); i++) {
+				nickNames.add(memChatRates.get(i).getNickName());
+			}
+			request.setAttribute("nickNames", nickNames);
+		}
+		System.out.println("8번"+nickNames.size());
+	
+
+		if (totalRates != null && totalRates.size() != 0) {
+			System.out.println("토탈사이즈" + totalRates.size());
+			for (int i = 0; i < totalRates.size(); i++) {
+				rate = totalRates.get(nickNames.get(i));
+				totalRateList.add(rate);
+			}
+
+			request.setAttribute("totalRate", totalRateList);
+		}
+		
+		
+		System.out.println("비율사이즈" + totalRateList.size());
+		RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/view/tab/property_mem.jsp");
+		rd.forward(request, response);
+	}
+}

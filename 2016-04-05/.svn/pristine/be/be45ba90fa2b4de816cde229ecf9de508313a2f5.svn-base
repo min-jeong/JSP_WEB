@@ -1,0 +1,486 @@
+package com.ktds.pingpong.team.dao;
+
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
+
+import com.ktds.pingpong.Const;
+import com.ktds.pingpong.team.vo.TeamListVO;
+import com.ktds.pingpong.team.vo.TeamVO;
+import com.ktds.pingpong.util.xml.XML;
+
+public class TeamDAO {
+	
+	public List<TeamVO> getAllListTeam() {
+
+		loadOracleDriver();
+
+		Connection conn = null;
+		PreparedStatement stmt = null;
+		ResultSet rs = null;
+		
+		List<TeamVO> teams = new ArrayList<TeamVO>();
+		try {
+
+			conn = DriverManager.getConnection(Const.DB_URL, Const.DB_USER, Const.DB_PASSWORD);
+
+			String query = XML.getNodeString("//query/team/getAllListTeam/text()");
+			stmt = conn.prepareStatement(query);
+			rs = stmt.executeQuery();
+			
+			TeamVO validTeam = null;
+
+			while (rs.next()) {
+				validTeam = new TeamVO();
+				validTeam.setTeamId(rs.getInt("TEAM_ID"));
+				validTeam.setChatId(rs.getInt("CHAT_ID"));
+				validTeam.setTeamName(rs.getString("TEAM_NAME"));
+				validTeam.setLeaderEmail(rs.getString("LEADER_EMAIL"));
+				teams.add(validTeam);
+			}
+		} catch (SQLException e) {
+			throw new RuntimeException(e.getMessage(), e);
+		} 
+		finally {
+			closeDB(conn, stmt, rs);
+		}
+		return teams;
+	}
+
+	public int insertNewTeam( TeamVO team ){
+		
+		int insertCount = 0;
+		
+		loadOracleDriver();		
+		Connection conn = null;
+		PreparedStatement stmt = null;
+
+		try {
+			conn = DriverManager.getConnection(Const.DB_URL, Const.DB_USER, Const.DB_PASSWORD);
+			String query = XML.getNodeString("//query/team/insertNewTeam/text()");
+			stmt = conn.prepareStatement(query);
+			stmt.setString(1, team.getTeamName());
+			stmt.setString(2, team.getLeaderEmail());
+			
+			insertCount = stmt.executeUpdate();
+			
+			if ( insertCount > 0 ){
+				
+				stmt.close();
+				query = XML.getNodeString("//query/team/getLatestTeamId/text()");
+				stmt = conn.prepareStatement(query);
+				
+				ResultSet rs = stmt.executeQuery();
+				
+				int teamId = 0;
+				
+				if ( rs.next() ){
+					teamId = rs.getInt(1);
+				}
+				
+				rs.close();
+				return teamId;
+			}
+			
+		} catch (SQLException e) {
+			throw new RuntimeException(e.getMessage(), e);
+		}
+		finally {
+			closeDB(conn, stmt, null);
+		}	
+		return insertCount;
+	}
+	
+	public void insertNewTeamList( TeamListVO teamList ){
+		
+		loadOracleDriver();
+		Connection conn = null;
+		PreparedStatement stmt = null;
+		
+		try {
+			conn = DriverManager.getConnection(Const.DB_URL, Const.DB_USER, Const.DB_PASSWORD);
+			String query = XML.getNodeString("//query/team/insertNewTeamList/text()");
+			stmt = conn.prepareStatement(query);
+			stmt.setInt(1, teamList.getTeamId());
+			stmt.setString(2, teamList.getEmail());
+			stmt.setString(3, teamList.getIsLeader());
+			
+			stmt.executeUpdate();
+			
+		} catch (SQLException e) {
+			throw new RuntimeException(e.getMessage(), e);
+		}
+		finally {
+			closeDB(conn, stmt, null);
+		}	
+	}
+	
+	
+	private void loadOracleDriver() {
+		try {
+			Class.forName("oracle.jdbc.driver.OracleDriver");
+		} catch (ClassNotFoundException e) {
+			throw new RuntimeException(e.getMessage(), e);
+		}
+	}
+
+	private void closeDB(Connection conn, PreparedStatement stmt, ResultSet rs) {
+		if (rs != null) {
+			try {
+				rs.close();
+			} catch (SQLException e) {
+			}
+		}
+		if (stmt != null) {
+			try {
+				stmt.close();
+			} catch (SQLException e) {
+			}
+		}
+		if (conn != null) {
+			try {
+				conn.close();
+			} catch (SQLException e) {
+			}
+		}
+
+	}
+
+	public TeamVO showDetail(int teamId) {
+		TeamVO team = new TeamVO();
+
+		loadOracleDriver();
+
+		Connection conn = null;
+		PreparedStatement stmt = null;
+		ResultSet rs = null;
+
+		try {
+
+			conn = DriverManager.getConnection(Const.DB_URL, Const.DB_USER, Const.DB_PASSWORD);
+
+			String query = XML.getNodeString("//query/team/showDetail/text()");
+			stmt = conn.prepareStatement(query);
+
+			stmt.setInt(1, teamId);
+
+			rs = stmt.executeQuery();
+
+			if (rs.next()) {
+				team.setTeamId(rs.getInt("TEAM_ID"));
+				team.setChatId(rs.getInt("CHAT_ID"));
+				team.setTeamName(rs.getString("TEAM_NAME"));
+				team.setLeaderEmail(rs.getString("LEADER_EMAIL"));
+			}
+
+		} catch (SQLException e) {
+			throw new RuntimeException(e.getMessage(), e);
+		} finally {
+			closeDB(conn, stmt, rs);
+		}
+
+		return team;
+		
+	}
+
+	public void removeTeam(int teamId) {
+		
+		loadOracleDriver();
+
+		Connection conn = null;
+		PreparedStatement stmt = null;
+		ResultSet rs = null;
+
+		try {
+
+			conn = DriverManager.getConnection(Const.DB_URL, Const.DB_USER, Const.DB_PASSWORD);
+
+			String query = XML.getNodeString("//query/team/removeTeam/text()");
+			stmt = conn.prepareStatement(query);
+
+			stmt.setInt(1, teamId);
+
+			rs = stmt.executeQuery();
+
+		} catch (SQLException e) {
+			throw new RuntimeException(e.getMessage(), e);
+		} finally {
+			closeDB(conn, stmt, rs);
+		}
+	}
+	
+	/**
+	 * MEM_COUNT UPDATE
+	 * get only teamID for updateCount
+	 * @param email
+	 * @return
+	 */
+	public List<TeamVO> getTeamIdforCount(String email) {
+		loadOracleDriver();
+
+		Connection conn = null;
+		PreparedStatement stmt = null;
+		ResultSet rs = null;
+		
+		List<TeamVO> teams = new ArrayList<TeamVO>();
+		try {
+
+			conn = DriverManager.getConnection(Const.DB_URL, Const.DB_USER, Const.DB_PASSWORD);
+
+			String query = XML.getNodeString("//query/team/getListTeamById/text()");
+			stmt = conn.prepareStatement(query);
+			stmt.setString(1, email);
+			
+			rs = stmt.executeQuery();
+			
+			TeamVO validTeam = null;
+
+			while (rs.next()) {
+				validTeam = new TeamVO();
+				validTeam.setTeamId(rs.getInt("TEAM_ID"));
+				
+				teams.add(validTeam);
+				
+			}
+		} catch (SQLException e) {
+			throw new RuntimeException(e.getMessage(), e);
+		} 
+		finally {
+			closeDB(conn, stmt, rs);
+		}
+		return teams;
+	}
+	
+	/**
+	 * TeamList BY Email Id
+	 * @param email
+	 * @return
+	 */
+	public List<TeamVO> getListTeamById(String email) {
+		loadOracleDriver();
+	
+		Connection conn = null;
+		PreparedStatement stmt = null;
+		ResultSet rs = null;
+		
+		List<TeamVO> teams = new ArrayList<TeamVO>();
+		try {
+	
+			conn = DriverManager.getConnection(Const.DB_URL, Const.DB_USER, Const.DB_PASSWORD);
+	
+			String query = XML.getNodeString("//query/team/getListTeamById/text()");
+			stmt = conn.prepareStatement(query);
+			stmt.setString(1, email);
+			
+			rs = stmt.executeQuery();
+			
+			TeamVO validTeam = null;
+	
+			while (rs.next()) {
+				validTeam = new TeamVO();
+				validTeam.setTeamId(rs.getInt("TEAM_ID"));
+				validTeam.setTeamListId(rs.getInt("TEAM_LIST_ID"));
+				validTeam.setChatId(rs.getInt("CHAT_ID"));
+				validTeam.setTeamName(rs.getString("TEAM_NAME"));
+				validTeam.setLeaderEmail(rs.getString("LEADER_EMAIL"));
+				validTeam.setIsLeader(rs.getString("ISLEADER"));
+				validTeam.setMemCount(rs.getInt("MEM_COUNT"));
+				
+				teams.add(validTeam);
+				
+			}
+		} catch (SQLException e) {
+			throw new RuntimeException(e.getMessage(), e);
+		} 
+		finally {
+			closeDB(conn, stmt, rs);
+		}
+		return teams;
+	}
+
+	public TeamVO getTeamInfoById(int teamId) {
+		
+		loadOracleDriver();
+
+		Connection conn = null;
+		PreparedStatement stmt = null;
+		ResultSet rs = null;
+
+		try {
+			conn = DriverManager.getConnection(Const.DB_URL, Const.DB_USER, Const.DB_PASSWORD);
+			String query = XML.getNodeString("//query/team/getTeamInfoById/text()");
+			stmt = conn.prepareStatement(query);
+			stmt.setInt(1, teamId);
+			
+			rs = stmt.executeQuery();
+
+			TeamVO team = new TeamVO();
+
+			if (rs.next()) {
+				
+				team.setTeamId(rs.getInt("TEAM_ID"));
+				team.setTeamListId(rs.getInt("TEAM_LIST_ID"));
+				team.setChatId(rs.getInt("CHAT_ID"));
+				team.setTeamName(rs.getString("TEAM_NAME"));
+				team.setLeaderEmail(rs.getString("LEADER_EMAIL"));
+				team.setIsLeader(rs.getString("ISLEADER"));
+				team.setEmail("EMAIL");
+				
+			}
+			return team;
+		} catch (SQLException e) {
+			throw new RuntimeException(e.getMessage(), e);
+		} finally {
+			closeDB(conn, stmt, rs);
+		}
+	}
+	
+	/**
+	 * updateMemberCount 
+	 * @param teamId
+	 * @return
+	 */
+	public int updateMemberCount(int teamId) {
+			
+			loadOracleDriver();
+	
+			Connection conn = null;
+			PreparedStatement stmt = null;
+			ResultSet rs = null;
+			
+			int updateCount = 0;
+			try {
+				conn = DriverManager.getConnection(Const.DB_URL, Const.DB_USER, Const.DB_PASSWORD);
+				String query = XML.getNodeString("//query/team/getMemberCount/text()");
+				stmt = conn.prepareStatement(query);
+				stmt.setInt(1, teamId);
+				stmt.setInt(2, teamId);
+				
+				updateCount = stmt.executeUpdate();
+				
+				return updateCount;
+			} catch (SQLException e) {
+				throw new RuntimeException(e.getMessage(), e);
+			} finally {
+				closeDB(conn, stmt, rs);
+			}
+		}
+		/**
+		 * isLeader = Y TeamList 이거 필요없나?????????????????
+		 * @param email
+		 * @return
+		 */
+		public List<TeamVO> getLeaderTeamById(String email) {
+			loadOracleDriver();
+			
+			Connection conn = null;
+			PreparedStatement stmt = null;
+			ResultSet rs = null;
+			
+			List<TeamVO> teams = new ArrayList<TeamVO>();
+			try {
+		
+				conn = DriverManager.getConnection(Const.DB_URL, Const.DB_USER, Const.DB_PASSWORD);
+		
+				String query = XML.getNodeString("//query/team/getLeaderTeamById/text()");
+				stmt = conn.prepareStatement(query);
+				stmt.setString(1, email);
+				
+				rs = stmt.executeQuery();
+				
+				TeamVO validTeam = null;
+		
+				while (rs.next()) {
+					validTeam = new TeamVO();
+					validTeam.setTeamId(rs.getInt("TEAM_ID"));
+					validTeam.setChatId(rs.getInt("CHAT_ID"));
+					validTeam.setTeamName(rs.getString("TEAM_NAME"));
+					validTeam.setLeaderEmail(rs.getString("LEADER_EMAIL"));
+					validTeam.setIsLeader(rs.getString("ISLEADER"));
+					validTeam.setEmail(rs.getString("EMAIL"));
+					validTeam.setMemCount(rs.getInt("MEM_COUNT"));
+					
+					teams.add(validTeam);
+					
+					System.out.println(validTeam.getTeamId());
+				}
+			} catch (SQLException e) {
+				throw new RuntimeException(e.getMessage(), e);
+			} 
+			finally {
+				closeDB(conn, stmt, rs);
+			}
+			return teams;
+		}
+		
+		
+		public List<TeamListVO> getMemberEmailByTeamId(int teamId) {
+			loadOracleDriver();
+			
+			Connection conn = null;
+			PreparedStatement stmt = null;
+			ResultSet rs = null;
+			
+			List<TeamListVO> teams = new ArrayList<TeamListVO>();
+			try {
+		
+				conn = DriverManager.getConnection(Const.DB_URL, Const.DB_USER, Const.DB_PASSWORD);
+		
+				String query = XML.getNodeString("//query/team/getMemberEmailByTeamId/text()");
+				stmt = conn.prepareStatement(query);
+				stmt.setInt(1, teamId);
+				
+				rs = stmt.executeQuery();
+				
+				TeamListVO validTeam = null;
+		
+				while (rs.next()) {
+					validTeam = new TeamVO();
+					validTeam.setEmail(rs.getString("EMAIL"));
+					validTeam.setName(rs.getString("NAME"));
+					validTeam.setPic_name(rs.getString("PIC_NAME"));
+					
+					teams.add(validTeam);
+				}
+			} catch (SQLException e) {
+				throw new RuntimeException(e.getMessage(), e);
+			} 
+			finally {
+				closeDB(conn, stmt, rs);
+			}
+			return teams;
+		}
+
+		public int deleteMember(String email, int teamId) {
+			loadOracleDriver();
+
+			Connection conn = null;
+			PreparedStatement stmt = null;
+			ResultSet rs = null;
+			
+			try {
+
+				conn = DriverManager.getConnection(Const.DB_URL, Const.DB_USER, Const.DB_PASSWORD);
+
+				String query = XML.getNodeString("//query/team/deleteMember/text()");
+				stmt = conn.prepareStatement(query);
+
+				stmt.setString(1, email);
+				stmt.setInt(2, teamId);
+
+				int result = stmt.executeUpdate();
+				
+				return result;
+			} catch (SQLException e) {
+				throw new RuntimeException(e.getMessage(), e);
+			} finally {
+				closeDB(conn, stmt, rs);
+			}
+			
+		}
+			
+}

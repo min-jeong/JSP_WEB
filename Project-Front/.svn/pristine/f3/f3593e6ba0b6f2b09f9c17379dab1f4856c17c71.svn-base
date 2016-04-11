@@ -1,0 +1,75 @@
+package com.ktds.pingpong.team.web;
+
+import java.io.IOException;
+import java.io.PrintWriter;
+
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+
+import com.ktds.pingpong.member.vo.MemberVO;
+import com.ktds.pingpong.team.biz.TeamBiz;
+import com.ktds.pingpong.team.vo.TeamVO;
+
+/**
+ * Servlet implementation class outTeamServlet
+ */
+public class outTeamServlet extends HttpServlet {
+	private static final long serialVersionUID = 1L;
+    private TeamBiz teamBiz;   
+    /**
+     * @see HttpServlet#HttpServlet()
+     */
+    public outTeamServlet() {
+        super();
+        teamBiz = new TeamBiz();
+        // TODO Auto-generated constructor stub
+    }
+
+	/**
+	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
+	 */
+	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		doPost(request, response);
+	}
+
+	/**
+	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
+	 */
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		HttpSession session = request.getSession();
+	    /*session.invalidate();*/
+		MemberVO member = (MemberVO)session.getAttribute("_MEMBER_");
+		TeamVO team = (TeamVO) session.getAttribute("_TEAM_");
+		
+		member.getEmail();
+		team.getTeamId();
+		
+		if ( member.getEmail().equals(team.getLeaderEmail()) ){
+			StringBuffer json = new StringBuffer(); 
+			json.append("{");
+			json.append("\"isOutSuccess\" : " + false);
+			json.append("}");
+			
+			PrintWriter out = response.getWriter();
+			out.print(json.toString());
+			out.flush();
+			out.close();
+		}
+		else{
+			teamBiz.deleteMember(member.getEmail(), team.getTeamId());
+			StringBuffer json = new StringBuffer(); 
+			json.append("{");
+			json.append("\"isOutSuccess\" : " + true);
+			json.append("}");
+			
+			PrintWriter out = response.getWriter();
+			out.print(json.toString());
+			out.flush();
+			out.close();
+		}
+	}
+
+}

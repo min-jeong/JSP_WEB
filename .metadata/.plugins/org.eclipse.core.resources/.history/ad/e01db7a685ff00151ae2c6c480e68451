@@ -1,0 +1,24 @@
+
+public class SamsungCDPlayer implements CDPlayer {
+
+	@Override
+	public void play() {
+		System.out.println("위이이이이이이잉이이이잉?");
+	}
+
+	@Override
+	public void stop() {
+		System.out.println("드르르르륵....");
+	}
+
+	@Override
+	public void next() {
+		
+	}
+
+	@Override
+	public void prev() {
+		
+	}
+
+}

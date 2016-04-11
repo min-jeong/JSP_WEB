@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+	<!-- LoginDAOImpl loginDAO = new LoginDAOImpl(); -->
+	<bean id="loginDAO"
+		class="com.ktds.jmj.LoginDAOImpl"></bean>
+		
+	<!-- LoginBizImpl loginBiz = new LoginBizImpl(); 
+		property는 setter을 의미한다. ref는 파라미터 -->	
+	<bean id="loginBiz"
+		class="com.ktds.jmj.LoginBizImpl">
+		<!-- loginBiz.setLoginDAO(loginDAO); 와같다. -->
+		<property name="loginDAO" ref="loginDAO" />
+		</bean>
+	
+
+</beans>

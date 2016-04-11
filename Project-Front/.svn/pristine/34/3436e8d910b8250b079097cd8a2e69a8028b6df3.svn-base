@@ -1,0 +1,102 @@
+package com.ktds.pingpong.member.web;
+
+import java.io.File;
+import java.io.IOException;
+
+import javax.servlet.RequestDispatcher;
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+
+import com.ktds.pingpong.member.biz.MemberBiz;
+import com.ktds.pingpong.member.vo.MemberVO;
+import com.ktds.pingpong.util.web.MultipartHttpServletRequest;
+import com.ktds.pingpong.util.web.MultipartHttpServletRequest.MultipartFile;
+
+/**
+ * Servlet implementation class UpdatePhotoServlet
+ */
+public class UpdatePhotoServlet extends HttpServlet {
+	private static final long serialVersionUID = 1L;
+    
+	private MemberBiz memberBiz;
+    /**
+     * @see HttpServlet#HttpServlet()
+     */
+    public UpdatePhotoServlet() {
+        super();
+        memberBiz = new MemberBiz();
+    }
+
+	/**
+	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
+	 */
+	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		doPost(request, response);
+	}
+
+	/**
+	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
+	 */
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		
+		RequestDispatcher rd = null;
+		
+		MultipartHttpServletRequest multipartRequest = new MultipartHttpServletRequest(request);
+		MultipartFile file = multipartRequest.getFile("upPhoto");
+		
+		if ( file.equals("") ) {
+			rd = request.getRequestDispatcher("/goMain?errorCode=1");
+			rd.forward(request, response);
+		}
+		else {
+			HttpSession session = request.getSession();
+			MemberVO loginMember = (MemberVO) session.getAttribute("_MEMBER_");
+
+			String fileExt = file.getFileName().split("\\.")[1];
+			;
+			fileExt.trim();
+
+			String emailSup = null;
+			String memberId = null;
+			String newFileName = null;
+
+			if (fileExt.equals("png") || fileExt.equals("jpg") || fileExt.equals("gif") || fileExt.equals("bmp")) {
+				System.out.println("사진 파일 적합");
+
+				String userEmail = loginMember.getEmail();
+				if (userEmail.contains("@")) {
+					System.out.println("사용자 아이디가 이메일이 맞음");
+
+					memberId = loginMember.getEmail().split("@")[0];
+					emailSup = loginMember.getEmail().split("@|\\.")[1];
+					newFileName = memberId + "_" + emailSup + ".png";
+				} else {
+					System.out.println("사용자 아이디가 이메일이 아님");
+
+					memberId = loginMember.getEmail();
+					newFileName = memberId + ".png";
+				}
+
+				File upPhoto = file.write("D:\\" + newFileName);
+
+				loginMember.setPic_name(newFileName);
+				loginMember.setPic_path(upPhoto.getPath());
+
+				boolean isBoolean = memberBiz.updateMemberPhoto(loginMember);
+
+				if (isBoolean) {
+					session.setAttribute("_MEMBER_", loginMember);
+					rd = request.getRequestDispatcher("/doAboutProfile");
+				} else {
+					rd = request.getRequestDispatcher("/goMain?errorCode=1");
+				}
+			} else {
+				rd = request.getRequestDispatcher("/goMain?errorCode=1");
+			}
+
+		}
+	}
+}

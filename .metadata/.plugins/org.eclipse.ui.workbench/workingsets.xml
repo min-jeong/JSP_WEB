@@ -8,5 +8,8 @@
 </workingSet>
 <workingSet editPageId="org.eclipse.mylyn.tasks.ui.workingSet" factoryID="org.eclipse.ui.internal.WorkingSetFactory" id="1459228126987_3" label="ff" name="ff"/>
 <workingSet editPageId="org.eclipse.mylyn.tasks.ui.workingSet" factoryID="org.eclipse.ui.internal.WorkingSetFactory" id="1459308335273_4" label="Project-Front" name="Project-Front"/>
+<workingSet editPageId="org.eclipse.mylyn.tasks.ui.workingSet" factoryID="org.eclipse.ui.internal.WorkingSetFactory" id="1459903945393_5" label="으악" name="으악">
+<item factoryID="org.eclipse.ui.internal.model.ResourceFactory" path="/Project-Front" type="4"/>
+</workingSet>
 <workingSet aggregate="true" factoryID="org.eclipse.ui.internal.WorkingSetFactory" id="1456277458343_0" label="Window Working Set" name="Aggregate for window 1456277458343"/>
 </workingSetManager>

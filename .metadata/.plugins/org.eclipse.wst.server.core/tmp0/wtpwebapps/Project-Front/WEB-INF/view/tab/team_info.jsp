@@ -12,6 +12,7 @@
         <title>PingPong Chat</title>
         <!-- Vendor CSS -->
         <link href="${root}/resource/vendors/animate-css/animate.min.css" rel="stylesheet">
+        <link href="${root}/resource/vendors/bootgrid/jquery.bootgrid.min.css" rel="stylesheet">
         <link href="${root}/resource/vendors/fullcalendar/fullcalendar.css" rel="stylesheet">
         <link href="${root}/resource/vendors/sweet-alert/sweet-alert.min.css" rel="stylesheet">
         <link href="${root}/resource/vendors/light-gallery/lightGallery.min.css" rel="stylesheet">
@@ -24,11 +25,6 @@
         <link href="${root}/resource/css/display.property.css" rel="stylesheet">
         <link href="${root}/resource/css/profile.css" rel="stylesheet">
    	    <link href="${root}/resource/vendors/light-gallery/hovereffect.css" rel="stylesheet">
-   	    
-   	    <!-- Scrollbar CSS, Script -->
-   	    <link rel="stylesheet" href="resource/css/jquery.mCustomScrollbar.css" />
-   	    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
-		<script src="/resource/js/jquery.mCustomScrollbar.concat.min.js"></script>
 		
         <!-- Javascript Libraries -->
         <script src="resource/js/jquery-2.1.1.min.js"></script>
@@ -60,21 +56,68 @@
                         iconUp: 'md-expand-less'
                     },
                 });
+                var jsonData3 = {};
+                $("#outTeam").click(function() {
+                	$.post(
+            				"/outTeam"
+            				, function(data) {
+            					
+            					try{
+            						jsonData3 = JSON.parse(data);
+            					}
+            					catch(e) { //자바스크립트는 타입이 없기때문에 e만 적으면 된다.
+            					}
+            					
+            					if (jsonData3.isOutSuccess) { // 로그인 성공했으면
+            						location.href="/goMain"; 
+            					}
+            					else { // 로그인에 실패했을 경우
+            					     swal("팀장일 경우에는 탈퇴를 할 수 없습니다."); 
+            					}
+            				  }
+            		);
+                });
                 
-                $("#upload").click( function move() {
-					var elem = document.getElementById("myBar"); 
-				    var width = 0;
-				    var id = setInterval(frame, 180);
-				    function frame() {
-				        if (width >= 100) {
-				            clearInterval(id);
-				        } else {
-				            width++; 
-				            elem.style.width = width + '%'; 
-				        }
-				    }
-				});
-            });
+                $("#myProgress").hide();
+            	$("#myBar").hide();
+            	  
+            /* 	$("#upload").click(function (){
+            		/* var fm = document.textFileUpload;
+            		var fnm = fm.chatText;
+            		var ext = fnm.value; 
+            		var fileExt = $("#isFile").val();
+            		fileExt = fileExt.slice(fileExt.indexOf(".") + 1).toLowerCase();
+            		if (fileExt != "txt" && fileExt != "") {
+            			swal("텍스트 파일만 등록가능합니다.");
+            			return false;
+            		}
+            		else if( $("#isFile") ==  null) {
+            			swal("파일을 등록해주세요.");
+            			return false;
+            		}
+            		else{
+            			var form = $("#textFileUpload");
+            	        form.attr("method", "post");
+            	        form.attr("action", "/insertChat");
+            	        form.attr("enctype", "multipart/form-data");
+            	        form.submit();
+            	        
+            	        $("#myProgress").show();
+            			$("#myBar").show();
+            			var elem = document.getElementById("myBar"); 
+            		    var width = 0;
+            		    var id = setInterval(frame, 180);
+            		    function frame() {
+            		        if (width >= 100) {
+            		            clearInterval(id);
+            		        } else {
+            		            width++; 
+            		            elem.style.width = width + '%'; 
+            		        }
+            		    }
+            		}
+            	}); */
+      });
         </script>
 <style>
 ::-webkit-scrollbar {width: 8px; height: 8px; border: 3px solid #fff; }
@@ -100,10 +143,12 @@ html{scrollbar-3dLight-Color: #efefef; scrollbar-arrow-color: #dfdfdf; scrollbar
 <c:set var="Username" value="${ sessionScope._MEMBER_.name }" />
 <c:set var="Useremail" value="${ sessionScope._MEMBER_.email }" />
 <c:set var="leaderEmail" value="${ sessionScope._TEAM_.leaderEmail }" />
+<c:set var="TeamID" value="${ sessionScope._TEAM_.teamId }" />
 <c:set var="root" value="${pageContext.request.contextPath}" />
-<body id="content">
-       <header id="header">
-            <ul class="header-inner">
+
+<body id="content" style="background-color: #edecec">
+       <header id="header" style="background-color: #ffffff">
+            <ul class="header-inner"  >
                 <li>
                     <div class="line-wrap">
                         <div class="line top"></div>
@@ -113,28 +158,27 @@ html{scrollbar-3dLight-Color: #efefef; scrollbar-arrow-color: #dfdfdf; scrollbar
                 </li>
             
                 <li class="logo hidden-xs">
-                    <a class="orgin" href="/goMain">PingPong Chat</a>
+                    <a class="orgin" href="/goMain"  style="color: #323e4a;">PingPong Chat</a>
                 </li>
                		 
-              <li class="pull-right">
+              <li class="pull-right"  style="color: black;">
                 <ul class="top-menu">
                 	<li class="logo" style="position: relative; top: 1px;">
-                    	<a class="my" href="/goMain">
-                    	<i class="md-timer-auto" style="width: 200%; height: 200%;"> Welcome ${ Username }  ( ${ Useremail } ) </i></a>
+                    	<a class="my" href="/goMain" style="color: black;">
+                    	<i class="md-timer-auto" style="width: 200%; height: 200%; color: #323e4a;"> Welcome ${ Username }  ( ${ Useremail } ) </i></a>
                 	</li> 
-                    <li class="dropdown">
-                        <a data-toggle="dropdown" class="tm-settings" href=""></a>
-                        <ul class="dropdown-menu dm-icon pull-right">
-                       		<li>
-                            	<a href="/doLogout"><i class="md md-history"></i> Logout</a>
+                    <li class="dropdown" style="color: black; ">
+                        <a data-toggle="dropdown" class="tm-settings" href=""  style="color: #323e4a; background-color: #71d1b2; border-radius : 5px 5px 5px 5px"></a>
+                        <ul class="dropdown-menu dm-icon pull-right" style="color: black; ">
+                    		<li>
+                            	<a href="/doLogout"><i class="md md-history"></i>로그아웃</a>
                             </li>
                             <li>
-                                <a data-action="fullscreen" href=""><i class="md md-fullscreen"></i> Toggle Fullscreen</a>
+                                <a data-action="fullscreen" href=""><i class="md md-fullscreen"></i>전체화면</a>
                             </li>
                             <li>
-                                <a href="/doAboutProfile"><i class="md md-person"></i> Privacy Settings</a>
+                                <a href="/doAboutProfile"><i class="md md-person"></i>회원정보</a>
                             </li>
-                            
                         </ul>
                     </li>
                     </ul>
@@ -156,164 +200,89 @@ html{scrollbar-3dLight-Color: #efefef; scrollbar-arrow-color: #dfdfdf; scrollbar
 			</div>
 			<div id="main_menu">
 				<div id="defaultPage">
-					<ul class="tab-nav tn-justified">
-					    <li class="waves-effect active"><a href="/teamInfo">Team Information</a></li>
-					    <li class="waves-effect"><a href="/propertyMember">Property By Member</a></li>
+					<ul class="tab-nav tn-justified" data-tab-color="cyan" style="color: #323e4a; background-color: #edecec; ">
+					    <li class="waves-effect active" ><a href="/teamInfo" style="color: #323e4a;">Team Information</a></li>
+					    <li class="waves-effect"><a href="/propertyMember" style="color: #323e4a;">CHAT ANALYSIS</a></li>
 						<c:if test="${ leaderEmail ne Useremail }">
 						</c:if>    
 						<c:if test="${ leaderEmail eq Useremail }">
-						<li class="waves-effect"><a href="/goManageTeam">Manage Team</a></li>
+						<li class="waves-effect"><a href="/goManageTeam" style="color: #323e4a;">TEAM SETTING</a></li>
 						</c:if>
 					</ul>
-					<div class="tab-content">
-					    <div role="tabpanel" class="tab-pane active" id="home11">
-					          <div class="block-header">
-					              <h2>Buttons</h2>
-					          
-					              <ul class="actions">
-					                  <li>
-					                      <a href="">
-					                          <i class="md md-trending-up"></i>
-					                      </a>
-					                  </li>
-					                  <li>
-					                      <a href="">
-					                          <i class="md md-done-all"></i>
-					                      </a>
-					                  </li>
-					                  <li class="dropdown">
-					                      <a href="" data-toggle="dropdown">
-					                          <i class="md md-more-vert"></i>
-					                      </a>
-					          
-					                      <ul class="dropdown-menu dropdown-menu-right">
-					                          <li>
-					                              <a href="">Refresh</a>
-					                          </li>
-					                          <li>
-					                              <a href="">Manage Widgets</a>
-					                          </li>
-					                          <li>
-					                              <a href="">Widgets Settings</a>
-					                          </li>
-					                      </ul>
-					                  </li>
-					              </ul>
-					          
-					          </div>
-					      
-					          <div class="card">
-					              <div class="card-header">
-					                  <h2>Basic Examples <small>Use any of the available button classes to quickly create a styled button.</small></h2>
-					          
-					                  <ul class="actions">
-					                      <li class="dropdown action-show">
-					                          <a href="" data-toggle="dropdown">
-					                              <i class="md md-more-vert"></i>
-					                          </a>
-					          
-					                          <div class="dropdown-menu pull-right">
-					                              <p class="p-20">
-					                                  You can put anything here
-					                              </p>
-					                          </div>
-					                      </li>
-					                  </ul>
-					              </div>
-					          
-					              <div class="card-body card-padding">
-					                  <p class="f-500 c-black m-b-20">Bootstrap Color Schemes</p>
-					                  
-					                  <div class="btn-demo">
-					                      <button class="btn btn-default">Default</button>
-					                      <button class="btn btn-info">Info</button>
-					                      <button class="btn btn-primary">Primary</button>
-					                      <button class="btn btn-success">Success</button>
-					                      <button class="btn btn-warning">Warning</button>
-					                      <button class="btn btn-danger">Danger</button>
-					                  </div>
-					                  
-					                  <br/>
-					                  <br/>
-					                  
-					                  <p class="f-500 c-black m-b-20">Optional Material Design Colors</p>
-					                  
-					                  <div class="btn-colors btn-demo"> Optional container for demo porpose only
-					                          <button class="btn bgm-cyan">Cyan</button>
-					                          <button class="btn bgm-teal">Teal</button>
-					                          <button class="btn bgm-amber">Amber</button>
-					                          <button class="btn bgm-orange">Orange</button>
-					                          <button class="btn bgm-deeporange">Deep Orange</button>
-					                          <button class="btn bgm-red">Red</button>
-					                          <button class="btn bgm-pink">Pink</button>
-					                          <button class="btn bgm-lightblue">Light Blue</button>
-					                          <button class="btn bgm-blue">Blue</button>
-					                          <button class="btn bgm-indigo">Indigo</button>
-					                          <button class="btn bgm-lime">Lime</button>
-					                          <button class="btn bgm-lightgreen">Light Green</button>
-					                          <button class="btn bgm-green">Green</button>
-					                          <button class="btn bgm-purple">Purple</button>
-					                          <button class="btn bgm-deeppurple">Deep Purple</button>
-					                          <button class="btn bgm-gray">Gray</button>
-					                          <button class="btn bgm-bluegray">Blue Gray</button>
-					                          <button class="btn bgm-black">Black</button>
-					                      </div>
-					                      
-					                      <br/>
-					                      <br/>
-					                      
-					                      <p class="f-500 c-black m-b-5">Button Sizes</p>
-					                      <small>Fancy larger or smaller buttons? Add the button sizing classes.</small>
-					                      
-					                      <br/>
-					                      <br/>
-					                      
-					                      <div class="btn-demo">
-					                          <button class="btn btn-primary btn-lg">Large</button>
-					                          <button class="btn btn-primary">Default</button>
-					                          <button class="btn btn-primary btn-sm">Small</button>
-					                          <button class="btn btn-primary btn-xs">Extra Small</button>
-					                      </div>
-					
-					                      <br/>
-					                      <br/>
-					                      
-					                      <p class="f-500 c-black m-b-20">Disable Stat</p>
-					                      
-					                      <div class="btn-demo">
-					                          <button class="btn btn-default" disabled="disabled">Default</button>
-					                          <button class="btn btn-info" disabled="disabled">Info</button>
-					                          <button class="btn btn-primary" disabled="disabled">Primary</button>
-					                          <button class="btn btn-success" disabled="disabled">Success</button>
-					                          <button class="btn btn-warning" disabled="disabled">Warning</button>
-					                          <button class="btn btn-danger" disabled="disabled">Danger</button>
-					                      </div>
-					                  </div>
-					              </div>
-				      		</div>
-				      <div role="tabpanel" class="tab-pane" id="profile11">
-				      2번
-				      </div>
-				      <div role="tabpanel" class="tab-pane" id="messages11">
-				      3번
-				      </div>
-				      <div role="tabpanel" class="tab-pane" id="settings11">
-				      4번
-				      </div>
-				    </div>
-				</div>
+					 <div class="card" id="profile-main">
+					<div class="pmb-block">
+                       <div class="p-header">
+                           <ul class="p-menu">
+                               <li class="active"><a href=""><i class="md md-people hidden-xs"></i> Team Member List </a></li>
+                               <button class="btn" style="background-color: #496f7a; color: #fff;" id="outTeam">탈퇴</button>
+                           </ul>
+                        
+						<div class="contacts clearfix row">
+							<c:forEach items="${ memberList }" var="memEmail" varStatus="status">
+							<c:if test="${(status.index mod 5) eq 4}">
+							<div class="row">
+							</c:if>
+							
+							<c:if test = "${ memEmail.email ne Useremail }">
+						
+						
+							
+                            <div class="col-md-3 col-sm-6 col-xs-6">
+                                <div class="c-item">
+                                    <div class="ci-avatar">
+                                    	<c:if test="${ memEmail.pic_name eq null }">
+                                    		<img src="resource/img/notifications.png" height="170px">
+                                    	</c:if>
+                                    	<c:if test="${ memEmail.pic_name ne null }">
+                                       		<img src="/callMemberImage?picName=${ memEmail.pic_name }" alt="" height="170px">
+                                    	</c:if>
+                                    </div>
+                                    
+                                    <div class="c-info">
+                                        <strong>${ memEmail.name }</strong>
+                                        <input type="hidden" id="thisEmail" name="thisEmail" value="${ memEmail.email }"><small>${ memEmail.email }</small>
+                                    </div>
+                                    <div class="c-footer">
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            </c:if>
+
+							<c:if test="${(status.index mod 5) eq 4}">
+							</div>
+							</c:if>
+				
+                            </c:forEach>
+						</div>
+					</div>
+			    </div>
 			</div>
-			<div id="right_menu">
-				<div id="calendar">
-					<jsp:include page="/WEB-INF/view/calendar/calendar.jsp"></jsp:include>
-				</div>
-				<div id="chatbyMem">
-					<jsp:include page="/WEB-INF/view/chat/chat_mem.jsp"></jsp:include>
-				</div>
-				<div id="chatbyKeyword">
-					<jsp:include page="/WEB-INF/view/chat/chat_keyword.jsp"></jsp:include>
-				</div>
 			</div>
+			</div>
+			<c:if test="${ TeamID eq null }">
+				<div id="right_menu">
+					<div id="calendar">
+					</div>
+					<div id="chatbyMem">
+					</div>
+					<div id="chatbyKeyword">
+					</div>
+				</div>
+			</c:if>
+			<c:if test="${ TeamID ne null }">
+				<div id="right_menu">
+					<div id="calendar">
+						<jsp:include page="/WEB-INF/view/calendar/calendar.jsp"></jsp:include>
+					</div>
+					<div id="chatbyMem">
+						<jsp:include page="/WEB-INF/view/chat/chat_mem.jsp"></jsp:include>
+					</div>
+					<div id="chatbyKeyword">
+						<jsp:include page="/WEB-INF/view/chat/chat_keyword.jsp"></jsp:include>
+					</div>
+				</div>
+			</c:if>
 	    <div class="clear"></div>
 		</section>
 	</body>

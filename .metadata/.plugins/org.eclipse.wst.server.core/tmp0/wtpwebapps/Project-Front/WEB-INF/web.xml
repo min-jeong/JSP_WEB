@@ -18,26 +18,15 @@
     <filter-name>CharacterEncodingFilter</filter-name>
     <url-pattern>/*</url-pattern>
   </filter-mapping>
-  <servlet>
-    <description></description>
-    <display-name>ChatByMember</display-name>
-    <servlet-name>ChatByMember</servlet-name>
-    <servlet-class>com.ktds.pingpong.chat.web.ChatByMember</servlet-class>
-  </servlet>
-  <servlet-mapping>
-    <servlet-name>ChatByMember</servlet-name>
-    <url-pattern>/chatMember</url-pattern>
-  </servlet-mapping>
-  <servlet>
-    <description></description>
-    <display-name>ChatByCalendar</display-name>
-    <servlet-name>ChatByCalendar</servlet-name>
-    <servlet-class>com.ktds.pingpong.chat.web.ChatByCalendar</servlet-class>
-  </servlet>
-  <servlet-mapping>
-    <servlet-name>ChatByCalendar</servlet-name>
-    <url-pattern>/chatCalendar</url-pattern>
-  </servlet-mapping>
+  <filter>
+    <display-name>SessionCheckFilter</display-name>
+    <filter-name>SessionCheckFilter</filter-name>
+    <filter-class>com.ktds.pingpong.filter.SessionCheckFilter</filter-class>
+  </filter>
+  <filter-mapping>
+    <filter-name>SessionCheckFilter</filter-name>
+    <url-pattern>/*</url-pattern>
+  </filter-mapping>
   <servlet>
     <description></description>
     <display-name>TeamInfo</display-name>
@@ -67,16 +56,6 @@
   <servlet-mapping>
     <servlet-name>ControlMain</servlet-name>
     <url-pattern>/controlMain</url-pattern>
-  </servlet-mapping>
-  <servlet>
-    <description></description>
-    <display-name>MainView</display-name>
-    <servlet-name>MainView</servlet-name>
-    <servlet-class>com.ktds.pingpong.view.MainView</servlet-class>
-  </servlet>
-  <servlet-mapping>
-    <servlet-name>MainView</servlet-name>
-    <url-pattern>/mainView</url-pattern>
   </servlet-mapping>
   <servlet>
     <description></description>
@@ -317,5 +296,125 @@
   <servlet-mapping>
     <servlet-name>deleteMemberServelt</servlet-name>
     <url-pattern>/deleteMember</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>forgotEmailServlet</display-name>
+    <servlet-name>forgotEmailServlet</servlet-name>
+    <servlet-class>com.ktds.pingpong.member.web.forgotEmailServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>forgotEmailServlet</servlet-name>
+    <url-pattern>/forgotEmail</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>addNewMemberServlet</display-name>
+    <servlet-name>addNewMemberServlet</servlet-name>
+    <servlet-class>com.ktds.pingpong.team.web.addNewMemberServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>addNewMemberServlet</servlet-name>
+    <url-pattern>/addNewMember</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>GetDayChatServlet</display-name>
+    <servlet-name>GetDayChatServlet</servlet-name>
+    <servlet-class>com.ktds.pingpong.calendar.web.GetDayChatServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>GetDayChatServlet</servlet-name>
+    <url-pattern>/getDayChat</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>CalendarServlet</display-name>
+    <servlet-name>CalendarServlet</servlet-name>
+    <servlet-class>com.ktds.pingpong.calendar.web.CalendarServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>CalendarServlet</servlet-name>
+    <url-pattern>/calendar</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>ShowDayChatServlet</display-name>
+    <servlet-name>ShowDayChatServlet</servlet-name>
+    <servlet-class>com.ktds.pingpong.calendar.web.ShowDayChatServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>ShowDayChatServlet</servlet-name>
+    <url-pattern>/showDayChat</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>GetChatByKeywordServlet</display-name>
+    <servlet-name>GetChatByKeywordServlet</servlet-name>
+    <servlet-class>com.ktds.pingpong.chat.web.GetChatByKeywordServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>GetChatByKeywordServlet</servlet-name>
+    <url-pattern>/getChatByKeyword</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>GetKeywordServlet</display-name>
+    <servlet-name>GetKeywordServlet</servlet-name>
+    <servlet-class>com.ktds.pingpong.chat.web.GetKeywordServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>GetKeywordServlet</servlet-name>
+    <url-pattern>/getKeyword</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>ModifyServlet</display-name>
+    <servlet-name>ModifyServlet</servlet-name>
+    <servlet-class>com.ktds.pingpong.calendar.web.ModifyServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>ModifyServlet</servlet-name>
+    <url-pattern>/modify</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>DeleteServlet</display-name>
+    <servlet-name>DeleteServlet</servlet-name>
+    <servlet-class>com.ktds.pingpong.calendar.web.DeleteServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>DeleteServlet</servlet-name>
+    <url-pattern>/delete</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>outTeamServlet</display-name>
+    <servlet-name>outTeamServlet</servlet-name>
+    <servlet-class>com.ktds.pingpong.team.web.outTeamServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>outTeamServlet</servlet-name>
+    <url-pattern>/outTeam</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>deleteWaitingMemberServlet</display-name>
+    <servlet-name>deleteWaitingMemberServlet</servlet-name>
+    <servlet-class>com.ktds.pingpong.team.web.deleteWaitingMemberServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>deleteWaitingMemberServlet</servlet-name>
+    <url-pattern>/deleteWaitingMember</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>goWaitingTeam</display-name>
+    <servlet-name>goWaitingTeam</servlet-name>
+    <servlet-class>com.ktds.pingpong.chat.web.goWaitingTeam</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>goWaitingTeam</servlet-name>
+    <url-pattern>/goWaitingTeam</url-pattern>
   </servlet-mapping>
 </web-app>

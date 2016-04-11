@@ -52,7 +52,8 @@
 <fullyQualifiedTypeName name="java.io.FileInputStream"/>
 <fullyQualifiedTypeName name="java.io.OutputStream"/>
 <fullyQualifiedTypeName name="java.io.FileNotFoundException"/>
-<fullyQualifiedTypeName name="javax.servlet.RequestDispatcher"/>
 <fullyQualifiedTypeName name="com.ktds.pingpong.team.vo.TeamVO"/>
 <fullyQualifiedTypeName name="com.ktds.pingpong.chat.biz.ChatBiz"/>
+<fullyQualifiedTypeName name="com.ktds.pingpong.member.vo.MemberVO"/>
+<fullyQualifiedTypeName name="javax.servlet.RequestDispatcher"/>
 </qualifiedTypeNameHistroy>

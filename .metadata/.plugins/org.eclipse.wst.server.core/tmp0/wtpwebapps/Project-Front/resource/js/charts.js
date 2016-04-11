@@ -88,7 +88,7 @@ $(document).ready(function () {
     
     /* Main Pie Chart */
     if ($('.main-pie')[0]) {
-        easyPieChart('main-pie', 'rgba(255,255,255,0.2)', 'rgba(255,255,255,0.5)', 'rgba(255,255,255,0.7)', 7, 'butt', 148);
+        easyPieChart('main-pie', 'rgba(255,255,255,0.7)', 'rgba(0,0,0,0.2)', 'rgba(0,0,0,0.2)', 8, 'butt', 160);
     }
     
     /* Others */

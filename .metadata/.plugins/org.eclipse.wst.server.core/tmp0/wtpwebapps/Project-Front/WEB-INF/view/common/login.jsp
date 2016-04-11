@@ -19,11 +19,11 @@
 
 <script type="text/javascript">
 $(document).ready( function() {
-	function notify(from, align, icon, type, animIn, animOut){
+	function notify(from, align, message, icon, type, animIn, animOut){
 	    $.growl({
 	        icon: icon,
 	        title: '',
-	        message: 'Check your ID and Password',
+	        message: message,
 	        url: ''
 	    },{
 	            element: 'body',
@@ -60,10 +60,12 @@ $(document).ready( function() {
 	                        '</div>'
 	    });
 	};
-
+	
+	
+	
 	$("#doLogin").click(function(e){
  		var userId = $("#userId").val();
-		var password = $("#password").val();
+ 		var password = $("#password").val();
 		$.post(
 				"/doLogin"
 				, { "userId" : userId,
@@ -80,9 +82,33 @@ $(document).ready( function() {
 						location.href="/goMain"; 
 					}
 					else { // 로그인에 실패했을 경우
-					    notify('top', 'center', 'fa fa-comments', 'inverse', 'animated fadeInDown', 'animated fadeOutDown'); 
+					    notify('top', 'center', 'Check your ID and Password', 'fa fa-comments', 'inverse', 'animated fadeInDown', 'animated fadeOutDown'); 
 					}
 				  }
+		);
+	});
+	
+	var jsonData3 = {};
+	$("#forgotPw").click(function(e){
+		var emailId = $("#emailId").val();
+		$.post(
+				"/forgotEmail"	
+				,{ "emailId" : emailId }
+				, function(data) {
+					
+					try{
+						jsonData3 = JSON.parse(data);
+					}
+					catch(e) { //자바스크립트는 타입이 없기때문에 e만 적으면 된다.
+					}
+					if (jsonData3.forgotPw) {
+						 swal("Confirm Email");
+						 /* location.href="/goLogin"; */
+					}
+					if( !jsonData3.forgotPw )
+					    notify('top','center', 'Check your Email ID', 'fa fa-comments', 'inverse', 'animated fadeInDown', 'animated fadeOutDown');
+					}
+					
 		);
 	});
 });
@@ -124,7 +150,7 @@ $(document).ready( function() {
             <!-- 비밀번호찾기 만들기 -->
             <div class="clearfix"></div>
 				
-            <button class="btn btn-login btn-danger btn-float" id="doLogin"><i class="md md-arrow-forward"></i></button>
+            <button class="btn btn-login btn-float" style="background-color: #71d1b2;" id="doLogin"><i class="md md-arrow-forward"></i></button>
             
             <ul class="login-navigation">
                 <li data-block="#l-forget-password" class="bgm-orange">Forgot Password?</li>
@@ -134,16 +160,16 @@ $(document).ready( function() {
         </div>
         
         <div class="lc-block" id="l-forget-password">
-            <p class="text-left">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla eu risus. Curabitur commodo lorem fringilla enim feugiat commodo sed ac lacus.</p>
+            <p class="text-left">Email ID</p>
             
             <div class="input-group m-b-20">
                 <span class="input-group-addon"><i class="md md-email"></i></span>
                 <div class="fg-line">
-                    <input type="text" class="form-control" placeholder="Email Address">
+                    <input type="text" class="form-control" placeholder="Email Address" id="emailId">
                 </div>
             </div>
             
-            <a href="" class="btn btn-login btn-danger btn-float"><i class="md md-arrow-forward"></i></a>
+            <button class="btn btn-login btn-float" style="background-color: #71d1b2;" id="forgotPw"><i class="md md-arrow-forward"></i></button>
             
             <ul class="login-navigation">
                 <li data-block="#l-login" class="bgm-green">Login</li>

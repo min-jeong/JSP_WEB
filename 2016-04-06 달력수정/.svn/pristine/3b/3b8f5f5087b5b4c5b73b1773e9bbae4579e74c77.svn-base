@@ -1,0 +1,179 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<c:set var="root" value="${pageContext.request.contextPath}" />
+<c:set var="Username" value="${ sessionScope._MEMBER_.name }" />
+<c:set var="Useremail" value="${ sessionScope._MEMBER_.email }" />
+<c:set var="nowTeamId" value="${ sessionScope._TEAM_.teamId }" />
+<script type="text/javascript">
+	$(document).ready(function() {
+		$("#input").hide();
+		
+		$("#addEmail").click(function(){
+			$("#input").show();
+			$("#tab3").append("<p>초대원 List <input type=\"text\" class=\"tag-select\" name=\"email\" /></p>");
+		});
+		
+//		var classCheck = $("[class~=tag-select]");
+
+		$("#input").click(function() {
+			/*  if($("#tab2").attr('class') == classCheck){
+				alert("sss");
+				return;
+			} */  
+			
+			if( $("#teamName").val() ==""  ){
+				swal("Team name is empty");
+				return;
+			}
+			
+			if ( $(".tag-select").val() == "" ){
+				alert("Member ID is empty");	
+				return;
+			}
+			
+			var form = $("#create");
+			form.attr("method", "post");
+			form.attr("action", "<c:url value="/create"/>");
+			form.submit();
+		});
+		
+			function txtFieldCheck(){
+				// form안의 모든 text type 조회
+				var txtEle = $("#frm input[type=text]");
+				  
+				for(var i = 0; i < txtEle.length; i ++){
+				// console.log($(txtEle[i]).val());
+				if("" == $(txtEle[i]).val() || null == $(txtEle[i]).val()){
+				var ele_id = $(txtEle[i]).attr("id");
+				var label_txt = $("label[for='" + ele_id +"']").text();
+				console.log("id : " + ele_id + ", label : " + label_txt);
+				showAlert(ele_id, label_txt);
+
+				return true;
+				}
+				}
+				}
+	});
+</script>		
+<style>
+.lv-avatar1 {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  color: #FFF;
+  text-align: center;
+  line-height: 34px;
+  font-size: 15px;
+  margin-right: 15px;
+  margin-top: 4px;
+  padding: 0 !important;
+  text-transform: uppercase;
+}
+</style>
+<div id="team" class="card" style="background-color : #354052;">
+   	<div class="card-header" style="background-color: #496f7a;">
+	    <h2 style="color :#323e4a; font-weight:bold; font-size: 20px;">My Team
+	    <button type="button" class="md md-help" data-trigger="hover" data-toggle="popover" data-placement="bottom" data-content="가입된 Team List"  style="border-radius :50%; background-color: #496f7a; border: 0; size: 50%;"></button>
+	    </h2>
+	    <a href="#step1" class="btn btn-float waves-effect" style="background-color: #71d1b2;" data-toggle="modal"  id="createTeam" >
+		<i class="md md-add"></i>
+		</a>
+	</div>
+
+		<div class="card-body" >
+			<c:forEach items="${ allTeams }" var="list">
+			<c:if test="${ list.teamId eq nowTeamId }">
+			<a href="/SetTeamSession?teamId=${ list.teamId }">
+				<div class="listview lv-user m-t-20" style="background-color: #22252E;">
+				<div class="lv-item media">
+				    <div class="lv-avatar1 pull-left" style="background-color: #71d1b2;"></div>
+				    <div class="media-body"> <!-- Optional container for demo porpose only -->
+	           			<div class="lv-title" style="color : #ffffff; font-weight:bold; font-size: 15px;" >${ list.teamName } 
+	           			<c:if test="${ list.leaderEmail eq Useremail }">
+	           			   <i class="md md-star" style="color: #ffffff;"></i>
+	           			 </c:if>	<!-- 리더 이메일 빼고 리더 여부 추가/리더면 왕관모양? -->
+	           			 </div>
+	            	</div>
+	            </div>
+	            </div>	
+			</a>
+			</c:if>
+			<c:if test="${ list.teamId ne nowTeamId }">
+			<a href="/SetTeamSession?teamId=${ list.teamId }">
+				<div class="listview lv-user m-t-20">
+				<div class="lv-item media">
+				    <div class="lv-avatar1 pull-left" style="background-color: #71d1b2;"></div>
+				    <div class="media-body"> <!-- Optional container for demo porpose only -->
+	           			<div class="lv-title" style="color : #959aa2;  font-size: 15px;">${ list.teamName } 
+	           			<c:if test="${ list.leaderEmail eq Useremail }">
+	           			   <i class="md md-star" style="color: #959aa2;"></i>
+	           			 </c:if>	<!-- 리더 이메일 빼고 리더 여부 추가/리더면 왕관모양? -->
+	           			 </div>
+	            	</div>
+	            </div>
+	            </div>	
+			</a>
+			</c:if>
+			</c:forEach>
+	    </div>
+</div>
+
+		<div class="modal" id="step1" tabindex="-1" role="dialog" aria-hidden="true">
+			<div class="modal-dialog">
+                <div class="modal-content">
+                     <div class="modal-header">
+                         <h4 class="modal-title" align="center">CREATE TEAM</h4>
+                     </div>
+						<div class="modal-body">
+                        <form id="create">
+                        <div class="form-wizard-basic fw-container">
+                               <ul class="tab-nav text-center">
+                                   <li class="active"><a href="#tab1" data-toggle="tab" >Step 1</a></li>
+                                   <li><a href="#tab2" data-toggle="tab">Step 2</a></li>
+                               </ul>
+                        
+                        		<div class="tab-content">
+                                    <div class="tab-pane active" id="tab1">
+	                                    <p class="f-500 c-black m-b-15">Input team name</p>
+	                                    <div class="input-group">
+		                                    <span class="input-group-addon"><i class="md md-person"></i></span>
+	                                        <div class="fg-line">
+	                                                <input type="text" class="form-control" placeholder="Team name" name="teamName" id="teamName">
+	                                        </div>
+                                        </div>
+					        		</div>
+					        		<div class="tab-pane fade" id="tab2">
+						        		<p class="f-500 c-black m-b-15">Select team member</p>
+						        							<!-- append로 생성된 email list가 들어가는 자리 -->
+						        							
+						        	<%-- <select class="tag-select" multiple data-placeholder="member email" name="email">
+						        			<c:forEach items="${ allMember }" var="mem">
+						        				<c:if test="${ mem.email eq Useremail }">
+						        					<option value="${ mem.email }" disabled="disabled"> ${ mem.email }</option>
+						        				</c:if>
+		                                        <c:if test="${ mem.email ne Useremail }">
+						        					<option value="${ mem.email }" > ${ mem.email }</option>
+						        				</c:if>jhg6
+	                                         </c:forEach>
+                                    	</select>  --%>
+						        		
+										<input type="button" id="addEmail" value="이메일 추가" />	
+										<div id="tab3"></div>									
+								       <input type="button" id="input" value="완료!" />
+									</div>
+									<ul class="fw-footer pagination wizard">
+                                        <li class="previous first"><a class="a-prevent" href="#tab1"><i class="md md-more-horiz"></i></a></li>
+                                        <li class="previous"><a class="a-prevent" href="#tab1"><i class="md md-chevron-left"></i></a></li>
+                                        <li class="next"><a class="a-prevent" href="#tab2"><i class="md md-chevron-right"></i></a></li>
+                                        <li class="next last"><a class="a-prevent" href="#tab2"><i class="md md-more-horiz"></i></a></li>
+                                    </ul>
+									
+								</div>
+							</div>
+						</form>
+                    </div>
+                 </div>
+             </div>
+		</div>
+			

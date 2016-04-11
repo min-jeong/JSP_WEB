@@ -1,0 +1,12 @@
+package com.ktds.jmj;
+
+public class LoginBizImpl implements LoginBiz {
+
+	@Override
+	public boolean login() {
+		// TODO Auto-generated method stub
+		return false;
+	}
+	
+	
+}

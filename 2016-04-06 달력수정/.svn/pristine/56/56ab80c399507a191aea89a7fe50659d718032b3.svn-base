@@ -1,0 +1,8 @@
+eclipse.preferences.version=1
+encoding//WebContent/WEB-INF/view/chat/chat_keyword.jsp=UTF-8
+encoding//WebContent/WEB-INF/view/team/team_menu.jsp=UTF-8
+encoding//WebContent/WEB-INF/view/view/profile.jsp=UTF-8
+encoding//src/com/ktds/pingpong=UTF-8
+encoding//src/com/ktds/pingpong/chat/biz/ChatBiz.java=UTF-8
+encoding//src/com/ktds/pingpong/chat/dao/ChatDAO.java=UTF-8
+encoding/<project>=UTF-8

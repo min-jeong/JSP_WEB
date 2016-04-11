@@ -1,0 +1,5 @@
+package com.ktds.pingpong.member.dao;
+
+public class sendPassword {
+
+}

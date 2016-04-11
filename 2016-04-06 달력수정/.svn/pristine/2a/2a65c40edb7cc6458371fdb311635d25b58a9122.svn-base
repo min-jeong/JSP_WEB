@@ -1,0 +1,5 @@
+package com.ktds.pingpong.chat.vo;
+
+public class KeywordVO {
+
+}
